@@ -10,7 +10,7 @@ Status: all phases of `PLAN.md` are done and version 1.0.0 is live.
 
 | Page | Source Markdown | Content |
 |---|---|---|
-| Home | all three files | Diagram: Midterm, topics, sections, sub-topics, then formulas and examples; topic cards |
+| Home | all three files | Diagram: Midterm, topics, sections, sub-topics, then formulas and examples |
 | Regression | `content/midterm/Regression.md` | Linear, Polynomial, K-NN Regression |
 | Classification | `content/midterm/Classification.md` | K-NN (four distances), Perceptron, FFBP, ID3 |
 | Clustering | `content/midterm/Clustering.md` | K-Means |

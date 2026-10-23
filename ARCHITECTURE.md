@@ -49,7 +49,7 @@ ML_Notes/
 │  ├─ app/                   App.tsx (HashRouter, routes from PAGES), layout/AppLayout.tsx, pwa/ (ToastHost, versionCheck)
 │  ├─ pages/                 HomePage, TopicPage (one component, three routes), NotFoundPage
 │  ├─ features/
-│  │  ├─ home/               HomeHero, TopicCards, HomeIllustration
+│  │  ├─ home/               HomeHero, HomeIllustration
 │  │  ├─ home-diagram/       HomeDiagram, DiagramNode, DiagramBlocks, model, useDiagramLayout, useLeavingColumns, urlState
 │  │  └─ topic/              TopicHero, TopicIllustration (regression, classification, clustering), OverviewPanel,
 │  │                         SectionHeader, TopicOutline, useActiveAnchor,

@@ -1,7 +1,7 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
-import { PAGES, UI_TEXT } from '@/config/site';
+import { UI_TEXT } from '@/config/site';
 import { homeFile } from '@/test/content';
 import HomePage from './HomePage';
 
@@ -46,37 +46,20 @@ describe('HomePage', () => {
     expect(homeFile.stats).toEqual({ topics: 3, leaves: 11, examples: 18 });
   });
 
-  it('shows the diagram section and the three topic cards with a link to each page', async () => {
+  it('has the hero and the diagram only, with no topic cards below it', async () => {
     renderHome();
     expect(
       screen.getByRole('heading', { level: 2, name: UI_TEXT.diagramTitle }),
     ).toBeInTheDocument();
-    const cards = await screen.findByRole('heading', { level: 2, name: UI_TEXT.allContent });
-    expect(cards).toBeInTheDocument();
-    for (const page of PAGES) {
-      const card = screen.getByRole('heading', { level: 3, name: page.label }).closest('article');
-      expect(card).not.toBeNull();
-      expect(
-        within(card as HTMLElement).getByRole('link', { name: UI_TEXT.openPage }),
-      ).toHaveAttribute('href', page.route);
-    }
+    await screen.findByText(UI_TEXT.statExamples);
+    expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(1);
+    expect(document.querySelector('article')).toBeNull();
+    expect(screen.getByRole('region', { name: UI_TEXT.diagramTitle })).toBeInTheDocument();
   });
 
-  it('lists a row per section in a card, with the sub-topics of K-NN under it', async () => {
+  it('does not frame the diagram: no filled panel around its scrolling region', () => {
     renderHome();
-    const card = (await screen.findByRole('heading', { level: 3, name: 'Classification' })).closest(
-      'article',
-    ) as HTMLElement;
-    for (const title of ['K-NN', 'Perceptron', 'FFBP', 'ID3']) {
-      expect(within(card).getByText(title)).toBeInTheDocument();
-    }
-    expect(
-      within(card).getByText('Euclidean · Cosine · Squared Euclidean · Manhattan'),
-    ).toBeInTheDocument();
-    // Regression counts its overview as a row of the diagram but not of the card
-    const regression = screen
-      .getByRole('heading', { level: 3, name: 'Regression' })
-      .closest('article') as HTMLElement;
-    expect(within(regression).getAllByRole('listitem')).toHaveLength(3);
+    const region = screen.getByRole('region', { name: UI_TEXT.diagramTitle });
+    expect(region.parentElement?.className ?? '').not.toMatch(/bg-soft-stone|rounded/);
   });
 });

@@ -60,8 +60,8 @@ Navigation: a top navbar only (logo left, three page tabs centered, share button
 ### F1 Home: exam-scope diagram (core feature)
 An interactive, animated diagram that grows to the right, carried over from the 1322201 site and restyled. Root node "Midterm" toggles open. Open: the three topics slide out, connected by curves, each tagged Supervised or Unsupervised. Open a topic: its sections appear in the next column (Regression: 3, Classification: 4, Clustering: 1). Open a section that has sub-topics (K-NN): its sub-topics appear in the next column. Open a leaf: an expanded block shows the explanation and the formulas, a "ดูตัวอย่าง (N)" button opens the worked examples in the next column, and an "อ่านในหน้าเนื้อหา" link opens the topic page at that section. Nothing overlays anything. Detailed behavior: `UI-SPEC.md` section 4.
 
-### F2 Home: hero and topic cards
-Above the diagram a compact editorial hero (course label, title, one Thai lead line, three numbers counted from the content, an animated thin-line illustration). Below the diagram three topic cards (Cohere `product-card`) list each topic's sub-topics with check rows and a pill link to the page.
+### F2 Home: hero and diagram
+Above the diagram a compact editorial hero (course label, title, one Thai lead line, three numbers counted from the content, an animated thin-line illustration). The diagram is full width with no frame, as on the 1322201 site. There is nothing below it (the topic cards were removed after launch).
 
 ### F3 Topic pages
 One long page per big topic: a coloured feature band (hero) with the topic illustration, an overview panel with the page's shared formulas, then every section in source order with its theory and formulas, and every example as a card with the problem, `Sol`, the steps, and the `Ans` strip. A collapsible contents rail on the left (icon toggle, no label) with progress rings, a drawer on phones, a reading-progress line and a back-to-top button.

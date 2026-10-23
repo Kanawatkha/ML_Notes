@@ -72,8 +72,6 @@ export const UI_TEXT = {
   hideExamples: 'ซ่อนตัวอย่าง',
   examples: 'ตัวอย่าง',
   readOnPage: 'อ่านในหน้าเนื้อหา',
-  allContent: 'เนื้อหาทั้งหมด',
-  openPage: 'เปิดหน้า',
   homeLead: 'สรุปสูตรและวิธีทำโจทย์คำนวณ แนวข้อสอบกลางภาค',
   courseLabel: '1322308 Machine Learning · Midterm',
   statTopics: 'หัวข้อใหญ่',

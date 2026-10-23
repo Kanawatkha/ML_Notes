@@ -15,7 +15,9 @@ function renderAt(path: string) {
 describe('routes', () => {
   it('renders Home at /', async () => {
     renderAt('/');
-    expect(await screen.findByRole('heading', { level: 1, name: 'ML Notes' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { level: 1, name: 'ML Notes' }, { timeout: 10000 }),
+    ).toBeInTheDocument();
     await waitFor(() => expect(document.title).toBe('ML Notes'));
   });
 

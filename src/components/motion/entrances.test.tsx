@@ -6,7 +6,6 @@ import { ExampleCard } from '@/components/content/ExampleCard';
 import { UI_TEXT } from '@/config/site';
 import type { Block } from '@/content/types';
 import { HomeHero } from '@/features/home/HomeHero';
-import { TopicCards } from '@/features/home/TopicCards';
 import { Overview, SectionPart } from '@/features/topic/TopicParts';
 import { fileOf, homeFile } from '@/test/content';
 
@@ -47,20 +46,6 @@ describe('entrances (A1, A8, A9)', () => {
     expect(container.querySelector('article')).toHaveAttribute('data-reveal', 'rise');
     rerender(<ExampleCard block={example as NonNullable<typeof example>} level={3} />);
     expect(container.querySelector('article')).not.toHaveAttribute('data-reveal');
-  });
-
-  it('every topic card rises and turns its border ink on hover', () => {
-    const { container } = render(
-      <MemoryRouter>
-        <TopicCards home={homeFile} />
-      </MemoryRouter>,
-    );
-    const cards = container.querySelectorAll('article');
-    expect(cards).toHaveLength(3);
-    for (const card of cards) {
-      expect(card).toHaveAttribute('data-reveal', 'rise');
-      expect(card).toHaveClass('card-hover');
-    }
   });
 
   it('the Home title and lead have their entrance classes, the counts are plain numbers', () => {

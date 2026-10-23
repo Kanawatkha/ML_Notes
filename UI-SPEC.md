@@ -72,7 +72,6 @@ Not used: announcement bar, trust-logo strip, blog filter chips at hero size, co
 | home stat labels | หัวข้อใหญ่ / หัวข้อย่อย / ตัวอย่างโจทย์ |
 | home diagram title | แผนผังแนวข้อสอบ |
 | home diagram hint | กดที่ Midterm เพื่อเปิดแผนผัง |
-| home topic cards title | เนื้อหาทั้งหมด |
 | topic card action | เปิดหน้า |
 | tabs | Regression / Classification / Clustering (Home through the logo and the menu) |
 | menu row Home | หน้าหลัก |
@@ -139,10 +138,7 @@ Every page sets `document.title` to `<page> | ML Notes` (Home: `ML Notes`) and m
 ```
 <HomeHero />            split hero: text left, illustration card right (stacked on phones)
 <section> แผนผังแนวข้อสอบ
-  <HomeDiagram />       soft-stone canvas panel, grows right
-</section>
-<section> เนื้อหาทั้งหมด
-  <TopicCards />        three product cards
+  <HomeDiagram />       full width, no frame: starts at the content column's left edge, grows right
 </section>
 ```
 
@@ -155,11 +151,7 @@ Vertical rhythm: `section` (80 px) between the three parts on desktop, 48 px on 
 - Illustration card (`hero-photo-card`): radius `lg` 22, `deep-green` field, a 4:3 drawing (on phones limited to 45% of the viewport height), holding the **Home illustration** (A3): a thin-line plot in `on-dark` at 70% opacity with `coral` accents.
 - No call-to-action button (the diagram is right below). A small `button-secondary` "แผนผังแนวข้อสอบ ↓" link scrolls to the diagram on phones only.
 
-### Topic cards (Cohere `product-card`)
-
-- Three columns on desktop, two on tablet (the third wraps), one on phones; gap 24 px.
-- Card: `soft-stone` fill, radius `sm` 8, padding 32 (24 phone). Top: mono tag (SUPERVISED / UNSUPERVISED) and the topic colour swatch; title in `type-card-heading` (Latin topic name); a `hairline` divider; check rows (a 16 px check icon in `ink`, then the leaf titles from the content, `type-body`); bottom: `button-primary` small pill "เปิดหน้า" linking to the topic page.
-- Hover (hover-capable devices only): the card's swatch grows from 12 to 16 px and the pill darkens to `cohere-black`; no lift, no shadow (the design is flat).
+There are no topic cards on Home: it is the hero and the diagram only (changed after Phase 9, at the owner's request).
 
 ## 4. Home diagram (core feature)
 
@@ -339,8 +331,8 @@ Scrolls to the node (smooth, instant under reduced motion) with `scroll-margin-t
 | Small phone | < 425 | mark + "ML", share icon, hamburger | hero stacked, title 48 px, stats wrap 2 + 1 | one column, hero padding 32, cards padding 20, drawer |
 | Phone | 425-767 | wordmark, share icon, hamburger | as above, title 60 px | as above |
 | Phone landscape | up to 932 x 430 | 56 px high | diagram height follows content | floating buttons 44 px |
-| Tablet | 768-1023 | tabs centered, share pill | hero stacked, topic cards 2 columns | reading width 880 px, drawer |
-| Desktop | 1024-1439 | full | split hero, topic cards 3 columns | rail plus content |
+| Tablet | 768-1023 | tabs centered, share pill | hero stacked | reading width 880 px, drawer |
+| Desktop | 1024-1439 | full | split hero | rail plus content |
 | Wide | >= 1440 | full | content capped at 1200 px; wider empty space above and below sections (design's large intervals) | same cap |
 
 Rules: no horizontal page scroll anywhere except inside the diagram canvas, tables, display math and figures; touch targets at least 44 px (40 px for rail rows); `100dvh` for full-height sheets; floating buttons respect `env(safe-area-inset-*)`; orientation change recomputes connectors, the rail highlight and the drawer width.

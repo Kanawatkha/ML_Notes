@@ -323,7 +323,7 @@ export function HomeDiagram() {
 
   return (
     <div>
-      <div className="rounded-lg bg-soft-stone py-6 md:py-8">
+      <div>
         <div
           ref={scrollRef}
           role="region"
@@ -333,7 +333,7 @@ export function HomeDiagram() {
         >
           <div
             ref={canvasRef}
-            className="relative flex w-max min-w-full items-start gap-8 px-4 md:gap-12 md:px-8"
+            className="relative flex w-max min-w-full items-start gap-8 px-4 md:gap-12 md:pr-8 md:pl-[max(1.5rem,calc((100%-1200px)/2+1.5rem))]"
           >
             <svg
               ref={svgRef}
@@ -404,7 +404,10 @@ export function HomeDiagram() {
         </div>
       </div>
       {homeFailed ? (
-        <div role="alert" className="mt-4 flex items-center gap-3">
+        <div
+          role="alert"
+          className="mx-auto mt-4 flex w-full max-w-[1200px] items-center gap-3 px-4 md:px-6"
+        >
           <p className="type-caption">{UI_TEXT.loadError}</p>
           <Button variant="secondary" onClick={fetchHome}>
             {UI_TEXT.retry}
