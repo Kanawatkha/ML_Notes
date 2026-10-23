@@ -1,103 +1,84 @@
 # Regression
 
-## 1. Regression คืออะไร
-
-- **Regression (การถดถอย)** = วิธีทำนายค่า $Y$ ที่เป็น **ค่าต่อเนื่อง** จากข้อมูล $X$ เป็น **Supervised Learning** เพราะมีทั้ง $X$ และ $Y$
-
-| กลุ่ม | งาน | ข้อมูลที่ใช้ |
-|---|---|---|
-| **Supervised Learning** | Classification (การจำแนกประเภท) | $X,\ Y$ |
-| | **Regression (การถดถอย)** | $X,\ Y$ |
-| **Unsupervised Learning** | Clustering (การจัดกลุ่ม) | $X$ |
-| อื่นๆ | Optimization (การทำให้เหมาะสมที่สุด) | |
-
-### ชนิดของ $Y$
-
-| ชนิด | ตัวอย่าง | งาน |
-|---|---|---|
-| **Discrete** | Y/N, M/F, Dog/Cat | Classification |
-| **Continuous** | Age, Weight, Height | **Regression** |
+**Regression (การถดถอย)** คือการทำนายค่า $Y$ ที่เป็น **ค่าต่อเนื่อง (Continuous)** จากข้อมูล $X$
 
 ---
 
-## 2. Linear Regression
+**Linear (Degree 1)**
 
-หา **เส้นตรง** ที่เหมาะสมที่สุดผ่านข้อมูล
+สมการ
 
 $$y=ax+b$$
 
-- $a$ = ความชัน ($\tan\theta$), $b$ = จุดตัดแกน $y$ คือเส้นตรงผ่านจุด $(0,b)$
-- ตัวอย่างความหมาย: กฎของโอห์ม $V=IR+0$ เทียบกับ $y=ax+c$ ($V\leftrightarrow y$, $R\leftrightarrow a$, $I\leftrightarrow x$)
+$X$, $Y$, $R$
 
-### 2.1 Error และ Optimum line
+$$X=\begin{bmatrix}x_1&x_2&\cdots&x_N\\1&1&\cdots&1\end{bmatrix}_{2\times N},\qquad Y=\begin{bmatrix}y_1&y_2&\cdots&y_N\end{bmatrix}_{1\times N},\qquad R=\begin{bmatrix}a&b\end{bmatrix}_{1\times2}$$
 
-- ข้อมูล $(x_i,y_i)\big|_{i=1}^{N}$
-- $e_i$ = ระยะตั้งจากจุดข้อมูลถึงเส้นตรง
-- รวม error ทุกจุดด้วยการหา **mean** (aggregate) ได้ error metric
+ทำนาย
 
-$$\text{MAE}=\frac1N\sum_{i=1}^{N}|e_i|\qquad\text{MSE}=\frac1N\sum_{i=1}^{N}e_i^2$$
+$$\hat y=RX=ax+b\qquad\text{โดย }X=\begin{bmatrix}x\\1\end{bmatrix}_{2\times1}$$
 
-- **Optimum line** = เส้นที่ error metric น้อยที่สุด
-- เส้นที่ผ่านทุกจุดพอดี (เส้นหยัก) คือ **Overfitting** ✗ ส่วนเส้นตรงที่จับแนวโน้มรวม คือ **generalization** ✓
+**Polynomial (Degree 2 และ N)**
 
-### 2.2 Least Square
+Degree 2
 
-ใช้ $x^2$ (MSE) หาค่าต่ำสุด โดยหา derivative แล้วให้เท่ากับ 0
+$$y=ax^2+bx+c$$
 
-$$f'(x)=0\ \Rightarrow\ \text{จุดต่ำสุด}$$
+$$X=\begin{bmatrix}x_1^2&x_2^2&\cdots&x_N^2\\x_1&x_2&\cdots&x_N\\1&1&\cdots&1\end{bmatrix}_{3\times N},\qquad Y=\begin{bmatrix}y_1&y_2&\cdots&y_N\end{bmatrix}_{1\times N},\qquad R=\begin{bmatrix}a&b&c\end{bmatrix}_{1\times3}$$
 
-| ฟังก์ชัน | Derivative |
-|---|---|
-| $\lvert x\rvert$ | $\dfrac{x}{\lvert x\rvert}$ |
-| $x^2$ | $2x$ |
+$$\hat y=RX=ax^2+bx+c\qquad\text{โดย }X=\begin{bmatrix}x^2\\x\\1\end{bmatrix}_{3\times1}$$
 
-### 2.3 Matrix Form
+Degree $n$
 
-ให้
+$$y=a_1x^{n}+a_2x^{n-1}+\dots+a_{n+1}$$
 
-$$X=[x_1\ x_2\ x_3\ \cdots\ x_N],\qquad Y=[y_1\ y_2\ y_3\ \cdots\ y_N]$$
+$$X=\begin{bmatrix}x_1^n&x_2^n&\cdots&x_N^n\\\vdots&\vdots&&\vdots\\x_1&x_2&\cdots&x_N\\1&1&\cdots&1\end{bmatrix}_{(n+1)\times N},\qquad Y=\begin{bmatrix}y_1&y_2&\cdots&y_N\end{bmatrix}_{1\times N},\qquad R=\begin{bmatrix}a_1&a_2&\cdots&a_{n+1}\end{bmatrix}_{1\times(n+1)}$$
 
-แปลง $(x,y)\to(x,y,1)$ เพื่อรวม $b$ เข้าไปด้วย
+**ส่วนที่ใช้ร่วมกัน (Linear และ Polynomial)**
 
-$$X=\begin{bmatrix}x_1&x_2&x_3&\cdots&x_N\\1&1&1&\cdots&1\end{bmatrix}$$
+Matrix Form (แถวล่างสุดของ $X$ เป็น 1 เสมอ เรียงกำลังจากมากไปน้อย)
 
-จาก $y=ax+b\cdot1$ เขียนเป็นเมทริกซ์ ($1$ สมการ, $2$ ตัวแปร คือ $a,b$)
+$$Y=RX$$
 
-$$\boxed{Y=RX}\qquad R=[a\ \ b]$$
+สูตรหา $R$
 
-| เมทริกซ์ | ขนาด |
-|---|---|
-| $Y$ | $1\times N$ |
-| $R$ | $1\times2$ |
-| $X$ | $2\times N$ |
+$$R=Y\,X^T(XX^T)^{-1}$$
 
-### 2.4 หา $R$
+กรณี $\det(XX^T)=0$ (ใช้แทนสูตรหา $R$) โดย $\varepsilon$ เป็นค่าเล็กๆ เช่น $0.1$
 
-กฎคูณเมทริกซ์: $A_{m\times n}\,B_{n\times q}=C_{m\times q}$ และ $AB\ne BA$
+$$R=Y\,X^T(XX^T+\varepsilon I)^{-1}$$
 
-**ขั้นที่ 1:** คูณ $X^T$ ทั้งสองข้าง ($X^T$ ขนาด $N\times2$)
+Error (MAE, MSE) เมื่อ $\hat y$ คือค่าทำนาย
 
-$$Y\cdot X^T=R\,(X\cdot X^T)$$
+$$\text{MAE}=\frac1N\sum_{i=1}^{N}|y_i-\hat y_i|$$
 
-**ขั้นที่ 2:** คูณ $(XX^T)^{-1}$ ทั้งสองข้าง โดย $(XX^T)(XX^T)^{-1}=I$ และ $A\cdot I=A$
+$$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2$$
 
-$$\boxed{R=Y\cdot X^T\,(XX^T)^{-1}}$$
+หา inverse
 
-### 2.5 กรณี $\det=0$
+$$A^{-1}=\frac{\text{adj}A}{\det A}$$
 
-$(XX^T)^{-1}=\dfrac{\text{adj}(XX^T)}{\det(XX^T)}$ ถ้า $\det\to0$ จะหา inverse ไม่ได้
+$$2\times2:\quad A=\begin{bmatrix}p&q\\r&s\end{bmatrix},\qquad \det A=ps-qr,\qquad \text{adj}A=\begin{bmatrix}s&-q\\-r&p\end{bmatrix}$$
 
-แก้โดยบวก $\varepsilon I$ เข้าที่เส้นทแยงมุม เช่นเมทริกซ์ทแยงมุม
+$$3\times3:\quad C_{ij}=(-1)^{i+j}M_{ij},\qquad \text{adj}A=C^T,\qquad \det A=a_{11}C_{11}+a_{12}C_{12}+a_{13}C_{13}$$
 
-$$\begin{bmatrix}a&0&0\\0&b&0\\0&0&c\end{bmatrix}+\varepsilon I=\begin{bmatrix}a+\varepsilon&0&0\\0&b+\varepsilon&0\\0&0&c+\varepsilon\end{bmatrix}$$
+**K-NN Regression** ระยะ Manhattan
 
-ได้สูตร
+$$d(\vec a,\vec b)=\sum_{j=1}^{n}|a_j-b_j|$$
 
-$$\boxed{R=Y\cdot X^T\,(XX^T+\varepsilon I)^{-1}}$$
+ข้อมูล 1 มิติ ($x$ ตัวเดียว) ได้ $d(x_q,x_i)=|x_q-x_i|$ แล้วทำนายด้วยค่าเฉลี่ยของ $y$ ของ $k$ จุดที่ใกล้ที่สุด
 
-### 2.6 โจทย์ตัวอย่าง
+$$\hat y=\frac1k\sum_{i=1}^{k}y_i$$
 
-จากข้อมูลในตารางต่อไปนี้ จงหาเส้นตรง $y=ax+b$ ด้วยวิธี Least Square และทำนายค่า $y$ เมื่อ $x=6$
+---
+
+## 1. Linear Regression
+
+$y=ax+b$
+
+### ตัวอย่างโจทย์
+
+จากข้อมูลในตารางต่อไปนี้ จงหาเส้นตรง $y=ax+b$ ด้วยวิธีเมทริกซ์ ทำนายค่า $y$ เมื่อ $x=6$ และหา MAE และ MSE
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
@@ -110,79 +91,69 @@ $$\boxed{R=Y\cdot X^T\,(XX^T+\varepsilon I)^{-1}}$$
 
 #### Sol<sup>n</sup>
 
-**ขั้นที่ 1: สร้าง $X$ และ $Y$** ($N=5$)
+จากสูตร
 
-$$X=\begin{bmatrix}1&2&3&4&5\\1&1&1&1&1\end{bmatrix}\ (2\times5),\qquad Y=[2\ \ 3\ \ 5\ \ 4\ \ 6]\ (1\times5)$$
+$$R=Y\,X^T(XX^T)^{-1}$$
 
-**ขั้นที่ 2: หา $XX^T$** ($2\times5$ คูณ $5\times2$ ได้ $2\times2$)
+สร้าง $X$ และ $Y$
 
-$$XX^T=\begin{bmatrix}1^2+2^2+3^2+4^2+5^2&1+2+3+4+5\\1+2+3+4+5&5\end{bmatrix}=\begin{bmatrix}55&15\\15&5\end{bmatrix}$$
+$$X=\begin{bmatrix}1&2&3&4&5\\1&1&1&1&1\end{bmatrix}_{2\times5},\qquad Y=\begin{bmatrix}2&3&5&4&6\end{bmatrix}_{1\times5}$$
 
-**ขั้นที่ 3: หา $YX^T$** ($1\times5$ คูณ $5\times2$ ได้ $1\times2$)
+หา $XX^T$
 
-$$YX^T=[(2)(1)+(3)(2)+(5)(3)+(4)(4)+(6)(5),\ \ 2+3+5+4+6]=[69,\ 20]$$
+$$XX^T=\begin{bmatrix}1&2&3&4&5\\1&1&1&1&1\end{bmatrix}_{2\times5}\begin{bmatrix}1&1\\2&1\\3&1\\4&1\\5&1\end{bmatrix}_{5\times2}=\begin{bmatrix}55&15\\15&5\end{bmatrix}_{2\times2}$$
 
-**ขั้นที่ 4: หา $(XX^T)^{-1}$**
+หา $YX^T$
 
-$$\det(XX^T)=(55)(5)-(15)(15)=275-225=50$$
+$$YX^T=\begin{bmatrix}2&3&5&4&6\end{bmatrix}_{1\times5}\begin{bmatrix}1&1\\2&1\\3&1\\4&1\\5&1\end{bmatrix}_{5\times2}=\begin{bmatrix}69&20\end{bmatrix}_{1\times2}$$
 
-$$\text{adj}(XX^T)=\begin{bmatrix}5&-15\\-15&55\end{bmatrix}$$
+หา $(XX^T)^{-1}$ จากสูตร $A^{-1}=\dfrac{\text{adj}A}{\det A}$ เมื่อ $A=\begin{bmatrix}p&q\\r&s\end{bmatrix}_{2\times2}$
 
-$$(XX^T)^{-1}=\frac1{50}\begin{bmatrix}5&-15\\-15&55\end{bmatrix}$$
+$$\det(XX^T)=ps-qr=(55)(5)-(15)(15)=275-225=50$$
 
-**ขั้นที่ 5: หา $R$**
+$$\text{adj}(XX^T)=\begin{bmatrix}s&-q\\-r&p\end{bmatrix}_{2\times2}=\begin{bmatrix}5&-15\\-15&55\end{bmatrix}_{2\times2}$$
 
-จากสูตร $R=Y\,X^T(XX^T)^{-1}$
+$$(XX^T)^{-1}=\frac{\text{adj}(XX^T)}{\det(XX^T)}=\frac1{50}\begin{bmatrix}5&-15\\-15&55\end{bmatrix}_{2\times2}$$
 
-$$R=[69,\ 20]\cdot\frac1{50}\begin{bmatrix}5&-15\\-15&55\end{bmatrix}=\frac1{50}[\,69(5)+20(-15),\ \ 69(-15)+20(55)\,]$$
+แทนค่าในสูตร
 
-$$=\frac1{50}[\,345-300,\ \ -1035+1100\,]=\frac1{50}[45,\ 65]=[0.9,\ 1.3]$$
+$$R=\begin{bmatrix}69&20\end{bmatrix}_{1\times2}\cdot\frac1{50}\begin{bmatrix}5&-15\\-15&55\end{bmatrix}_{2\times2}=\frac1{50}\begin{bmatrix}69(5)+20(-15)&69(-15)+20(55)\end{bmatrix}_{1\times2}$$
+
+$$=\frac1{50}\begin{bmatrix}45&65\end{bmatrix}_{1\times2}=\begin{bmatrix}0.9&1.3\end{bmatrix}_{1\times2}$$
 
 ดังนั้น $a=0.9$, $b=1.3$
 
 $$y=0.9x+1.3$$
 
-**ขั้นที่ 6: ทำนายที่ $x=6$**
+ทำนายที่ $x=6$
 
-$$y=0.9(6)+1.3=5.4+1.3=6.7$$
+$$\begin{array}{c|c}\textbf{แบบสมการ}&\textbf{แบบ Matrix Form}\\\hline\\[-6pt]\qquad\hat y=0.9(6)+1.3=6.7\qquad&\qquad\hat y=RX=\begin{bmatrix}0.9&1.3\end{bmatrix}_{1\times2}\begin{bmatrix}6\\1\end{bmatrix}_{2\times1}=\begin{bmatrix}0.9(6)+1.3(1)\end{bmatrix}_{1\times1}=\begin{bmatrix}6.7\end{bmatrix}_{1\times1}\qquad\end{array}$$
 
-**Ans** $y=0.9x+1.3$ และ $y(6)=6.7$
+หา Error จาก $\hat y=0.9x+1.3$
 
----
+<table align="center">
+  <tr><th>x</th><th>y</th><th>ŷ</th><th>|y − ŷ|</th><th>(y − ŷ)²</th></tr>
+  <tr><td align="center">1</td><td align="center">2</td><td align="center">2.2</td><td align="center">0.2</td><td align="center">0.04</td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">3.1</td><td align="center">0.1</td><td align="center">0.01</td></tr>
+  <tr><td align="center">3</td><td align="center">5</td><td align="center">4.0</td><td align="center">1.0</td><td align="center">1.00</td></tr>
+  <tr><td align="center">4</td><td align="center">4</td><td align="center">4.9</td><td align="center">0.9</td><td align="center">0.81</td></tr>
+  <tr><td align="center">5</td><td align="center">6</td><td align="center">5.8</td><td align="center">0.2</td><td align="center">0.04</td></tr>
+  <tr><th>sum</th><td></td><td></td><td align="center"><b>2.4</b></td><td align="center"><b>1.90</b></td></tr>
+</table>
 
-### 2.7 โจทย์ตัวอย่าง: หา Error (MAE, MSE)
+แทนค่าในสูตร
 
-จากข้อ 2.6 จงหา MAE และ MSE ของเส้นตรง $y=0.9x+1.3$
+$$\text{MAE}=\frac1N\sum_{i=1}^{N}|y_i-\hat y_i|=\frac{2.4}{5}=0.48$$
 
-#### Sol<sup>n</sup>
+$$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{1.90}{5}=0.38$$
 
-หา $e_i=y_i-\hat y_i$ เมื่อ $\hat y_i=0.9x_i+1.3$
-
-$$e_1=2-(0.9(1)+1.3)=2-2.2=-0.2$$
-
-$$e_2=3-(0.9(2)+1.3)=3-3.1=-0.1$$
-
-$$e_3=5-(0.9(3)+1.3)=5-4.0=1.0$$
-
-$$e_4=4-(0.9(4)+1.3)=4-4.9=-0.9$$
-
-$$e_5=6-(0.9(5)+1.3)=6-5.8=0.2$$
-
-จากสูตร MAE
-
-$$\text{MAE}=\frac1N\sum|e_i|=\frac{|-0.2|+|-0.1|+|1.0|+|-0.9|+|0.2|}{5}=\frac{0.2+0.1+1.0+0.9+0.2}{5}=\frac{2.4}{5}=0.48$$
-
-จากสูตร MSE
-
-$$\text{MSE}=\frac1N\sum e_i^2=\frac{(-0.2)^2+(-0.1)^2+(1.0)^2+(-0.9)^2+(0.2)^2}{5}=\frac{0.04+0.01+1+0.81+0.04}{5}=\frac{1.9}{5}=0.38$$
-
-**Ans** $\text{MAE}=0.48$, $\text{MSE}=0.38$
+**Ans** $y=0.9x+1.3$, $\hat y(6)=6.7$, $\text{MAE}=0.48$, $\text{MSE}=0.38$
 
 ---
 
-### 2.8 โจทย์ตัวอย่าง: กรณี $\det=0$
+### ตัวอย่างโจทย์: กรณี $\det=0$
 
-จากข้อมูลในตารางต่อไปนี้ จงหาเส้นตรง $y=ax+b$ เมื่อกำหนด $\varepsilon=1$
+จากข้อมูลในตารางต่อไปนี้ จงหาเส้นตรง $y=ax+b$ เมื่อกำหนด $\varepsilon=1$ ทำนายค่า $y$ เมื่อ $x=4$ และหา MAE และ MSE
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
@@ -193,184 +164,235 @@ $$\text{MSE}=\frac1N\sum e_i^2=\frac{(-0.2)^2+(-0.1)^2+(1.0)^2+(-0.9)^2+(0.2)^2}
 
 #### Sol<sup>n</sup>
 
-**ขั้นที่ 1: สร้าง $X$ และ $Y$** ($N=3$)
-
-$$X=\begin{bmatrix}2&2&2\\1&1&1\end{bmatrix},\qquad Y=[1\ \ 2\ \ 3]$$
-
-**ขั้นที่ 2: หา $XX^T$ และตรวจ $\det$**
-
-$$XX^T=\begin{bmatrix}2^2+2^2+2^2&2+2+2\\2+2+2&3\end{bmatrix}=\begin{bmatrix}12&6\\6&3\end{bmatrix}$$
-
-$$\det(XX^T)=(12)(3)-(6)(6)=36-36=0$$
-
-$\det=0$ ไม่มี $(XX^T)^{-1}$ จึงใช้สูตร $R=Y\,X^T(XX^T+\varepsilon I)^{-1}$
-
-**ขั้นที่ 3: หา $YX^T$**
-
-$$YX^T=[(1)(2)+(2)(2)+(3)(2),\ \ 1+2+3]=[12,\ 6]$$
-
-**ขั้นที่ 4: หา $(XX^T+\varepsilon I)^{-1}$** เมื่อ $\varepsilon=1$
-
-$$XX^T+\varepsilon I=\begin{bmatrix}12&6\\6&3\end{bmatrix}+\begin{bmatrix}1&0\\0&1\end{bmatrix}=\begin{bmatrix}13&6\\6&4\end{bmatrix}$$
-
-$$\det=(13)(4)-(6)(6)=52-36=16$$
-
-$$\text{adj}=\begin{bmatrix}4&-6\\-6&13\end{bmatrix}\ \Rightarrow\ (XX^T+\varepsilon I)^{-1}=\frac1{16}\begin{bmatrix}4&-6\\-6&13\end{bmatrix}$$
-
-**ขั้นที่ 5: หา $R$**
-
-$$R=[12,\ 6]\cdot\frac1{16}\begin{bmatrix}4&-6\\-6&13\end{bmatrix}=\frac1{16}[\,12(4)+6(-6),\ \ 12(-6)+6(13)\,]$$
-
-$$=\frac1{16}[\,48-36,\ \ -72+78\,]=\frac1{16}[12,\ 6]=[0.75,\ 0.375]$$
-
-**Ans** $y=0.75x+0.375$
-
----
-
-## 3. Nonlinear Regression (Polynomial)
-
-ใช้ **พหุนาม** แทนเส้นตรง เช่นพาราโบลา $y=x^2$ (มีจุดโฟกัส $f$ เหมือนจานรับสัญญาณ)
-
-$$y=ax^2+bx+c\cdot1\qquad(\text{Degree }2)$$
-
-เทียบกับ $y=ax^1+b$ (Degree 1) สมการทั้งสองเขียนเป็น $Y=RX$ และหา $R$ ด้วยสูตรเดียวกัน
+จากสูตร
 
 $$R=Y\,X^T(XX^T)^{-1}$$
 
-สิ่งที่เปลี่ยนมีแค่การสร้างเมทริกซ์ $X$ ซึ่งเพิ่มแถวของ $x$ ยกกำลัง
+สร้าง $X$ และ $Y$
 
-| ระดับ | เมทริกซ์ $X$ |
-|---|---|
-| ข้อมูล | $[x_1\ x_2\ x_3\ x_4]$ |
-| Degree 1 (Linear) | $\begin{bmatrix}x_1&x_2&x_3&x_4\\1&1&1&1\end{bmatrix}$ |
-| **Degree 2** | $\begin{bmatrix}x_1^2&x_2^2&x_3^2&x_4^2\\x_1&x_2&x_3&x_4\\1&1&1&1\end{bmatrix}$ |
+$$X=\begin{bmatrix}2&2&2\\1&1&1\end{bmatrix}_{2\times3},\qquad Y=\begin{bmatrix}1&2&3\end{bmatrix}_{1\times3}$$
 
-### รูปทั่วไป
+หา $XX^T$
 
-$$y=a_1x^{n}+a_2x^{n-1}+a_3x^{n-2}+\dots+a_{n+1}\qquad(n=\text{Degree})$$
+$$XX^T=\begin{bmatrix}2&2&2\\1&1&1\end{bmatrix}_{2\times3}\begin{bmatrix}2&1\\2&1\\2&1\end{bmatrix}_{3\times2}=\begin{bmatrix}12&6\\6&3\end{bmatrix}_{2\times2}$$
 
-| Degree | ชื่อ | จุดเปลี่ยนทิศของกราฟ |
-|---|---|---|
-| 1 | Linear | เส้นตรง |
-| 2 | Parabola | 1 ครั้ง |
-| 3 | | 2 ครั้ง |
-| $n$ | | $n-1$ ครั้ง |
+ตรวจ $\det$
 
-### 3.1 โจทย์ตัวอย่าง
+$$\det(XX^T)=(12)(3)-(6)(6)=36-36=0$$
 
-จากข้อมูลในตารางต่อไปนี้ จงหา
+$\det=0$ ไม่มี $(XX^T)^{-1}$ จึงใช้สูตร
 
-- ก) เส้นตรง $y=ax+b$ (Degree 1)
-- ข) พาราโบลา $y=ax^2+bx+c$ (Degree 2)
-- ค) เปรียบเทียบ MAE ของทั้งสองแบบ แล้วทำนายค่า $y$ เมื่อ $x=3$ ด้วยแบบที่ดีกว่า
+$$R=Y\,X^T(XX^T+\varepsilon I)^{-1}$$
+
+หา $YX^T$
+
+$$YX^T=\begin{bmatrix}1&2&3\end{bmatrix}_{1\times3}\begin{bmatrix}2&1\\2&1\\2&1\end{bmatrix}_{3\times2}=\begin{bmatrix}12&6\end{bmatrix}_{1\times2}$$
+
+หา $XX^T+\varepsilon I$ เมื่อ $\varepsilon=1$
+
+$$XX^T+\varepsilon I=\begin{bmatrix}12&6\\6&3\end{bmatrix}_{2\times2}+\begin{bmatrix}1&0\\0&1\end{bmatrix}_{2\times2}=\begin{bmatrix}13&6\\6&4\end{bmatrix}_{2\times2}$$
+
+หา $(XX^T+\varepsilon I)^{-1}$ จากสูตร $A^{-1}=\dfrac{\text{adj}A}{\det A}$ เมื่อ $A=\begin{bmatrix}p&q\\r&s\end{bmatrix}_{2\times2}$
+
+$$\det(XX^T+\varepsilon I)=ps-qr=(13)(4)-(6)(6)=52-36=16$$
+
+$$\text{adj}(XX^T+\varepsilon I)=\begin{bmatrix}s&-q\\-r&p\end{bmatrix}_{2\times2}=\begin{bmatrix}4&-6\\-6&13\end{bmatrix}_{2\times2}$$
+
+$$(XX^T+\varepsilon I)^{-1}=\frac{\text{adj}(XX^T+\varepsilon I)}{\det(XX^T+\varepsilon I)}=\frac1{16}\begin{bmatrix}4&-6\\-6&13\end{bmatrix}_{2\times2}$$
+
+แทนค่าในสูตร
+
+$$R=\begin{bmatrix}12&6\end{bmatrix}_{1\times2}\cdot\frac1{16}\begin{bmatrix}4&-6\\-6&13\end{bmatrix}_{2\times2}=\frac1{16}\begin{bmatrix}12(4)+6(-6)&12(-6)+6(13)\end{bmatrix}_{1\times2}$$
+
+$$=\frac1{16}\begin{bmatrix}12&6\end{bmatrix}_{1\times2}=\begin{bmatrix}0.75&0.375\end{bmatrix}_{1\times2}$$
+
+ดังนั้น $a=0.75$, $b=0.375$
+
+$$y=0.75x+0.375$$
+
+ทำนายที่ $x=4$
+
+$$\begin{array}{c|c}\textbf{แบบสมการ}&\textbf{แบบ Matrix Form}\\\hline\\[-6pt]\qquad\hat y=0.75(4)+0.375=3.375\qquad&\qquad\hat y=RX=\begin{bmatrix}0.75&0.375\end{bmatrix}_{1\times2}\begin{bmatrix}4\\1\end{bmatrix}_{2\times1}=\begin{bmatrix}0.75(4)+0.375(1)\end{bmatrix}_{1\times1}=\begin{bmatrix}3.375\end{bmatrix}_{1\times1}\qquad\end{array}$$
+
+หา Error จาก $\hat y=0.75x+0.375$
+
+<table align="center">
+  <tr><th>x</th><th>y</th><th>ŷ</th><th>|y − ŷ|</th><th>(y − ŷ)²</th></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">1.875</td><td align="center">0.875</td><td align="center">0.765625</td></tr>
+  <tr><td align="center">2</td><td align="center">2</td><td align="center">1.875</td><td align="center">0.125</td><td align="center">0.015625</td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">1.875</td><td align="center">1.125</td><td align="center">1.265625</td></tr>
+  <tr><th>sum</th><td></td><td></td><td align="center"><b>2.125</b></td><td align="center"><b>2.046875</b></td></tr>
+</table>
+
+แทนค่าในสูตร
+
+$$\text{MAE}=\frac1N\sum_{i=1}^{N}|y_i-\hat y_i|=\frac{2.125}{3}\approx0.7083$$
+
+$$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{2.046875}{3}\approx0.6823$$
+
+**Ans** $y=0.75x+0.375$, $\hat y(4)=3.375$, $\text{MAE}\approx0.7083$, $\text{MSE}\approx0.6823$
+
+---
+
+## 2. Nonlinear Regression (Polynomial)
+
+$y=ax^2+bx+c$ (Degree 2)
+
+### ตัวอย่างโจทย์
+
+จากข้อมูลในตารางต่อไปนี้ จงหาพหุนาม Degree 2 ด้วยวิธีเมทริกซ์ ทำนายค่า $y$ เมื่อ $x=3$ และหา MAE และ MSE
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
-  <tr><td align="center">1</td><td align="center">-2</td><td align="center">3</td></tr>
-  <tr><td align="center">2</td><td align="center">-1</td><td align="center">1</td></tr>
-  <tr><td align="center">3</td><td align="center">0</td><td align="center">1</td></tr>
-  <tr><td align="center">4</td><td align="center">1</td><td align="center">3</td></tr>
+  <tr><td align="center">1</td><td align="center">-2</td><td align="center">1</td></tr>
+  <tr><td align="center">2</td><td align="center">-1</td><td align="center">2</td></tr>
+  <tr><td align="center">3</td><td align="center">0</td><td align="center">0</td></tr>
+  <tr><td align="center">4</td><td align="center">1</td><td align="center">0</td></tr>
   <tr><td align="center">5</td><td align="center">2</td><td align="center">7</td></tr>
 </table>
 
 #### Sol<sup>n</sup>
 
-**ก) Degree 1**
+จากสูตร
 
-$$X=\begin{bmatrix}-2&-1&0&1&2\\1&1&1&1&1\end{bmatrix}\ (2\times5),\qquad Y=[3\ \ 1\ \ 1\ \ 3\ \ 7]$$
+$$R=Y\,X^T(XX^T)^{-1}$$
 
-$$XX^T=\begin{bmatrix}4+1+0+1+4&-2-1+0+1+2\\0&5\end{bmatrix}=\begin{bmatrix}10&0\\0&5\end{bmatrix}$$
+สร้าง $X$ และ $Y$
 
-$$YX^T=[(3)(-2)+(1)(-1)+(1)(0)+(3)(1)+(7)(2),\ \ 3+1+1+3+7]=[-6-1+0+3+14,\ \ 15]=[10,\ 15]$$
+$$X=\begin{bmatrix}4&1&0&1&4\\-2&-1&0&1&2\\1&1&1&1&1\end{bmatrix}_{3\times5},\qquad Y=\begin{bmatrix}1&2&0&0&7\end{bmatrix}_{1\times5}$$
 
-$$\det(XX^T)=(10)(5)-(0)(0)=50,\qquad \text{adj}=\begin{bmatrix}5&0\\0&10\end{bmatrix},\qquad (XX^T)^{-1}=\frac1{50}\begin{bmatrix}5&0\\0&10\end{bmatrix}$$
+หา $XX^T$
 
-จากสูตร $R=Y\,X^T(XX^T)^{-1}$
+$$XX^T=\begin{bmatrix}4&1&0&1&4\\-2&-1&0&1&2\\1&1&1&1&1\end{bmatrix}_{3\times5}\begin{bmatrix}4&-2&1\\1&-1&1\\0&0&1\\1&1&1\\4&2&1\end{bmatrix}_{5\times3}$$
 
-$$R=[10,\ 15]\cdot\frac1{50}\begin{bmatrix}5&0\\0&10\end{bmatrix}=\frac1{50}[50,\ 150]=[1,\ 3]$$
-
-ดังนั้น $y=x+3$
-
-**ข) Degree 2**
-
-$$X=\begin{bmatrix}4&1&0&1&4\\-2&-1&0&1&2\\1&1&1&1&1\end{bmatrix}\ (3\times5),\qquad Y=[3\ \ 1\ \ 1\ \ 3\ \ 7]$$
-
-หา $XX^T$ ($3\times5$ คูณ $5\times3$ ได้ $3\times3$)
-
-$$XX^T=\begin{bmatrix}\sum x^4&\sum x^3&\sum x^2\\\sum x^3&\sum x^2&\sum x\\\sum x^2&\sum x&5\end{bmatrix}$$
-
-$$\sum x^4=16+1+0+1+16=34,\quad \sum x^3=-8-1+0+1+8=0,\quad \sum x^2=4+1+0+1+4=10,\quad \sum x=0$$
-
-$$XX^T=\begin{bmatrix}34&0&10\\0&10&0\\10&0&5\end{bmatrix}$$
+$$=\begin{bmatrix}16+1+0+1+16&-8-1+0+1+8&4+1+0+1+4\\-8-1+0+1+8&4+1+0+1+4&-2-1+0+1+2\\4+1+0+1+4&-2-1+0+1+2&5\end{bmatrix}_{3\times3}=\begin{bmatrix}34&0&10\\0&10&0\\10&0&5\end{bmatrix}_{3\times3}$$
 
 หา $YX^T$
 
-$$YX^T=[\sum x^2y,\ \sum xy,\ \sum y]$$
+$$YX^T=\begin{bmatrix}1&2&0&0&7\end{bmatrix}_{1\times5}\begin{bmatrix}4&-2&1\\1&-1&1\\0&0&1\\1&1&1\\4&2&1\end{bmatrix}_{5\times3}$$
 
-$$\sum x^2y=(4)(3)+(1)(1)+(0)(1)+(1)(3)+(4)(7)=12+1+0+3+28=44$$
+$$=\begin{bmatrix}1(4)+2(1)+0(0)+0(1)+7(4)&1(-2)+2(-1)+0(0)+0(1)+7(2)&1+2+0+0+7\end{bmatrix}_{1\times3}=\begin{bmatrix}34&10&10\end{bmatrix}_{1\times3}$$
 
-$$\sum xy=(-2)(3)+(-1)(1)+(0)(1)+(1)(3)+(2)(7)=-6-1+0+3+14=10$$
+หา $(XX^T)^{-1}$ จากสูตร $A^{-1}=\dfrac{\text{adj}A}{\det A}$ เมื่อ $C_{ij}=(-1)^{i+j}M_{ij}$, $\text{adj}A=C^T$ และ $\det A=a_{11}C_{11}+a_{12}C_{12}+a_{13}C_{13}$
 
-$$\sum y=3+1+1+3+7=15$$
+$$C_{11}=(10)(5)-(0)(0)=50,\quad C_{12}=-[(0)(5)-(0)(10)]=0,\quad C_{13}=(0)(0)-(10)(10)=-100$$
 
-$$YX^T=[44,\ 10,\ 15]$$
+$$C_{21}=-[(0)(5)-(10)(0)]=0,\quad C_{22}=(34)(5)-(10)(10)=70,\quad C_{23}=-[(34)(0)-(0)(10)]=0$$
 
-หา $(XX^T)^{-1}$
+$$C_{31}=(0)(0)-(10)(10)=-100,\quad C_{32}=-[(34)(0)-(10)(0)]=0,\quad C_{33}=(34)(10)-(0)(0)=340$$
 
-$$\det(XX^T)=34(10\cdot5-0\cdot0)-0+10(0\cdot0-10\cdot10)=34(50)+10(-100)=1700-1000=700$$
+$$\det(XX^T)=a_{11}C_{11}+a_{12}C_{12}+a_{13}C_{13}=(34)(50)+(0)(0)+(10)(-100)=1700-1000=700$$
 
-Cofactor ($C_{ij}=(-1)^{i+j}M_{ij}$)
+$$\text{adj}(XX^T)=C^T=\begin{bmatrix}50&0&-100\\0&70&0\\-100&0&340\end{bmatrix}_{3\times3}$$
 
-$$C_{11}=50,\ C_{12}=0,\ C_{13}=-100$$
-$$C_{21}=0,\ C_{22}=70,\ C_{23}=0$$
-$$C_{31}=-100,\ C_{32}=0,\ C_{33}=340$$
+$$(XX^T)^{-1}=\frac{\text{adj}(XX^T)}{\det(XX^T)}=\frac1{700}\begin{bmatrix}50&0&-100\\0&70&0\\-100&0&340\end{bmatrix}_{3\times3}$$
 
-$$\text{adj}(XX^T)=C^T=\begin{bmatrix}50&0&-100\\0&70&0\\-100&0&340\end{bmatrix}$$
+แทนค่าในสูตร
 
-$$(XX^T)^{-1}=\frac1{700}\begin{bmatrix}50&0&-100\\0&70&0\\-100&0&340\end{bmatrix}$$
+$$R=\begin{bmatrix}34&10&10\end{bmatrix}_{1\times3}\cdot\frac1{700}\begin{bmatrix}50&0&-100\\0&70&0\\-100&0&340\end{bmatrix}_{3\times3}$$
 
-จากสูตร $R=Y\,X^T(XX^T)^{-1}$
+$$=\frac1{700}\begin{bmatrix}34(50)+10(0)+10(-100)&34(0)+10(70)+10(0)&34(-100)+10(0)+10(340)\end{bmatrix}_{1\times3}$$
 
-$$R=[44,\ 10,\ 15]\cdot\frac1{700}\begin{bmatrix}50&0&-100\\0&70&0\\-100&0&340\end{bmatrix}$$
+$$=\frac1{700}\begin{bmatrix}700&700&0\end{bmatrix}_{1\times3}=\begin{bmatrix}1&1&0\end{bmatrix}_{1\times3}$$
 
-$$=\frac1{700}[\,44(50)+10(0)+15(-100),\ \ 44(0)+10(70)+15(0),\ \ 44(-100)+10(0)+15(340)\,]$$
+ดังนั้น $a=1$, $b=1$, $c=0$
 
-$$=\frac1{700}[\,2200-1500,\ \ 700,\ \ -4400+5100\,]=\frac1{700}[700,\ 700,\ 700]=[1,\ 1,\ 1]$$
+$$y=x^2+x$$
 
-ดังนั้น $y=x^2+x+1$
+ทำนายที่ $x=3$
 
-**ค) เปรียบเทียบ MAE**
+$$\begin{array}{c|c}\textbf{แบบสมการ}&\textbf{แบบ Matrix Form}\\\hline\\[-6pt]\qquad\hat y=(1)(3)^2+(1)(3)+0=12\qquad&\qquad\hat y=RX=\begin{bmatrix}1&1&0\end{bmatrix}_{1\times3}\begin{bmatrix}9\\3\\1\end{bmatrix}_{3\times1}=\begin{bmatrix}1(9)+1(3)+0(1)\end{bmatrix}_{1\times1}=\begin{bmatrix}12\end{bmatrix}_{1\times1}\qquad\end{array}$$
 
-Degree 1: $\hat y=x+3$
+หา Error จาก $\hat y=x^2+x$
 
-$$e=[\,3-1,\ 1-2,\ 1-3,\ 3-4,\ 7-5\,]=[2,\ -1,\ -2,\ -1,\ 2]$$
+<table align="center">
+  <tr><th>x</th><th>y</th><th>ŷ</th><th>|y − ŷ|</th><th>(y − ŷ)²</th></tr>
+  <tr><td align="center">-2</td><td align="center">1</td><td align="center">2</td><td align="center">1</td><td align="center">1</td></tr>
+  <tr><td align="center">-1</td><td align="center">2</td><td align="center">0</td><td align="center">2</td><td align="center">4</td></tr>
+  <tr><td align="center">0</td><td align="center">0</td><td align="center">0</td><td align="center">0</td><td align="center">0</td></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">2</td><td align="center">2</td><td align="center">4</td></tr>
+  <tr><td align="center">2</td><td align="center">7</td><td align="center">6</td><td align="center">1</td><td align="center">1</td></tr>
+  <tr><th>sum</th><td></td><td></td><td align="center"><b>6</b></td><td align="center"><b>10</b></td></tr>
+</table>
 
-$$\text{MAE}_1=\frac{2+1+2+1+2}{5}=\frac85=1.6$$
+แทนค่าในสูตร
 
-Degree 2: $\hat y=x^2+x+1$
+$$\text{MAE}=\frac1N\sum_{i=1}^{N}|y_i-\hat y_i|=\frac65=1.2$$
 
-$$\hat y=[\,4-2+1,\ 1-1+1,\ 0+0+1,\ 1+1+1,\ 4+2+1\,]=[3,\ 1,\ 1,\ 3,\ 7]$$
+$$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{10}5=2$$
 
-$$e=[0,\ 0,\ 0,\ 0,\ 0]\ \Rightarrow\ \text{MAE}_2=0$$
-
-$\text{MAE}_2<\text{MAE}_1$ ดังนั้น Degree 2 ฟิตข้อมูลได้ดีกว่า
-
-ทำนายที่ $x=3$ ด้วย Degree 2
-
-$$y=3^2+3+1=13$$
-
-**Ans** ก) $y=x+3$ ข) $y=x^2+x+1$ ค) $\text{MAE}=1.6$ (Degree 1), $0$ (Degree 2) ใช้ Degree 2 ได้ $y(3)=13$
+**Ans** $y=x^2+x$, $\hat y(3)=12$, $\text{MAE}=1.2$, $\text{MSE}=2$
 
 ---
 
-## 4. K-NN Regression
+## 3. K-NN Regression
 
-ใช้ K-NN เป็น **regressor** สำหรับ $Y$ ที่เป็นค่าต่อเนื่อง
+$\hat y=\dfrac1k\sum_{i=1}^{k}y_i$ เมื่อ $y_i$ คือค่า $y$ ของ $k$ จุดที่ใกล้ที่สุด (ระยะ Manhattan)
 
-1. หา distance จาก query ไปทุก sample (วิธีเดียวกับ K-NN Classification ดู `Classification.md` ข้อ 2.2)
-2. เลือก $k$ ตัวที่ใกล้สุด
-3. ค่าทำนาย = **ค่าเฉลี่ย (Avg)** ของ $Y$ ทั้ง $k$ ตัว
+### ตัวอย่างโจทย์
 
-$$\hat y=\frac1k\sum_{i=1}^{k}y_i$$
+จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของข้อมูลลำดับที่ 6 ด้วย K-NN Regression เมื่อ $k=1,2,3$
 
-เช่น $k=3$ เฉลี่ย $Y$ ของจุดที่ใกล้ที่สุด 3 จุด
+<table align="center">
+  <tr><th>#</th><th>x</th><th>y</th></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">1</td></tr>
+  <tr><td align="center">2</td><td align="center">2</td><td align="center">2</td></tr>
+  <tr><td align="center">3</td><td align="center">4</td><td align="center">5</td></tr>
+  <tr><td align="center">4</td><td align="center">7</td><td align="center">8</td></tr>
+  <tr><td align="center">5</td><td align="center">10</td><td align="center">9</td></tr>
+  <tr><td align="center">6</td><td align="center">5</td><td align="center">?</td></tr>
+</table>
+
+#### Sol<sup>n</sup>
+
+ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 6 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>4</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>5</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>6</th><td align="center">D₆₁</td><td align="center">D₆₂</td><td align="center">D₆₃</td><td align="center">D₆₄</td><td align="center">D₆₅</td><td align="center">0</td></tr>
+</table>
+
+จากสูตร Manhattan
+
+$$d(x_i,x_j)=|x_i-x_j|$$
+
+โดย $x_6=5$
+
+$$D_{61}=|x_6-x_1|=|5-1|=4$$
+
+$$D_{62}=|x_6-x_2|=|5-2|=3$$
+
+$$D_{63}=|x_6-x_3|=|5-4|=1$$
+
+$$D_{64}=|x_6-x_4|=|5-7|=2$$
+
+$$D_{65}=|x_6-x_5|=|5-10|=5$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>4</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>5</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>6</th><td align="center">4</td><td align="center">3</td><td align="center">1</td><td align="center">2</td><td align="center">5</td><td align="center">0</td></tr>
+</table>
+
+จากตาราง $D$ แถวที่ 6 เรียงจากน้อยไปมาก
+
+$$D_{63}=1\ <\ D_{64}=2\ <\ D_{62}=3\ <\ D_{61}=4\ <\ D_{65}=5$$
+
+เลือก $k$ ตัวแรก แล้วเฉลี่ยค่า $y$
+
+- $k=1$: $1\to(③)\to(y=5)$ ดังนั้น $\hat y=5$
+- $k=2$: $(1,2)\to(③,④)\to(y=5,8)$ ดังนั้น $\hat y=\dfrac{5+8}{2}=6.5$
+- $k=3$: $(1,2,3)\to(③,④,②)\to(y=5,8,2)$ ดังนั้น $\hat y=\dfrac{5+8+2}{3}=5$
+
+**Ans** $k=1$ ได้ $\hat y=5$, $k=2$ ได้ $\hat y=6.5$, $k=3$ ได้ $\hat y=5$
