@@ -391,8 +391,8 @@ $$D_{63}=1\ <\ D_{64}=2\ <\ D_{62}=3\ <\ D_{61}=4\ <\ D_{65}=5$$
 
 เลือก $k$ ตัวแรก แล้วเฉลี่ยค่า $y$
 
-- $k=1$: $1\to(③)\to(y=5)$ ดังนั้น $\hat y=5$
-- $k=2$: $(1,2)\to(③,④)\to(y=5,8)$ ดังนั้น $\hat y=\dfrac{5+8}{2}=6.5$
-- $k=3$: $(1,2,3)\to(③,④,②)\to(y=5,8,2)$ ดังนั้น $\hat y=\dfrac{5+8+2}{3}=5$
+- $k=1$: $1\to(\text{\textcircled{3}})\to(y=5)$ ดังนั้น $\hat y=5$
+- $k=2$: $(1,2)\to(\text{\textcircled{3}},\text{\textcircled{4}})\to(y=5,8)$ ดังนั้น $\hat y=\dfrac{5+8}{2}=6.5$
+- $k=3$: $(1,2,3)\to(\text{\textcircled{3}},\text{\textcircled{4}},\text{\textcircled{2}})\to(y=5,8,2)$ ดังนั้น $\hat y=\dfrac{5+8+2}{3}=5$
 
 **Ans** $k=1$ ได้ $\hat y=5$, $k=2$ ได้ $\hat y=6.5$, $k=3$ ได้ $\hat y=5$
