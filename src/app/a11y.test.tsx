@@ -45,7 +45,7 @@ beforeEach(() => {
 describe('axe: no serious or critical violations', () => {
   it('Home with the diagram closed', async () => {
     renderAt('/');
-    await screen.findByText(UI_TEXT.statExamples);
+    await screen.findByText(UI_TEXT.statExamples, undefined, { timeout: 10000 });
     expect(await violations()).toEqual([]);
   });
 

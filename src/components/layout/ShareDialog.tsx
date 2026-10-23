@@ -1,9 +1,11 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { QrCode } from '@/components/layout/QrCode';
+import { buttonClass } from '@/components/ui/buttonClass';
 import { Icon } from '@/components/ui/Icon';
 import { UI_TEXT } from '@/config/site';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
+import { canNativeShare, nativeShare } from '@/lib/share';
 import './overlay.css';
 
 const CLOSE_MS = 200;
@@ -112,6 +114,15 @@ export function ShareDialog({ open, onClose, url }: ShareDialogProps) {
             <Icon name={copied ? 'check' : 'copy'} size={20} />
           </button>
         </div>
+        {canNativeShare() ? (
+          <button
+            type="button"
+            onClick={() => void nativeShare({ title: document.title, url: shown })}
+            className={buttonClass('outline')}
+          >
+            {UI_TEXT.shareOther}
+          </button>
+        ) : null}
         <p aria-live="polite" className="sr-only">
           {copied ? UI_TEXT.linkCopied : ''}
         </p>

@@ -120,6 +120,27 @@ describe('share', () => {
     expect(screen.queryByRole('dialog')).toBeNull();
   });
 
+  it('on a phone with a share sheet opens the same dialog, and offers the sheet inside it', () => {
+    window.matchMedia = vi.fn().mockImplementation(() => ({
+      matches: true,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    })) as unknown as typeof window.matchMedia;
+    const share = vi.fn(() => Promise.resolve());
+    Object.defineProperty(navigator, 'share', { value: share, configurable: true });
+    try {
+      renderAt('/');
+      fireEvent.click(screen.getByRole('button', { name: UI_TEXT.share }));
+      const dialog = screen.getByRole('dialog', { name: UI_TEXT.shareTitle });
+      expect(share).not.toHaveBeenCalled();
+      expect(within(dialog).getByRole('img', { name: /^QR / })).toBeInTheDocument();
+      fireEvent.click(within(dialog).getByRole('button', { name: UI_TEXT.shareOther }));
+      expect(share).toHaveBeenCalledWith({ title: document.title, url: window.location.href });
+    } finally {
+      Reflect.deleteProperty(navigator, 'share');
+    }
+  });
+
   it('copies the link and says so', async () => {
     const writeText = vi.fn(() => Promise.resolve());
     Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true });

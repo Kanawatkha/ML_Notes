@@ -10,7 +10,6 @@ import { Icon } from '@/components/ui/Icon';
 import { HOME_ROUTE, PAGES, SITE_NAME, UI_TEXT } from '@/config/site';
 import { BAND_CLASS } from '@/lib/bands';
 import { cn } from '@/lib/cn';
-import { nativeShare } from '@/lib/share';
 
 const MENU_ID = 'mobile-menu';
 
@@ -47,11 +46,10 @@ export function Navbar() {
     shareRef.current?.focus();
   }, []);
 
-  const share = async () => {
+  // the same dialog on every device; where the system share sheet exists it is offered inside it
+  const share = () => {
     setOpenAt(null);
-    const url = window.location.href;
-    const result = await nativeShare({ title: document.title, url });
-    if (result === 'unavailable') setShareUrl(url);
+    setShareUrl(window.location.href);
   };
 
   return (

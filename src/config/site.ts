@@ -54,6 +54,7 @@ export const UI_TEXT = {
   shareTitle: 'แชร์หน้านี้',
   shareHint: 'สแกน QR หรือคัดลอกลิงก์',
   copyLink: 'คัดลอกลิงก์',
+  shareOther: 'แชร์ผ่านแอปอื่น',
   linkCopied: 'คัดลอกลิงก์แล้ว',
   dismiss: 'ปิด',
   railOpen: 'เปิดสารบัญ',
