@@ -164,7 +164,8 @@ Goal: the three Markdown files to typed, tested data.
 - [x] Fresh-checkout check: with `src/content/generated/` absent, `lint`, `format:check` and `typecheck` pass, and `npm run test` failed because the tests read generated data. Fixed with `"pretest": "npm run content"`; the whole suite then passes from a clean state (also with the Vitest module cache removed, which had kept an old empty-glob transform of `loaders.ts` locally). The two workflows match `DEPLOY.md` and need no change
 - [x] README and `AGENTS.md` checked against the project (commands, status, icons command, pretest)
 - [x] Final run: `typecheck`, `lint`, `format:check`, 306 tests and `build` green; app shell 91.9 KB JS + 16.5 KB CSS gzip, largest page chunk 67 KB gzip
-- [ ] Owner: say go for the push (commit and push to `main`); in the repository Settings, Pages, Source: GitHub Actions (`DEPLOY.md` section 2); open https://kanawatkha.github.io/ML_Notes/ and check the four pages; offline check on a phone (`TESTING.md` section 6)
+- [x] First push to `main` (c25bcfa): the build job passed on CI (lint, 306 tests, build); the deploy job failed with 404 because Pages was not enabled yet. The owner then set Pages, Source: GitHub Actions, and a second push re-ran the deploy
+- [ ] Owner: open https://kanawatkha.github.io/ML_Notes/ and check the four pages; offline check on a phone (`TESTING.md` section 6)
 - [ ] Tag `v1.0.0` after the owner approves
 - [ ] Share the Pages URL
 
