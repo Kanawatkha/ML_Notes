@@ -1,0 +1,235 @@
+@import 'tailwindcss';
+@import './fonts.css';
+@import './motion.css';
+
+/*
+ * Design tokens copied from DESIGN-cohere.md (single source of truth: that file, never edited;
+ * tests/design-tokens.test.ts compares the two). Light theme only.
+ * Never inline hex values in components, use these tokens. Spacing tokens xxs to xxl equal the
+ * Tailwind steps 0.5, 1.5, 2, 3, 4, 6 and 8; only `section` and the navbar height are added.
+ */
+@theme {
+  /* Only the design colors exist: the default Tailwind palette is switched off. */
+  --color-*: initial;
+  --color-primary: #17171c;
+  --color-cohere-black: #000000;
+  --color-ink: #212121;
+  --color-deep-green: #003c33;
+  --color-dark-navy: #071829;
+  --color-canvas: #ffffff;
+  --color-soft-stone: #eeece7;
+  --color-pale-green: #edfce9;
+  --color-pale-blue: #f1f5ff;
+  --color-hairline: #d9d9dd;
+  --color-border-light: #e5e7eb;
+  --color-card-border: #f2f2f2;
+  --color-muted: #93939f;
+  --color-slate: #75758a;
+  --color-body-muted: #616161;
+  --color-action-blue: #1863dc;
+  --color-focus-blue: #4c6ee6;
+  --color-coral: #ff7759;
+  --color-coral-soft: #ffad9b;
+  --color-form-focus: #9b60aa;
+  --color-on-primary: #ffffff;
+  --color-on-dark: #ffffff;
+  --color-error: #b30000;
+
+  /* Latin glyphs resolve to the first face, Thai glyphs fall through (UI-SPEC.md Addendum A). */
+  --font-display: 'Space Grotesk', 'IBM Plex Sans Thai', system-ui, sans-serif;
+  --font-heading: 'Inter', 'IBM Plex Sans Thai', system-ui, sans-serif;
+  --font-sans: 'Inter', 'IBM Plex Sans Thai', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'IBM Plex Sans Thai', ui-monospace, monospace;
+
+  --radius-*: initial;
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+  --radius-pill: 32px;
+  --radius-full: 9999px;
+
+  --spacing-section: 80px;
+  --spacing-nav: 64px;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    /* Keep the space of the vertical scrollbar so the layout does not jump */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    min-height: 100dvh;
+  }
+
+  /* 2 px focus-blue outline with an offset; on dark surfaces the outline turns white */
+  :focus-visible {
+    outline: 2px solid var(--color-focus-blue);
+    outline-offset: 2px;
+  }
+
+  .on-dark :focus-visible,
+  [data-surface='dark'] :focus-visible {
+    outline-color: var(--color-on-dark);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/*
+ * Type scale (DESIGN-cohere.md tokens, UI-SPEC.md Addendum B). Display utilities are for Latin-only
+ * text: they use line height 1 and negative tracking, which clips Thai tone marks. Anything that
+ * may hold Thai uses type-section-heading or smaller, with line height 1.25 or more and no tracking.
+ * Sizes step down at 1024, 768 and 425 px (mobile first).
+ */
+@utility type-hero {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-size: 48px;
+  @media (min-width: 425px) {
+    font-size: 60px;
+  }
+  @media (min-width: 768px) {
+    font-size: 80px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 96px;
+  }
+}
+@utility type-product {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-size: 40px;
+  @media (min-width: 425px) {
+    font-size: 48px;
+  }
+  @media (min-width: 768px) {
+    font-size: 60px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 72px;
+  }
+}
+@utility type-section-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-size: 40px;
+  @media (min-width: 425px) {
+    font-size: 48px;
+  }
+  @media (min-width: 768px) {
+    font-size: 56px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 60px;
+  }
+}
+@utility type-section-heading {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.25;
+  font-size: 28px;
+  @media (min-width: 425px) {
+    font-size: 32px;
+  }
+  @media (min-width: 768px) {
+    font-size: 40px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 48px;
+  }
+}
+@utility type-card-heading {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.25;
+  font-size: 24px;
+  @media (min-width: 425px) {
+    font-size: 26px;
+  }
+  @media (min-width: 768px) {
+    font-size: 30px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 32px;
+  }
+}
+@utility type-feature-heading {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.3;
+  font-size: 20px;
+  @media (min-width: 425px) {
+    font-size: 21px;
+  }
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
+}
+@utility type-body-lg {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
+}
+@utility type-body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+@utility type-button {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+@utility type-caption {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+/* Latin labels only: uppercase and mono never apply to Thai text */
+@utility type-mono {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+@utility type-micro {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}

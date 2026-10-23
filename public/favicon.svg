@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ML Notes">
+  <rect width="32" height="32" rx="8" fill="#eeece7"/>
+  <g stroke="#17171c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 25 L28 7" fill="none"/>
+    <circle cx="8" cy="21" r="2.75" fill="#ffffff"/>
+    <circle cx="16" cy="15" r="2.75" fill="#ffffff"/>
+    <circle cx="24.5" cy="9.5" r="3.25" fill="#ff7759" stroke-width="1.5"/>
+  </g>
+</svg>

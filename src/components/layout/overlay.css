@@ -1,0 +1,110 @@
+/* Shared by the share dialog and the mobile menu: the page behind blurs and darkens gradually. */
+
+.blur-overlay {
+  background-color: rgb(23 23 28 / 0.4);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: share-backdrop-in 240ms ease-out both;
+}
+
+.blur-overlay[data-state='closed'] {
+  animation: share-backdrop-out 200ms ease-in both;
+}
+
+.share-card {
+  animation: share-card-in 360ms var(--ease-spring) both;
+}
+
+.blur-overlay[data-state='closed'] .share-card {
+  animation: share-card-out 200ms ease-in both;
+}
+
+@keyframes share-backdrop-in {
+  from {
+    background-color: rgb(23 23 28 / 0);
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+  }
+}
+
+@keyframes share-backdrop-out {
+  to {
+    background-color: rgb(23 23 28 / 0);
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+  }
+}
+
+@keyframes share-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+
+@keyframes share-card-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blur-overlay,
+  .blur-overlay[data-state='closed'],
+  .share-card,
+  .blur-overlay[data-state='closed'] .share-card {
+    animation: none;
+  }
+}
+
+/* Mobile menu rows rise 12 px one after another (A15) */
+.menu-panel li {
+  animation: rise-in 280ms var(--ease-out) both;
+}
+
+.menu-panel li:nth-child(1) {
+  animation-delay: 60ms;
+}
+.menu-panel li:nth-child(2) {
+  animation-delay: 90ms;
+}
+.menu-panel li:nth-child(3) {
+  animation-delay: 120ms;
+}
+.menu-panel li:nth-child(4) {
+  animation-delay: 150ms;
+}
+
+.blur-overlay[data-state='closed'] .menu-panel li {
+  animation: none;
+}
+
+/* Mobile menu panel: slides down from under the navbar and back up. */
+.menu-panel {
+  animation: menu-down 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.blur-overlay[data-state='closed'] .menu-panel {
+  animation: menu-up 220ms ease-in both;
+}
+
+@keyframes menu-down {
+  from {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes menu-up {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel,
+  .menu-panel li,
+  .blur-overlay[data-state='closed'] .menu-panel {
+    animation: none;
+  }
+}

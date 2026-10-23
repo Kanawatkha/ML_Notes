@@ -1,0 +1,159 @@
+/*
+ * Illustration motion (UI-SPEC.md A3, A4). Each animated shape carries one of these classes and a
+ * `--d` start delay. The base style of every shape is its FINAL frame, the keyframes only name the
+ * start (`from`), so with no animation (reduced motion, or the page not yet scrolled to) the
+ * picture is complete. A shape waits paused until its drawing is shown (data-shown, set once by
+ * lib/reveal.ts when it scrolls into view).
+ */
+.ill-pop,
+.ill-fade,
+.ill-line,
+.ill-ticks,
+.ill-grow,
+.ill-move {
+  animation-fill-mode: both;
+  animation-play-state: paused;
+  animation-delay: var(--d, 0ms);
+}
+
+.illus[data-shown] :is(.ill-pop, .ill-fade, .ill-line, .ill-ticks, .ill-grow, .ill-move) {
+  animation-play-state: running;
+}
+
+/* a point appears: grows from nothing with a small overshoot */
+.ill-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-name: ill-pop;
+  animation-duration: 360ms;
+  animation-timing-function: var(--ease-spring);
+}
+
+@keyframes ill-pop {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+.ill-fade {
+  animation-name: ill-fade;
+  animation-duration: 420ms;
+  animation-timing-function: ease-out;
+}
+
+@keyframes ill-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* a fitted line: drawn along its length while it tilts from flat into its slope (pathLength is 1) */
+.ill-line {
+  stroke-dasharray: 1;
+  transform-box: view-box;
+  transform-origin: var(--ox, 0) var(--oy, 0);
+  animation-name: ill-draw, ill-tilt;
+  animation-duration: 700ms, 900ms;
+  animation-timing-function: var(--ease-out), var(--ease-out);
+}
+
+@keyframes ill-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes ill-tilt {
+  from {
+    transform: rotate(var(--tilt, 0deg));
+  }
+}
+
+/* a line that is only there for a moment (the Home fit, before the groups form) */
+.ill-line[data-flash] {
+  opacity: 0;
+  animation-name: ill-draw, ill-tilt, ill-flash;
+  animation-duration: 700ms, 900ms, 1300ms;
+  animation-timing-function: var(--ease-out), var(--ease-out), linear;
+}
+
+@keyframes ill-flash {
+  0% {
+    opacity: 0;
+  }
+  15%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ill-ticks {
+  stroke-dasharray: 1;
+  animation-name: ill-draw;
+  animation-duration: 360ms;
+  animation-timing-function: var(--ease-out);
+}
+
+/* the K-NN circle grows out of the query point (a ring never changes its stroke width) */
+.ill-grow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-name: ill-grow;
+  animation-duration: 900ms;
+  animation-timing-function: var(--ease-out);
+}
+
+@keyframes ill-grow {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+/* centroids glide between the positions named by --x0/--y0 (start), --x1/--y1 (after step one)
+   and their place (0, 0) */
+.ill-move {
+  animation-name: ill-move;
+  animation-duration: 2000ms;
+  animation-timing-function: var(--ease-out);
+}
+
+@keyframes ill-move {
+  0%,
+  20% {
+    transform: translate(var(--x0, 0), var(--y0, 0));
+  }
+  50%,
+  65% {
+    transform: translate(var(--x1, 0), var(--y1, 0));
+  }
+  95%,
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* a glide from the start to the final place in a single move (Home) */
+@keyframes ill-move-single {
+  from {
+    transform: translate(var(--x0, 0), var(--y0, 0));
+  }
+}
+
+.ill-move[data-single] {
+  animation-name: ill-move-single;
+  animation-duration: 800ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .illus * {
+    animation: none !important;
+  }
+  .ill-line[data-flash] {
+    opacity: 0;
+  }
+}

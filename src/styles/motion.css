@@ -1,0 +1,233 @@
+/*
+ * Motion (UI-SPEC.md section 9). Only transform and opacity move, with three exceptions: the rail
+ * tree (height), the rail column width on desktop, and SVG stroke-dashoffset (connectors,
+ * illustrations, the jump underline). Everything is CSS: the springs are `linear()` curves of a
+ * spring with stiffness 380 and damping 30 (about 2 percent overshoot), with a cubic-bezier
+ * fallback for browsers without `linear()`. Reduced motion is handled in index.css (durations and
+ * delays go to zero, so every animation ends in its final state at once) plus the rules marked
+ * below.
+ */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.35, 0.64, 1);
+}
+
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --ease-spring: linear(
+      0,
+      0.041,
+      0.14,
+      0.268,
+      0.402,
+      0.532,
+      0.648,
+      0.746,
+      0.827,
+      0.89,
+      0.937,
+      0.972,
+      0.995,
+      1.01,
+      1.018,
+      1.022,
+      1.023,
+      1.021,
+      1.019,
+      1.016,
+      1.013,
+      1
+    );
+  }
+}
+
+/* ---------- reveal on scroll (A8, A9): shown once by lib/reveal.ts ---------- */
+
+[data-reveal] {
+  transition:
+    opacity 480ms var(--ease-out),
+    transform 480ms var(--ease-out),
+    border-color 160ms ease;
+}
+
+[data-reveal]:not([data-shown]) {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+}
+
+[data-reveal='fade']:not([data-shown]) {
+  transform: none;
+}
+
+/* the host stays put; only its marked parts animate (section headers, A8) */
+[data-reveal='parts']:not([data-shown]) {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* above the viewport on arrival (a deep jump): final state at once */
+[data-reveal][data-instant] {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal]:not([data-shown]) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* hover on devices that hover: the border turns ink, nothing lifts (the design is flat) */
+@media (hover: hover) and (pointer: fine) {
+  .card-hover:hover {
+    border-color: var(--color-ink);
+  }
+}
+
+/* A8 section header: the top rule grows from the left, then the number and title rise */
+@keyframes rule-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.rule-grow {
+  transform-origin: left;
+}
+
+[data-shown] .rule-grow {
+  animation: rule-grow 480ms var(--ease-out) both;
+}
+
+[data-shown] .fade-up {
+  animation: fade-up 400ms var(--ease-out) 160ms both;
+}
+
+[data-reveal]:not([data-shown]) .rule-grow {
+  transform: scaleX(0);
+}
+
+[data-reveal]:not([data-shown]) .fade-up {
+  opacity: 0;
+}
+
+/* ---------- Home hero (A1) ---------- */
+
+/*
+ * The title starts at 30 percent opacity, not at 0: a browser does not count invisible text as
+ * painted, so with a full fade the title (the largest thing on screen, hence the LCP element)
+ * would only count once it had faded in.
+ */
+@keyframes title-rise {
+  from {
+    opacity: 0.3;
+    transform: translateY(24px);
+  }
+}
+
+@keyframes lead-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.title-rise {
+  animation: title-rise 480ms var(--ease-out) both;
+}
+
+.lead-rise {
+  animation: lead-rise 420ms var(--ease-out) 80ms both;
+}
+
+/* ---------- Home diagram root (A7): the plus turns into a minus ---------- */
+
+.plus-bar {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 240ms var(--ease-out);
+}
+
+.plus-icon[data-open] .plus-bar {
+  transform: rotate(90deg);
+}
+
+/* ---------- contents drawer, menu (A15, A16) ---------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.rise-in {
+  animation: rise-in 320ms var(--ease-out) both;
+}
+
+/* ---------- share dialog (A17) ---------- */
+
+@keyframes qr-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.qr-in {
+  animation: qr-in 400ms ease-out 160ms both;
+}
+
+/* ---------- jump arrival (A13) ---------- */
+
+[data-arrive] > header,
+[data-arrive] > p:first-child {
+  position: relative;
+}
+
+[data-arrive] > header::after,
+[data-arrive] > p:first-child::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -6px;
+  height: 3px;
+  border-radius: 9999px;
+  background: var(--color-coral);
+  box-shadow: 0 0 0 1px var(--color-ink);
+  transform-origin: left;
+  animation: arrive 1700ms var(--ease-out) both;
+}
+
+@keyframes arrive {
+  0% {
+    opacity: 1;
+    transform: scaleX(0);
+  }
+  30% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  70% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- toast (A20) ---------- */
+
+.toast-in {
+  animation: rise-in 240ms var(--ease-out) both;
+}

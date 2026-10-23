@@ -1,0 +1,10 @@
+dist
+node_modules
+src/content/generated
+content
+package-lock.json
+*.md
+.claude
+CLAUDE.md
+docs
+DESIGN-cohere.md
