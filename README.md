@@ -2,9 +2,9 @@
 
 Midterm study notes for course 1322308 Machine Learning: formulas and fully worked hand-calculation examples for Regression, Classification and Clustering. A static, frontend-only site with an interactive exam-scope diagram on Home, one long page per topic with a contents rail, and offline support.
 
-Live site (after launch): https://kanawatkha.github.io/ML_Notes/
+Live site: https://kanawatkha.github.io/ML_Notes/
 
-Status: Phases 0 to 8 of `PLAN.md` are done and the Phase 9 checks (Lighthouse, README, CI behaviour on a fresh checkout) are done; what is left is the push, the Pages setting and the `v1.0.0` tag, which the owner does.
+Status: all phases of `PLAN.md` are done and version 1.0.0 is live.
 
 ## What is in it
 

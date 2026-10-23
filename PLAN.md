@@ -158,16 +158,17 @@ Goal: the three Markdown files to typed, tested data.
 - [ ] User: offline test in a real browser and on a phone (`TESTING.md` section 6; add to the home screen, airplane mode)
 - Gate
 
-## Phase 9 - Launch  (checks done, waiting for the owner)
+## Phase 9 - Launch  (done)
 
 - [x] Lighthouse mobile on the production preview (`TESTING.md` section 7): Performance 93 to 95, Accessibility, Best Practices and SEO 100 on all four pages, CLS 0 to 0.01, TBT 20 to 180 ms, LCP 2.7 s (0.2 s over the budget under the slow-4G simulation). Fixes: first-paint fonts and route chunks preloaded, nothing under the topic hero until it arrives (CLS 0.149 to 0), 2 parts mounted at first instead of 4 (TBT 340 to 70 ms on Regression)
 - [x] Fresh-checkout check: with `src/content/generated/` absent, `lint`, `format:check` and `typecheck` pass, and `npm run test` failed because the tests read generated data. Fixed with `"pretest": "npm run content"`; the whole suite then passes from a clean state (also with the Vitest module cache removed, which had kept an old empty-glob transform of `loaders.ts` locally). The two workflows match `DEPLOY.md` and need no change
 - [x] README and `AGENTS.md` checked against the project (commands, status, icons command, pretest)
 - [x] Final run: `typecheck`, `lint`, `format:check`, 306 tests and `build` green; app shell 91.9 KB JS + 16.5 KB CSS gzip, largest page chunk 67 KB gzip
-- [x] First push to `main` (c25bcfa): the build job passed on CI (lint, 306 tests, build); the deploy job failed with 404 because Pages was not enabled yet. The owner then set Pages, Source: GitHub Actions, and a second push re-ran the deploy
-- [ ] Owner: open https://kanawatkha.github.io/ML_Notes/ and check the four pages; offline check on a phone (`TESTING.md` section 6)
-- [ ] Tag `v1.0.0` after the owner approves
-- [ ] Share the Pages URL
+- [x] First push to `main` (c25bcfa): the build job passed on CI (lint, 306 tests, build); the deploy job failed with 404 because Pages was not enabled yet. The owner then set Pages, Source: GitHub Actions; the second push (e702418) deployed
+- [x] The live site https://kanawatkha.github.io/ML_Notes/ checked after the deploy: Home with its numbers and illustration, the three topic pages with their formulas and examples, manifest, `version.json` and the service worker
+- [ ] Owner: offline check on a phone (`TESTING.md` section 6)
+- [x] Tag `v1.0.0` on e702418, pushed on the owner's order
+- [x] Pages URL ready to share: https://kanawatkha.github.io/ML_Notes/
 
 ## Future (not planned)
 
