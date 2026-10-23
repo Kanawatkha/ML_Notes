@@ -39,14 +39,14 @@ Open for the user (do not act without an answer):
 
 | # | Question | Default if not answered |
 |---|---|---|
-| O1 | `docs/` (lecturer slides, notebooks, Python files) is already public in the repo. Keep it there? | Keep as is; it is never read by the build |
+| O1 | `docs/` (lecturer slides, notebooks, Python files) is already public in the repo. Keep it there? | Decided by the owner: keep it public; it is never read by the build |
 
 ## Phase 0 - Planning documents  (done, 2026-10-23)
 
 - [x] Read the plan documents and skills of both reference projects and `DESIGN-cohere.md`; scanned the three Markdown files (headings, HTML tags, tables, figures, formulas)
 - [x] Wrote `CLAUDE.md`, `AGENTS.md`, `README.md`, `PRD.md`, `PLAN.md`, `ARCHITECTURE.md`, `CONTENT-SCHEMA.md`, `UI-SPEC.md`, `TESTING.md`, `DEPLOY.md`, `.claude/skills/*`
 - [x] Tech stack reviewed with the user and kept as planned (no Astro, Playwright, Preact, search or stored reading progress)
-- [x] User approved the plan documents. Open item O1 (`docs/` stays public?) is still unanswered; the default applies
+- [x] User approved the plan documents. Open item O1 (`docs/` stays public?) was answered later: it stays public
 - Next: Phase 1, started only when the user says go
 
 ## Phase 1 - Restructure and scaffold  (done, awaiting review)

@@ -7,7 +7,7 @@ How the site is built, hosted and updated. Everything runs on GitHub: no externa
 - Host: GitHub Pages for repository `Kanawatkha/ML_Notes` (public).
 - URL: `https://kanawatkha.github.io/ML_Notes/`
 - Deployment: a GitHub Actions workflow publishes the Vite `dist/` folder as the Pages artifact. `dist/` is never committed.
-- The repository also holds `docs/` (lecturer slides, notebooks and Python files) and the planning documents. They are not part of the build. Whether `docs/` stays public is open item O1 in `PLAN.md`.
+- The repository also holds `docs/` (lecturer slides, notebooks and Python files) and the planning documents. They are not part of the build. The owner decided that `docs/` stays public (decision O1 in `PLAN.md`).
 
 ## 2. One-time repository setup (user action)
 
