@@ -1,5 +1,6 @@
 import { createElement, type ReactNode } from 'react';
 import { ExampleCard } from '@/components/content/ExampleCard';
+import { ExerciseCard } from '@/components/content/ExerciseCard';
 import type { ContentNode, PageFile } from '@/content/types';
 import { Overview, SectionPart } from './TopicParts';
 import { estimateBlocks, estimateBlock } from '@/lib/estimate';
@@ -41,6 +42,14 @@ export function buildUnits(file: PageFile): Unit[] {
         render: () => createElement(ExampleCard, { block, level }),
       });
     }
+    node.exercises.forEach((block, i) => {
+      if (block.t !== 'exercise') return;
+      units.push({
+        id: block.id,
+        estimate: estimateBlock(block),
+        render: () => createElement(ExerciseCard, { block, level, first: i === 0 }),
+      });
+    });
     node.children.forEach(visit);
   };
   root.children.forEach(visit);

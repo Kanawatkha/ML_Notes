@@ -7,6 +7,7 @@ export type Counts = {
   subtopics: number;
   leaves: number;
   examples: number;
+  exercises: number;
   tables: number;
   figures: number;
   lists: number;
@@ -20,6 +21,7 @@ export function countsOf(file: PageFile): Counts {
     subtopics: file.stats.subtopics,
     leaves: file.stats.leaves,
     examples: file.stats.examples,
+    exercises: file.stats.exercises,
     tables: 0,
     figures: 0,
     lists: 0,
@@ -34,7 +36,7 @@ export function countsOf(file: PageFile): Counts {
   };
   walkNodes(file.root, (n) => {
     inline(n.title);
-    walkBlocks([...n.lead, ...n.explain, ...n.examples], (b) => {
+    walkBlocks([...n.lead, ...n.explain, ...n.examples, ...n.exercises], (b) => {
       if (b.t === 'math') c.displayFormulas++;
       if (b.t === 'figure') c.figures++;
       if (b.t === 'p') inline(b.c);
@@ -50,6 +52,7 @@ export function countsOf(file: PageFile): Counts {
         inline(b.title);
         inline(b.solLabel);
       }
+      if (b.t === 'exercise') inline(b.title);
     });
   });
   return c;
@@ -59,7 +62,7 @@ function line(n: ContentNode, depth: number): string[] {
   const pad = '  '.repeat(depth);
   const label = `${n.number ?? ''} ${inlineText(n.title)}`.trim();
   const out = [
-    `${pad}[${n.kind}] ${n.id}  ${label}  (explain ${n.explain.length} blocks, ${n.examples.length} examples, ${n.children.length} children)`,
+    `${pad}[${n.kind}] ${n.id}  ${label}  (explain ${n.explain.length} blocks, ${n.examples.length} examples, ${n.exercises.length} exercises, ${n.children.length} children)`,
   ];
   for (const c of n.children) out.push(...line(c, depth + 1));
   return out;
@@ -80,7 +83,7 @@ export function renderReport(entries: ReportEntry[], warnings: string[]): string
     out.push(`Page "${file.id}"  (${source})`);
     out.push(`  title: ${inlineText(file.title)}`);
     out.push(
-      `  sections ${c.sections}, sub-topics ${c.subtopics}, leaves ${c.leaves}, examples ${c.examples}, tables ${c.tables}, figures ${c.figures}, lists ${c.lists}, display formulas ${c.displayFormulas}, inline formulas ${c.inlineFormulas}`,
+      `  sections ${c.sections}, sub-topics ${c.subtopics}, leaves ${c.leaves}, examples ${c.examples}, exercises ${c.exercises}, tables ${c.tables}, figures ${c.figures}, lists ${c.lists}, display formulas ${c.displayFormulas}, inline formulas ${c.inlineFormulas}`,
     );
     out.push(
       `  generated JSON: ${(bytes / 1024).toFixed(1)} KB, ${(gzipBytes / 1024).toFixed(1)} KB gzip`,

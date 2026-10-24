@@ -43,7 +43,10 @@ describe('HomePage', () => {
       String(homeFile.stats.leaves),
     );
     expect(label.previousElementSibling).toHaveTextContent(String(homeFile.stats.examples));
-    expect(homeFile.stats).toEqual({ topics: 3, leaves: 11, examples: 18 });
+    expect(homeFile.stats).toEqual({ topics: 3, leaves: 11, examples: 28, exercises: 27 });
+    expect(within(stats).getByText(UI_TEXT.statExercises).previousElementSibling).toHaveTextContent(
+      String(homeFile.stats.exercises),
+    );
   });
 
   it('has the hero and the diagram only, with no topic cards below it', async () => {

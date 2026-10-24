@@ -92,6 +92,8 @@ function blk(blocks: Block[], p: Projection): string {
             blk(b.sol, p),
             blk(b.ans, p),
           ].join(' ');
+        case 'exercise':
+          return [inl(b.title, p), blk(b.problem, p)].join(' ');
       }
     })
     .join(' ');
@@ -99,7 +101,13 @@ function blk(blocks: Block[], p: Projection): string {
 
 function node(n: ContentNode, p: Projection): string {
   if (n.number) p.numbers.push(n.number);
-  const parts: string[] = [inl(n.title, p), blk(n.lead, p), blk(n.explain, p), blk(n.examples, p)];
+  const parts: string[] = [
+    inl(n.title, p),
+    blk(n.lead, p),
+    blk(n.explain, p),
+    blk(n.examples, p),
+    blk(n.exercises, p),
+  ];
   for (const c of n.children) parts.push(node(c, p));
   return parts.join(' ');
 }

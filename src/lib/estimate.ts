@@ -27,6 +27,8 @@ export function estimateBlock(block: Block): number {
         140 +
         [...block.problem, ...block.sol, ...block.ans].reduce((s, b) => s + estimateBlock(b), 0)
       );
+    case 'exercise':
+      return 150 + block.problem.reduce((s, b) => s + estimateBlock(b), 0);
   }
 }
 

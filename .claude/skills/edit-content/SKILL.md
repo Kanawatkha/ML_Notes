@@ -48,6 +48,7 @@ steps
 
 - A section without sub-topics puts its examples at `###` with `#### Sol<sup>n</sup>`; inside a sub-topic, `####` with `##### Sol<sup>n</sup>`.
 - Example headings start with `ตัวอย่างโจทย์` (`ตัวอย่างโจทย์ 2`, `ตัวอย่างโจทย์: กรณี $\det=0$`).
+- Exercise headings start with `แบบฝึกหัด` (`แบบฝึกหัด 1`), at the same level as the examples of the node, after its examples, with the problem only: no `Sol` heading, no `**Ans**`. Check that the exercise is well posed by program (unique answer, no accidental ties, rounding to 2 decimals does not change an order or a label) before writing it; keep the answers outside the repository.
 - Separate examples with `---` (a blank line before it, never directly under a text line: that makes a setext heading).
 
 ### Writing style (hand-written exam style)

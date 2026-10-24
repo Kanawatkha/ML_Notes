@@ -39,6 +39,16 @@ export type Block =
       sol: Block[];
       /** The paragraph that starts with a bold "Ans" and anything after it. May be empty. */
       ans: Block[];
+    }
+  /** A problem to solve on your own: a heading and the problem, with no solution. */
+  | {
+      t: 'exercise';
+      /** "<node id>/pr<K>". */
+      id: string;
+      /** Running number in the page, for the "PR 01" chip. */
+      index: number;
+      title: Inline[];
+      problem: Block[];
     };
 
 /**
@@ -63,6 +73,8 @@ export type ContentNode = {
   explain: Block[];
   /** The node's own worked examples, in order (each is an `example` block). */
   examples: Block[];
+  /** The node's own exercises, in order (each is an `exercise` block), after its examples. */
+  exercises: Block[];
   children: ContentNode[];
   source: { file: string; line: number };
 };
@@ -73,6 +85,7 @@ export type PageStats = {
   /** Sections and sub-topics without sub-topics. */
   leaves: number;
   examples: number;
+  exercises: number;
 };
 
 export type PageFile = {
@@ -100,10 +113,11 @@ export type OutlineNode = {
   /** The node has its own explanation (the diagram shows an "overview" entry for it). */
   explain: boolean;
   examples: number;
+  exercises: number;
   children: OutlineNode[];
 };
 
 export type HomeFile = {
   pages: { id: string; title: Inline[]; outline: OutlineNode }[];
-  stats: { topics: number; leaves: number; examples: number };
+  stats: { topics: number; leaves: number; examples: number; exercises: number };
 };

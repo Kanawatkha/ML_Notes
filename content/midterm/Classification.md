@@ -35,7 +35,7 @@ $$d(\vec a,\vec b)=\|\vec a-\vec b\|_1=|a_1-b_1|+|a_2-b_2|+|a_3-b_3|$$
 
 $$d(\vec a,\vec b)=\|\vec a-\vec b\|_2=\sqrt{(a_1-b_1)^2+(a_2-b_2)^2+(a_3-b_3)^2}$$
 
-#### ตัวอย่างโจทย์
+#### ตัวอย่างโจทย์ 1
 
 จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Euclidean
 
@@ -92,6 +92,94 @@ $$D_{41}=1.73\ <\ D_{43}=3.16\ <\ D_{42}=4.90$$
 - $k=3$: $(1.73,3.16,4.90)\to(\text{\textcircled{1}},\text{\textcircled{3}},\text{\textcircled{2}})\to(Y,N,N)$ ดังนั้น **N**
 
 **Ans** $k=1$ ได้ **Y**, $k=2$ ได้ **Y**, $k=3$ ได้ **N**
+
+#### ตัวอย่างโจทย์ 2
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Euclidean
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">2</td><td align="center">1</td><td align="center">N</td></tr>
+  <tr><td align="center">3</td><td align="center">2</td><td align="center">1</td><td align="center">1</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">1</td><td align="center">1</td><td align="center">2</td><td align="center">?</td></tr>
+</table>
+
+##### Sol<sup>n</sup>
+
+ตาราง $D$ (Euclidean) ทำเฉพาะแถวที่ 4 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+</table>
+
+จากสูตร Euclidean
+
+$$\|\vec x_i-\vec x_j\|_2=\sqrt{\Delta A_1^2+\Delta A_2^2+\Delta A_3^2}$$
+
+โดย $\vec x_4=[1,1,2]$
+
+$$D_{41}=\|\vec x_4-\vec x_1\|_2=\sqrt{(1-1)^2+(1-2)^2+(2-3)^2}=\sqrt{0+1+1}=\sqrt{2}\approx1.41$$
+
+$$D_{42}=\|\vec x_4-\vec x_2\|_2=\sqrt{(1-3)^2+(1-2)^2+(2-1)^2}=\sqrt{4+1+1}=\sqrt{6}\approx2.45$$
+
+$$D_{43}=\|\vec x_4-\vec x_3\|_2=\sqrt{(1-2)^2+(1-1)^2+(2-1)^2}=\sqrt{1+0+1}=\sqrt{2}\approx1.41$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">1.41</td><td align="center">2.45</td><td align="center">1.41</td><td align="center">0</td></tr>
+</table>
+
+จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+
+$$D_{41}=1.41\ \le\ D_{43}=1.41\ <\ D_{42}=2.45$$
+
+ค่าเท่ากันเรียงตามลำดับในตาราง
+
+เลือก $k$ ตัวแรก แล้วดู Target
+
+- $k=1$: $1.41\to(\text{\textcircled{1}})\to(Y)$ ดังนั้น **Y**
+- $k=2$: $(1.41,1.41)\to(\text{\textcircled{1}},\text{\textcircled{3}})\to(Y,N)$ เสมอกัน เลือกตัวแรก ดังนั้น **Y**
+- $k=3$: $(1.41,1.41,2.45)\to(\text{\textcircled{1}},\text{\textcircled{3}},\text{\textcircled{2}})\to(Y,N,N)$ ดังนั้น **N**
+
+**Ans** $k=1$ ได้ **Y**, $k=2$ ได้ **Y**, $k=3$ ได้ **N**
+
+#### แบบฝึกหัด 1
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,3,5$ โดยใช้ระยะแบบ Euclidean
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">4</td><td align="center">-3</td><td align="center">7</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">-2</td><td align="center">4</td><td align="center">7</td><td align="center">Y</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">3</td><td align="center">5</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">-2</td><td align="center">8</td><td align="center">1</td><td align="center">Y</td></tr>
+  <tr><td align="center">5</td><td align="center">2</td><td align="center">9</td><td align="center">0</td><td align="center">N</td></tr>
+  <tr><td align="center">6</td><td align="center">5</td><td align="center">1</td><td align="center">-3</td><td align="center">?</td></tr>
+</table>
+
+#### แบบฝึกหัด 2
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Euclidean
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">-1</td><td align="center">1</td><td align="center">3</td><td align="center">N</td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">-3</td><td align="center">-1</td><td align="center">N</td></tr>
+  <tr><td align="center">3</td><td align="center">-3</td><td align="center">4</td><td align="center">-2</td><td align="center">Y</td></tr>
+  <tr><td align="center">4</td><td align="center">5</td><td align="center">1</td><td align="center">0</td><td align="center">Y</td></tr>
+  <tr><td align="center">5</td><td align="center">-1</td><td align="center">0</td><td align="center">-2</td><td align="center">Y</td></tr>
+  <tr><td align="center">6</td><td align="center">9</td><td align="center">5</td><td align="center">3</td><td align="center">?</td></tr>
+</table>
 
 ---
 
@@ -217,13 +305,41 @@ $$D_{41}=0.98\ >\ D_{43}=0.83\ >\ D_{42}=0.76$$
 
 **Ans** $k=1$ ได้ **Y**, $k=2$ ได้ **Y**, $k=3$ ได้ **N**
 
+#### แบบฝึกหัด 1
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,3,5$ โดยใช้ระยะแบบ Cosine
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">-1</td><td align="center">3</td><td align="center">8</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">7</td><td align="center">1</td><td align="center">N</td></tr>
+  <tr><td align="center">3</td><td align="center">4</td><td align="center">0</td><td align="center">9</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">4</td><td align="center">9</td><td align="center">5</td><td align="center">Y</td></tr>
+  <tr><td align="center">5</td><td align="center">-1</td><td align="center">5</td><td align="center">5</td><td align="center">Y</td></tr>
+  <tr><td align="center">6</td><td align="center">0</td><td align="center">9</td><td align="center">-3</td><td align="center">?</td></tr>
+</table>
+
+#### แบบฝึกหัด 2
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Cosine
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">3</td><td align="center">-3</td><td align="center">9</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">-1</td><td align="center">-2</td><td align="center">-1</td><td align="center">Y</td></tr>
+  <tr><td align="center">3</td><td align="center">0</td><td align="center">4</td><td align="center">4</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">3</td><td align="center">1</td><td align="center">9</td><td align="center">Y</td></tr>
+  <tr><td align="center">5</td><td align="center">-1</td><td align="center">4</td><td align="center">9</td><td align="center">N</td></tr>
+  <tr><td align="center">6</td><td align="center">2</td><td align="center">2</td><td align="center">4</td><td align="center">?</td></tr>
+</table>
+
 ---
 
 ### 1.3 Squared Euclidean
 
 $$d^2(\vec a,\vec b)=\|\vec a-\vec b\|_2^2=(a_1-b_1)^2+(a_2-b_2)^2+(a_3-b_3)^2$$
 
-ไม่ต้องถอดราก เพราะ $x\propto\sqrt x$ ลำดับใกล้-ไกลไม่เปลี่ยน
+ไม่ต้องถอดราก เพราะ $\sqrt{\ }$ เป็นฟังก์ชันเพิ่ม ลำดับใกล้-ไกลไม่เปลี่ยน
 
 #### ตัวอย่างโจทย์ 1
 
@@ -341,13 +457,41 @@ $$D_{41}=2\ \le\ D_{43}=2\ <\ D_{42}=6$$
 
 **Ans** $k=1$ ได้ **Y**, $k=2$ ได้ **Y**, $k=3$ ได้ **N**
 
+#### แบบฝึกหัด 1
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,3,5$ โดยใช้ระยะแบบ Squared Euclidean
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">-3</td><td align="center">4</td><td align="center">-2</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">9</td><td align="center">3</td><td align="center">-1</td><td align="center">Y</td></tr>
+  <tr><td align="center">3</td><td align="center">7</td><td align="center">-3</td><td align="center">-1</td><td align="center">Y</td></tr>
+  <tr><td align="center">4</td><td align="center">-2</td><td align="center">5</td><td align="center">0</td><td align="center">N</td></tr>
+  <tr><td align="center">5</td><td align="center">8</td><td align="center">9</td><td align="center">-1</td><td align="center">N</td></tr>
+  <tr><td align="center">6</td><td align="center">-1</td><td align="center">8</td><td align="center">-3</td><td align="center">?</td></tr>
+</table>
+
+#### แบบฝึกหัด 2
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Squared Euclidean
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">7</td><td align="center">6</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">9</td><td align="center">-3</td><td align="center">N</td></tr>
+  <tr><td align="center">3</td><td align="center">4</td><td align="center">2</td><td align="center">7</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">-3</td><td align="center">2</td><td align="center">3</td><td align="center">Y</td></tr>
+  <tr><td align="center">5</td><td align="center">5</td><td align="center">5</td><td align="center">1</td><td align="center">N</td></tr>
+  <tr><td align="center">6</td><td align="center">1</td><td align="center">2</td><td align="center">6</td><td align="center">?</td></tr>
+</table>
+
 ---
 
 ### 1.4 Manhattan
 
 $$d(\vec a,\vec b)=\|\vec a-\vec b\|_1=|a_1-b_1|+|a_2-b_2|+|a_3-b_3|$$
 
-#### ตัวอย่างโจทย์
+#### ตัวอย่างโจทย์ 1
 
 จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Manhattan
 
@@ -404,6 +548,94 @@ $$D_{41}=3\ <\ D_{43}=4\ <\ D_{42}=8$$
 - $k=3$: $(3,4,8)\to(\text{\textcircled{1}},\text{\textcircled{3}},\text{\textcircled{2}})\to(Y,N,N)$ ดังนั้น **N**
 
 **Ans** $k=1$ ได้ **Y**, $k=2$ ได้ **Y**, $k=3$ ได้ **N**
+
+#### ตัวอย่างโจทย์ 2
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Manhattan
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">2</td><td align="center">1</td><td align="center">N</td></tr>
+  <tr><td align="center">3</td><td align="center">2</td><td align="center">1</td><td align="center">1</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">1</td><td align="center">1</td><td align="center">2</td><td align="center">?</td></tr>
+</table>
+
+##### Sol<sup>n</sup>
+
+ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 4 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+</table>
+
+จากสูตร Manhattan
+
+$$\|\vec x_i-\vec x_j\|_1=|\Delta A_1|+|\Delta A_2|+|\Delta A_3|$$
+
+โดย $\vec x_4=[1,1,2]$
+
+$$D_{41}=\|\vec x_4-\vec x_1\|_1=|1-1|+|1-2|+|2-3|=0+1+1=2$$
+
+$$D_{42}=\|\vec x_4-\vec x_2\|_1=|1-3|+|1-2|+|2-1|=2+1+1=4$$
+
+$$D_{43}=\|\vec x_4-\vec x_3\|_1=|1-2|+|1-1|+|2-1|=1+0+1=2$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">2</td><td align="center">4</td><td align="center">2</td><td align="center">0</td></tr>
+</table>
+
+จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+
+$$D_{41}=2\ \le\ D_{43}=2\ <\ D_{42}=4$$
+
+ค่าเท่ากันเรียงตามลำดับในตาราง
+
+เลือก $k$ ตัวแรก แล้วดู Target
+
+- $k=1$: $2\to(\text{\textcircled{1}})\to(Y)$ ดังนั้น **Y**
+- $k=2$: $(2,2)\to(\text{\textcircled{1}},\text{\textcircled{3}})\to(Y,N)$ เสมอกัน เลือกตัวแรก ดังนั้น **Y**
+- $k=3$: $(2,2,4)\to(\text{\textcircled{1}},\text{\textcircled{3}},\text{\textcircled{2}})\to(Y,N,N)$ ดังนั้น **N**
+
+**Ans** $k=1$ ได้ **Y**, $k=2$ ได้ **Y**, $k=3$ ได้ **N**
+
+#### แบบฝึกหัด 1
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,3,5$ โดยใช้ระยะแบบ Manhattan
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">-1</td><td align="center">8</td><td align="center">-1</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">-3</td><td align="center">1</td><td align="center">2</td><td align="center">Y</td></tr>
+  <tr><td align="center">3</td><td align="center">0</td><td align="center">6</td><td align="center">-3</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">6</td><td align="center">6</td><td align="center">-1</td><td align="center">Y</td></tr>
+  <tr><td align="center">5</td><td align="center">3</td><td align="center">9</td><td align="center">-3</td><td align="center">N</td></tr>
+  <tr><td align="center">6</td><td align="center">1</td><td align="center">3</td><td align="center">-1</td><td align="center">?</td></tr>
+</table>
+
+#### แบบฝึกหัด 2
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Manhattan
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">-1</td><td align="center">3</td><td align="center">-1</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">4</td><td align="center">0</td><td align="center">N</td></tr>
+  <tr><td align="center">3</td><td align="center">-2</td><td align="center">4</td><td align="center">9</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">5</td><td align="center">-2</td><td align="center">-3</td><td align="center">N</td></tr>
+  <tr><td align="center">5</td><td align="center">7</td><td align="center">5</td><td align="center">-3</td><td align="center">Y</td></tr>
+  <tr><td align="center">6</td><td align="center">-2</td><td align="center">9</td><td align="center">0</td><td align="center">?</td></tr>
+</table>
 
 ---
 
@@ -545,6 +777,44 @@ $$x_5\cdot w_2=11.2+6.24+0.56+0.12=18.12\ \checkmark$$
 
 **Ans** $w=[1.6\ \ 1.04\ \ -0.56]$, $b=-0.12$ สมการแบ่งกลุ่ม $1.6A_1+1.04A_2-0.56A_3-0.12=0$
 
+### แบบฝึกหัด 1
+
+จากข้อมูลในตารางต่อไปนี้ จงหา $w$ และ $b$ ของ Perceptron เมื่อเริ่มจาก $w_0=\begin{bmatrix}0&0&0&0\end{bmatrix}$ และเขียนสมการแบ่งกลุ่ม
+
+<table align="center">
+  <tr><th>#</th><th>a₁</th><th>a₂</th><th>a₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">3</td><td align="center">5</td><td align="center">-2</td><td align="center">+1</td></tr>
+  <tr><td align="center">2</td><td align="center">2</td><td align="center">2</td><td align="center">-3</td><td align="center">+1</td></tr>
+  <tr><td align="center">3</td><td align="center">5</td><td align="center">3</td><td align="center">4</td><td align="center">-1</td></tr>
+  <tr><td align="center">4</td><td align="center">2</td><td align="center">-2</td><td align="center">-3</td><td align="center">-1</td></tr>
+</table>
+
+### แบบฝึกหัด 2
+
+จากข้อมูลในตารางต่อไปนี้ จงหา $w$ และ $b$ ของ Perceptron เมื่อเริ่มจาก $w_0=\begin{bmatrix}1&-1&0\end{bmatrix}$ และ learning rate $\eta=0.5$ (ใช้ $w\leftarrow\eta\,(w+x_i)$) และเขียนสมการแบ่งกลุ่ม
+
+<table align="center">
+  <tr><th>#</th><th>a₁</th><th>a₂</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">-4</td><td align="center">4</td><td align="center">-1</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">3</td><td align="center">+1</td></tr>
+  <tr><td align="center">3</td><td align="center">0</td><td align="center">-1</td><td align="center">-1</td></tr>
+  <tr><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">+1</td></tr>
+  <tr><td align="center">5</td><td align="center">0</td><td align="center">1</td><td align="center">-1</td></tr>
+</table>
+
+### แบบฝึกหัด 3
+
+จากข้อมูลในตารางต่อไปนี้ จงหา $w$ และ $b$ ของ Perceptron เมื่อเริ่มจาก $w_0=\begin{bmatrix}0&0&0&0\end{bmatrix}$ และเขียนสมการแบ่งกลุ่ม
+
+<table align="center">
+  <tr><th>#</th><th>a₁</th><th>a₂</th><th>a₃</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">-5</td><td align="center">6</td><td align="center">5</td><td align="center">-1</td></tr>
+  <tr><td align="center">2</td><td align="center">6</td><td align="center">-4</td><td align="center">2</td><td align="center">-1</td></tr>
+  <tr><td align="center">3</td><td align="center">-4</td><td align="center">-1</td><td align="center">2</td><td align="center">+1</td></tr>
+  <tr><td align="center">4</td><td align="center">-3</td><td align="center">-3</td><td align="center">1</td><td align="center">+1</td></tr>
+  <tr><td align="center">5</td><td align="center">-3</td><td align="center">-2</td><td align="center">0</td><td align="center">+1</td></tr>
+</table>
+
 ---
 
 ## 3. FFBP (Matrix Form)
@@ -587,12 +857,16 @@ $$\text{weight}=4(8)+8(6)+6(2)=32+48+12=92,\qquad \text{bias}=8+6+2=16,\qquad \#
 
 $$\text{weight}=10(2)+2(5)+5(6)+6(8)=20+10+30+48=108,\qquad \text{bias}=2+5+6+8=21,\qquad \#P=108+21=129$$
 
+2-2-3-4-5-1
+
+$$\text{weight}=2(2)+2(3)+3(4)+4(5)+5(1)=4+6+12+20+5=47,\qquad \text{bias}=2+3+4+5+1=15,\qquad \#P=47+15=62$$
+
 **ขนาด input / output** ของโครงข่ายจากตารางข้อมูล
 
 - input = จำนวน attribute (attribute หมวดหมู่ที่มี $N$ ค่า แปลงเป็น $N-1$ ตัว)
 - output = จำนวน class (target 2 ค่าใช้ 1 ตัว)
 
-### ตัวอย่างโจทย์
+### ตัวอย่างโจทย์ 1
 
 จากโครงข่าย 2-2-1 ดังรูป (ใช้ sigmoid ทุกชั้น bias เป็น 0 และค่า $w_1$ ถึง $w_6$ ดังรูป) และข้อมูลในตารางต่อไปนี้ จงปรับ weight ทั้งหมด ($w_1$ ถึง $w_6$) ด้วย Backpropagation 1 ครั้ง (ใช้ทั้ง 2 ตัวอย่างพร้อมกัน) เมื่อ $\eta=0.1$
 
@@ -693,6 +967,150 @@ $$=\begin{bmatrix}0.5&0.2\\0.3&0.4\end{bmatrix}+0.1\begin{bmatrix}0.0024+0.0029&
 $$=\begin{bmatrix}0.5&0.2\\0.3&0.4\end{bmatrix}+\begin{bmatrix}0.0005&0.0005\\0.0011&0.0011\end{bmatrix}=\begin{bmatrix}0.5005&0.2005\\0.3011&0.4011\end{bmatrix}_{2\times2}$$
 
 **Ans** $w_1=0.1031$, $w_2=0.2031$, $w_3=0.5005$, $w_4=0.2005$, $w_5=0.3011$, $w_6=0.4011$
+
+### ตัวอย่างโจทย์ 2
+
+จากโครงข่าย 2-2-1 ดังรูป (ใช้ sigmoid ทุกชั้น bias เป็น 0 และ weight ทุกตัวเริ่มต้นที่ 0) และข้อมูลในตารางต่อไปนี้ จงปรับ weight ทั้งหมด ($w_1$ ถึง $w_6$) ด้วย Backpropagation 1 ครั้ง (ใช้ทั้ง 2 ตัวอย่างพร้อมกัน) เมื่อ $\eta=0.1$
+
+<div align="center">
+<svg viewBox="0 0 480 285" width="480" role="img" aria-label="โครงข่าย 2-2-1 ที่ weight ทุกตัวเป็น 0" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker></defs>
+<line x1="90.0" y1="230.0" x2="90.0" y2="163.0" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="108.2" y1="241.7" x2="309.1" y2="149.6" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="311.8" y1="241.7" x2="110.9" y2="149.6" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="330.0" y1="230.0" x2="330.0" y2="163.0" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="105.4" y1="127.2" x2="192.3" y2="54.7" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="314.6" y1="127.2" x2="227.7" y2="54.7" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<circle cx="90" cy="250" r="20" fill="none" stroke="currentColor" stroke-width="2"/><text x="90" y="255" text-anchor="middle" font-size="15" fill="currentColor">x₁</text>
+<circle cx="330" cy="250" r="20" fill="none" stroke="currentColor" stroke-width="2"/><text x="330" y="255" text-anchor="middle" font-size="15" fill="currentColor">x₂</text>
+<circle cx="90" cy="140" r="20" fill="none" stroke="currentColor" stroke-width="2"/><text x="90" y="145" text-anchor="middle" font-size="15" fill="currentColor">h₁</text>
+<circle cx="330" cy="140" r="20" fill="none" stroke="currentColor" stroke-width="2"/><text x="330" y="145" text-anchor="middle" font-size="15" fill="currentColor">h₂</text>
+<circle cx="210" cy="40" r="20" fill="none" stroke="currentColor" stroke-width="2"/><text x="210" y="45" text-anchor="middle" font-size="15" fill="currentColor">o</text>
+<text x="368" y="255" text-anchor="start" font-size="14" fill="currentColor">Input</text>
+<text x="368" y="145" text-anchor="start" font-size="14" fill="currentColor">Hidden (ชั้น 1)</text>
+<text x="250" y="45" text-anchor="start" font-size="14" fill="currentColor">Output (ชั้น 2)</text>
+<text x="80" y="200" text-anchor="end" font-size="14" fill="currentColor">w₃ = 0</text>
+<text x="340" y="200" text-anchor="start" font-size="14" fill="currentColor">w₆ = 0</text>
+<text x="140" y="244" text-anchor="start" font-size="14" fill="currentColor">w₅ = 0</text>
+<text x="280" y="244" text-anchor="end" font-size="14" fill="currentColor">w₄ = 0</text>
+<text x="140" y="95" text-anchor="end" font-size="14" fill="currentColor">w₁ = 0</text>
+<text x="280" y="95" text-anchor="start" font-size="14" fill="currentColor">w₂ = 0</text>
+</svg>
+</div>
+
+<table align="center">
+  <tr><th></th><th>x₁</th><th>x₂</th><th>Y</th></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">-1</td><td align="center">1</td></tr>
+  <tr><td align="center">2</td><td align="center">-1</td><td align="center">1</td><td align="center">0</td></tr>
+</table>
+
+#### Sol<sup>n</sup>
+
+**1. Forward** จากสูตร
+
+$$o=\sigma(XW^T),\qquad \sigma(x)=\frac{1}{1+e^{-x}}$$
+
+เขียนเป็นเมทริกซ์ (1 ตัวอย่าง = 1 แถว)
+
+$$X=\begin{bmatrix}1&-1\\-1&1\end{bmatrix}_{2\times2},\quad T=\begin{bmatrix}1\\0\end{bmatrix}_{2\times1},\quad W_h=\begin{bmatrix}0&0\\0&0\end{bmatrix}_{2\times2},\quad W_o=\begin{bmatrix}0&0\end{bmatrix}_{1\times2}$$
+
+Hidden
+
+$$XW_h^T=\begin{bmatrix}0&0\\0&0\end{bmatrix}\ \Rightarrow\ O_h=\sigma\left(XW_h^T\right)=\begin{bmatrix}0.5&0.5\\0.5&0.5\end{bmatrix}_{2\times2}$$
+
+Output
+
+$$O_hW_o^T=\begin{bmatrix}0\\0\end{bmatrix}\ \Rightarrow\ o=\sigma\left(O_hW_o^T\right)=\begin{bmatrix}0.5\\0.5\end{bmatrix}_{2\times1}$$
+
+<table align="center">
+  <tr><th></th><th>x₁</th><th>x₂</th><th>Y</th><th>Output</th><th>t-o</th></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">-1</td><td align="center">1</td><td align="center">0.5</td><td align="center">0.5</td></tr>
+  <tr><td align="center">2</td><td align="center">-1</td><td align="center">1</td><td align="center">0</td><td align="center">0.5</td><td align="center">-0.5</td></tr>
+</table>
+
+**2. Backward** จากสูตร
+
+$$\delta_o=o\odot(1-o)\odot(T-o),\qquad \delta_h=O_h\odot(1-O_h)\odot(\delta_oW_o)$$
+
+Output
+
+$$\delta_o=\begin{bmatrix}0.5\\0.5\end{bmatrix}\odot\begin{bmatrix}0.5\\0.5\end{bmatrix}\odot\begin{bmatrix}0.5\\-0.5\end{bmatrix}=\begin{bmatrix}0.125\\-0.125\end{bmatrix}_{2\times1}$$
+
+Hidden (ใช้ $W_o$ ก่อนปรับ ซึ่งเป็น 0)
+
+$$\delta_oW_o=\begin{bmatrix}0.125\\-0.125\end{bmatrix}_{2\times1}\begin{bmatrix}0&0\end{bmatrix}_{1\times2}=\begin{bmatrix}0&0\\0&0\end{bmatrix}_{2\times2}\ \Rightarrow\ \delta_h=\begin{bmatrix}0.25&0.25\\0.25&0.25\end{bmatrix}\odot\begin{bmatrix}0&0\\0&0\end{bmatrix}=\begin{bmatrix}0&0\\0&0\end{bmatrix}_{2\times2}$$
+
+**3. Update** จากสูตร
+
+$$W_o'=W_o+\eta\,\delta_o^T\,O_h,\qquad W_h'=W_h+\eta\,\delta_h^T\,X$$
+
+Output
+
+$$W_o'=\begin{bmatrix}0&0\end{bmatrix}+0.1\begin{bmatrix}0.125&-0.125\end{bmatrix}_{1\times2}\begin{bmatrix}0.5&0.5\\0.5&0.5\end{bmatrix}_{2\times2}=\begin{bmatrix}0&0\end{bmatrix}+0.1\begin{bmatrix}0&0\end{bmatrix}=\begin{bmatrix}0&0\end{bmatrix}_{1\times2}$$
+
+Hidden
+
+$$W_h'=\begin{bmatrix}0&0\\0&0\end{bmatrix}+0.1\begin{bmatrix}0&0\\0&0\end{bmatrix}_{2\times2}\begin{bmatrix}1&-1\\-1&1\end{bmatrix}_{2\times2}=\begin{bmatrix}0&0\\0&0\end{bmatrix}_{2\times2}$$
+
+เพราะ $\delta_o$ ของสองตัวอย่างมีขนาดเท่ากันและเครื่องหมายตรงข้าม ในขณะที่ $O_h$ ของทั้งสองตัวอย่างเท่ากัน ผลรวมจึงหักล้างเป็น 0
+
+**Ans** $w_1=w_2=w_3=w_4=w_5=w_6=0$ (weight ทุกตัวไม่เปลี่ยน)
+
+### แบบฝึกหัด 1
+
+จากโครงข่าย 2-2-1 ดังรูป (ใช้ sigmoid ทุกชั้น bias เป็น 0 และค่า $w_1$ ถึง $w_6$ ดังรูป) และข้อมูลในตารางต่อไปนี้ จงปรับ weight ทั้งหมด ($w_1$ ถึง $w_6$) ด้วย Backpropagation 1 ครั้ง (ใช้ทั้ง 2 ตัวอย่างพร้อมกัน) เมื่อ $\eta=0.2$
+
+<div align="center">
+<svg viewBox="0 0 480 285" width="480" role="img" aria-label="โครงข่าย 2-2-1 พร้อมค่า weight" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker></defs>
+<line x1="90.0" y1="230.0" x2="90.0" y2="163.0" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="108.2" y1="241.7" x2="309.1" y2="149.6" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="311.8" y1="241.7" x2="110.9" y2="149.6" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="330.0" y1="230.0" x2="330.0" y2="163.0" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="105.4" y1="127.2" x2="192.3" y2="54.7" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="314.6" y1="127.2" x2="227.7" y2="54.7" stroke="currentColor" stroke-width="1.5" marker-end="url(#arr)"/>
+<circle cx="90" cy="250" r="20" fill="none" stroke="currentColor" stroke-width="2"/><text x="90" y="255" text-anchor="middle" font-size="15" fill="currentColor">x₁</text>
+<circle cx="330" cy="250" r="20" fill="none" stroke="currentColor" stroke-width="2"/><text x="330" y="255" text-anchor="middle" font-size="15" fill="currentColor">x₂</text>
+<circle cx="90" cy="140" r="20" fill="none" stroke="currentColor" stroke-width="2"/><text x="90" y="145" text-anchor="middle" font-size="15" fill="currentColor">h₁</text>
+<circle cx="330" cy="140" r="20" fill="none" stroke="currentColor" stroke-width="2"/><text x="330" y="145" text-anchor="middle" font-size="15" fill="currentColor">h₂</text>
+<circle cx="210" cy="40" r="20" fill="none" stroke="currentColor" stroke-width="2"/><text x="210" y="45" text-anchor="middle" font-size="15" fill="currentColor">o</text>
+<text x="368" y="255" text-anchor="start" font-size="14" fill="currentColor">Input</text>
+<text x="368" y="145" text-anchor="start" font-size="14" fill="currentColor">Hidden (ชั้น 1)</text>
+<text x="250" y="45" text-anchor="start" font-size="14" fill="currentColor">Output (ชั้น 2)</text>
+<text x="80" y="200" text-anchor="end" font-size="14" fill="currentColor">w₃ = 0.3</text>
+<text x="340" y="200" text-anchor="start" font-size="14" fill="currentColor">w₆ = 0.1</text>
+<text x="140" y="244" text-anchor="start" font-size="14" fill="currentColor">w₅ = 0.4</text>
+<text x="280" y="244" text-anchor="end" font-size="14" fill="currentColor">w₄ = -0.2</text>
+<text x="140" y="95" text-anchor="end" font-size="14" fill="currentColor">w₁ = 0.5</text>
+<text x="280" y="95" text-anchor="start" font-size="14" fill="currentColor">w₂ = -0.3</text>
+</svg>
+</div>
+
+<table align="center">
+  <tr><th></th><th>x₁</th><th>x₂</th><th>Y</th></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">0</td><td align="center">1</td></tr>
+  <tr><td align="center">2</td><td align="center">0</td><td align="center">1</td><td align="center">0</td></tr>
+</table>
+
+### แบบฝึกหัด 2
+
+จงหาจำนวนพารามิเตอร์ (weight และ bias) ของโครงข่ายต่อไปนี้ (เขียนเป็น $n_0$-$n_1$-$\dots$-$n_L$)
+
+1. 3-4-2
+2. 5-6-4-1
+3. 6-8-5-3-2
+
+### แบบฝึกหัด 3
+
+จากข้อมูลในตารางต่อไปนี้ ต้องการสร้างโครงข่ายที่ทำนาย Class จงหาขนาด input และ output ของโครงข่าย และหาจำนวนพารามิเตอร์ของโครงข่ายที่มี hidden 1 ชั้น 4 node
+
+<table align="center">
+  <tr><th>#</th><th>Age</th><th>Gender</th><th>Color</th><th>Weight</th><th>Class</th></tr>
+  <tr><td align="center">1</td><td align="center">15</td><td align="center">M</td><td align="center">Red</td><td align="center">80</td><td align="center">A</td></tr>
+  <tr><td align="center">2</td><td align="center">30</td><td align="center">F</td><td align="center">Green</td><td align="center">60</td><td align="center">B</td></tr>
+  <tr><td align="center">3</td><td align="center">22</td><td align="center">F</td><td align="center">Blue</td><td align="center">55</td><td align="center">C</td></tr>
+  <tr><td align="center">4</td><td align="center">41</td><td align="center">M</td><td align="center">Red</td><td align="center">72</td><td align="center">B</td></tr>
+</table>
 
 ---
 
@@ -798,13 +1216,11 @@ $$\text{Gain}(S,A)=\text{Entropy}(S)-\sum_{v\in A}\frac{|S_v|}{|S|}\,\text{Entro
   <tr><td align="center">1</td><td align="center">0</td><td align="center">A</td><td align="center">—</td></tr>
   <tr><td align="center">2</td><td align="center">1</td><td align="center">B</td><td align="center">1</td></tr>
   <tr><td align="center">3</td><td align="center">1</td><td align="center">C</td><td align="center">2</td></tr>
-  <tr><td align="center">4</td><td align="center">1</td><td align="center">D</td><td align="center">3</td></tr>
-  <tr><td align="center">5</td><td align="center">2</td><td align="center">I</td><td align="center">8</td></tr>
-  <tr><td align="center">6</td><td align="center">2</td><td align="center">J</td><td align="center">9</td></tr>
-  <tr><td align="center">7</td><td align="center">4</td><td align="center">E</td><td align="center">4</td></tr>
-  <tr><td align="center">8</td><td align="center">4</td><td align="center">F</td><td align="center">5</td></tr>
-  <tr><td align="center">9</td><td align="center">8</td><td align="center">G</td><td align="center">6</td></tr>
-  <tr><td align="center">10</td><td align="center">8</td><td align="center">H</td><td align="center">7</td></tr>
+  <tr><td align="center">4</td><td align="center">2</td><td align="center">G</td><td align="center">3</td></tr>
+  <tr><td align="center">5</td><td align="center">3</td><td align="center">D</td><td align="center">4</td></tr>
+  <tr><td align="center">6</td><td align="center">4</td><td align="center">H</td><td align="center">5</td></tr>
+  <tr><td align="center">7</td><td align="center">5</td><td align="center">E</td><td align="center">6</td></tr>
+  <tr><td align="center">8</td><td align="center">5</td><td align="center">F</td><td align="center">7</td></tr>
 </table>
 
 #### Sol<sup>n</sup>
@@ -813,53 +1229,45 @@ $$\text{Gain}(S,A)=\text{Entropy}(S)-\sum_{v\in A}\frac{|S_v|}{|S|}\,\text{Entro
 
 หาลูกของแต่ละ node โดยดูแถวที่ Parent เท่ากับ id ของ node นั้น
 
-- ลูกของ A (id 1): แถวที่ Parent = 1 ได้ B (กิ่ง 1), C (กิ่ง 2), D (กิ่ง 3)
-- ลูกของ B (id 2): แถวที่ Parent = 2 ได้ I (กิ่ง 8), J (กิ่ง 9)
-- ลูกของ C (id 3): ไม่มีแถวที่ Parent = 3 จึงเป็น leaf
-- ลูกของ D (id 4): แถวที่ Parent = 4 ได้ E (กิ่ง 4), F (กิ่ง 5)
-- ลูกของ F (id 8): แถวที่ Parent = 8 ได้ G (กิ่ง 6), H (กิ่ง 7)
-- I, J, E, G, H ไม่มีลูก จึงเป็น leaf
+- ลูกของ A (id 1): แถวที่ Parent = 1 ได้ B (กิ่ง 1), C (กิ่ง 2)
+- ลูกของ B (id 2): แถวที่ Parent = 2 ได้ G (กิ่ง 3)
+- ลูกของ C (id 3): แถวที่ Parent = 3 ได้ D (กิ่ง 4)
+- ลูกของ G (id 4): แถวที่ Parent = 4 ได้ H (กิ่ง 5)
+- ลูกของ D (id 5): แถวที่ Parent = 5 ได้ E (กิ่ง 6), F (กิ่ง 7)
+- H, E, F ไม่มีแถวที่ Parent ตรงกับ id ของตัวเอง จึงเป็น leaf
 
 <div align="center">
-<svg viewBox="0 0 520 310" width="520" role="img" aria-label="ต้นไม้ A ถึง J พร้อมค่าบนกิ่ง" xmlns="http://www.w3.org/2000/svg">
-<line x1="230" y1="58" x2="100" y2="102" stroke="currentColor" stroke-width="1.5"/>
-<text x="154" y="84" text-anchor="end" font-size="13" fill="currentColor">1</text>
-<line x1="230" y1="58" x2="220" y2="102" stroke="currentColor" stroke-width="1.5"/>
-<text x="214" y="84" text-anchor="end" font-size="13" fill="currentColor">2</text>
-<line x1="230" y1="58" x2="360" y2="102" stroke="currentColor" stroke-width="1.5"/>
-<text x="306" y="84" text-anchor="start" font-size="13" fill="currentColor">3</text>
-<line x1="100" y1="138" x2="60" y2="182" stroke="currentColor" stroke-width="1.5"/>
-<text x="69" y="164" text-anchor="end" font-size="13" fill="currentColor">8</text>
-<line x1="100" y1="138" x2="140" y2="182" stroke="currentColor" stroke-width="1.5"/>
-<text x="131" y="164" text-anchor="start" font-size="13" fill="currentColor">9</text>
-<line x1="360" y1="138" x2="300" y2="182" stroke="currentColor" stroke-width="1.5"/>
-<text x="319" y="164" text-anchor="end" font-size="13" fill="currentColor">4</text>
-<line x1="360" y1="138" x2="420" y2="182" stroke="currentColor" stroke-width="1.5"/>
-<text x="401" y="164" text-anchor="start" font-size="13" fill="currentColor">5</text>
-<line x1="420" y1="218" x2="380" y2="262" stroke="currentColor" stroke-width="1.5"/>
-<text x="389" y="244" text-anchor="end" font-size="13" fill="currentColor">6</text>
-<line x1="420" y1="218" x2="460" y2="262" stroke="currentColor" stroke-width="1.5"/>
-<text x="451" y="244" text-anchor="start" font-size="13" fill="currentColor">7</text>
-<circle cx="230" cy="40" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-<text x="230" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
-<circle cx="100" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-<text x="100" y="125" text-anchor="middle" font-size="15" fill="currentColor">B</text>
-<circle cx="220" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-<text x="220" y="125" text-anchor="middle" font-size="15" fill="currentColor">C</text>
-<circle cx="360" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-<text x="360" y="125" text-anchor="middle" font-size="15" fill="currentColor">D</text>
-<circle cx="60" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-<text x="60" y="205" text-anchor="middle" font-size="15" fill="currentColor">I</text>
-<circle cx="140" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-<text x="140" y="205" text-anchor="middle" font-size="15" fill="currentColor">J</text>
-<circle cx="300" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-<text x="300" y="205" text-anchor="middle" font-size="15" fill="currentColor">E</text>
-<circle cx="420" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-<text x="420" y="205" text-anchor="middle" font-size="15" fill="currentColor">F</text>
-<circle cx="380" cy="280" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-<text x="380" y="285" text-anchor="middle" font-size="15" fill="currentColor">G</text>
-<circle cx="460" cy="280" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-<text x="460" y="285" text-anchor="middle" font-size="15" fill="currentColor">H</text>
+<svg viewBox="0 0 280 320" width="280" role="img" aria-label="ต้นไม้ที่ได้จากตาราง" xmlns="http://www.w3.org/2000/svg">
+<line x1="100" y1="58" x2="40" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="64" y="78" text-anchor="end" font-size="13" fill="currentColor">1</text>
+<line x1="100" y1="58" x2="160" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="138" y="78" text-anchor="start" font-size="13" fill="currentColor">2</text>
+<line x1="40" y1="138" x2="40" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="48" y="158" text-anchor="start" font-size="13" fill="currentColor">3</text>
+<line x1="160" y1="138" x2="160" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="168" y="158" text-anchor="start" font-size="13" fill="currentColor">4</text>
+<line x1="40" y1="218" x2="40" y2="262" stroke="currentColor" stroke-width="1.5"/>
+<text x="48" y="238" text-anchor="start" font-size="13" fill="currentColor">5</text>
+<line x1="160" y1="218" x2="120" y2="262" stroke="currentColor" stroke-width="1.5"/>
+<text x="134" y="238" text-anchor="end" font-size="13" fill="currentColor">6</text>
+<line x1="160" y1="218" x2="200" y2="262" stroke="currentColor" stroke-width="1.5"/>
+<text x="188" y="238" text-anchor="start" font-size="13" fill="currentColor">7</text>
+<circle cx="100" cy="40" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="100" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+<circle cx="40" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="40" y="125" text-anchor="middle" font-size="15" fill="currentColor">B</text>
+<circle cx="160" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="160" y="125" text-anchor="middle" font-size="15" fill="currentColor">C</text>
+<circle cx="40" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="40" y="205" text-anchor="middle" font-size="15" fill="currentColor">G</text>
+<circle cx="160" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="160" y="205" text-anchor="middle" font-size="15" fill="currentColor">D</text>
+<circle cx="40" cy="280" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="40" y="285" text-anchor="middle" font-size="15" fill="currentColor">H</text>
+<circle cx="120" cy="280" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="120" y="285" text-anchor="middle" font-size="15" fill="currentColor">E</text>
+<circle cx="200" cy="280" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="285" text-anchor="middle" font-size="15" fill="currentColor">F</text>
 </svg>
 </div>
 
@@ -868,6 +1276,485 @@ $$\text{Gain}(S,A)=\text{Entropy}(S)-\sum_{v\in A}\frac{|S_v|}{|S|}\,\text{Entro
 ---
 
 ### ตัวอย่างโจทย์ 3
+
+จากต้นไม้ในรูป (ตัวเลขที่กิ่งคือค่าบนกิ่ง) จงเขียนโครงสร้างข้อมูลแบบตาราง (id, Parent, Node, Branch)
+
+<div align="center">
+<svg viewBox="0 0 440 240" width="440" role="img" aria-label="ต้นไม้ A ถึง D พร้อม leaf Y และ N" xmlns="http://www.w3.org/2000/svg">
+<line x1="200" y1="58" x2="80" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="134" y="78" text-anchor="end" font-size="13" fill="currentColor">1</text>
+<line x1="200" y1="58" x2="200" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="208" y="78" text-anchor="start" font-size="13" fill="currentColor">2</text>
+<line x1="200" y1="58" x2="320" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="268" y="78" text-anchor="start" font-size="13" fill="currentColor">3</text>
+<line x1="80" y1="138" x2="40" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="54" y="158" text-anchor="end" font-size="13" fill="currentColor">4</text>
+<line x1="80" y1="138" x2="120" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="108" y="158" text-anchor="start" font-size="13" fill="currentColor">5</text>
+<line x1="200" y1="138" x2="200" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="208" y="158" text-anchor="start" font-size="13" fill="currentColor">6</text>
+<line x1="320" y1="138" x2="280" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="294" y="158" text-anchor="end" font-size="13" fill="currentColor">7</text>
+<line x1="320" y1="138" x2="360" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="348" y="158" text-anchor="start" font-size="13" fill="currentColor">8</text>
+<circle cx="200" cy="40" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+<circle cx="80" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="80" y="125" text-anchor="middle" font-size="15" fill="currentColor">B</text>
+<circle cx="200" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="125" text-anchor="middle" font-size="15" fill="currentColor">C</text>
+<circle cx="320" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="320" y="125" text-anchor="middle" font-size="15" fill="currentColor">D</text>
+<circle cx="40" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="40" y="205" text-anchor="middle" font-size="15" fill="currentColor">Y</text>
+<circle cx="120" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="120" y="205" text-anchor="middle" font-size="15" fill="currentColor">N</text>
+<circle cx="200" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="205" text-anchor="middle" font-size="15" fill="currentColor">Y</text>
+<circle cx="280" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="280" y="205" text-anchor="middle" font-size="15" fill="currentColor">N</text>
+<circle cx="360" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="360" y="205" text-anchor="middle" font-size="15" fill="currentColor">Y</text>
+</svg>
+</div>
+
+#### Sol<sup>n</sup>
+
+ให้ id ตามชั้น จากบนลงล่าง ซ้ายไปขวา
+
+- ชั้น 1: A = 1
+- ชั้น 2: B = 2, C = 3, D = 4
+- ชั้น 3: Y = 5, N = 6 (ลูกของ B), Y = 7 (ลูกของ C), N = 8, Y = 9 (ลูกของ D)
+
+เติม Parent = id ของแม่ และ Branch = ค่าบนกิ่งที่ลงมาหา node นั้น
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">A</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">B</td><td align="center">1</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">C</td><td align="center">2</td></tr>
+  <tr><td align="center">4</td><td align="center">1</td><td align="center">D</td><td align="center">3</td></tr>
+  <tr><td align="center">5</td><td align="center">2</td><td align="center">Y</td><td align="center">4</td></tr>
+  <tr><td align="center">6</td><td align="center">2</td><td align="center">N</td><td align="center">5</td></tr>
+  <tr><td align="center">7</td><td align="center">3</td><td align="center">Y</td><td align="center">6</td></tr>
+  <tr><td align="center">8</td><td align="center">4</td><td align="center">N</td><td align="center">7</td></tr>
+  <tr><td align="center">9</td><td align="center">4</td><td align="center">Y</td><td align="center">8</td></tr>
+</table>
+
+**Ans** ตารางข้างบน
+
+---
+
+### ตัวอย่างโจทย์ 4
+
+จากตารางโครงสร้างข้อมูลของต้นไม้ต่อไปนี้ จงวาดต้นไม้
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">A</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">B</td><td align="center">1</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">E</td><td align="center">2</td></tr>
+  <tr><td align="center">4</td><td align="center">2</td><td align="center">C</td><td align="center">3</td></tr>
+  <tr><td align="center">5</td><td align="center">2</td><td align="center">F</td><td align="center">4</td></tr>
+  <tr><td align="center">6</td><td align="center">3</td><td align="center">H</td><td align="center">5</td></tr>
+  <tr><td align="center">7</td><td align="center">3</td><td align="center">I</td><td align="center">6</td></tr>
+  <tr><td align="center">8</td><td align="center">4</td><td align="center">G</td><td align="center">7</td></tr>
+</table>
+
+#### Sol<sup>n</sup>
+
+แถวที่ Parent = 0 คือราก ได้ A (id 1)
+
+หาลูกของแต่ละ node โดยดูแถวที่ Parent เท่ากับ id ของ node นั้น
+
+- ลูกของ A (id 1): แถวที่ Parent = 1 ได้ B (กิ่ง 1), E (กิ่ง 2)
+- ลูกของ B (id 2): แถวที่ Parent = 2 ได้ C (กิ่ง 3), F (กิ่ง 4)
+- ลูกของ E (id 3): แถวที่ Parent = 3 ได้ H (กิ่ง 5), I (กิ่ง 6)
+- ลูกของ C (id 4): แถวที่ Parent = 4 ได้ G (กิ่ง 7)
+- F, H, I, G ไม่มีแถวที่ Parent ตรงกับ id ของตัวเอง จึงเป็น leaf
+
+<div align="center">
+<svg viewBox="0 0 360 320" width="360" role="img" aria-label="ต้นไม้ที่ได้จากตาราง" xmlns="http://www.w3.org/2000/svg">
+<line x1="160" y1="58" x2="80" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="114" y="78" text-anchor="end" font-size="13" fill="currentColor">1</text>
+<line x1="160" y1="58" x2="240" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="208" y="78" text-anchor="start" font-size="13" fill="currentColor">2</text>
+<line x1="80" y1="138" x2="40" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="54" y="158" text-anchor="end" font-size="13" fill="currentColor">3</text>
+<line x1="80" y1="138" x2="120" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="108" y="158" text-anchor="start" font-size="13" fill="currentColor">4</text>
+<line x1="240" y1="138" x2="200" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="214" y="158" text-anchor="end" font-size="13" fill="currentColor">5</text>
+<line x1="240" y1="138" x2="280" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="268" y="158" text-anchor="start" font-size="13" fill="currentColor">6</text>
+<line x1="40" y1="218" x2="40" y2="262" stroke="currentColor" stroke-width="1.5"/>
+<text x="48" y="238" text-anchor="start" font-size="13" fill="currentColor">7</text>
+<circle cx="160" cy="40" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="160" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+<circle cx="80" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="80" y="125" text-anchor="middle" font-size="15" fill="currentColor">B</text>
+<circle cx="240" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="240" y="125" text-anchor="middle" font-size="15" fill="currentColor">E</text>
+<circle cx="40" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="40" y="205" text-anchor="middle" font-size="15" fill="currentColor">C</text>
+<circle cx="120" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="120" y="205" text-anchor="middle" font-size="15" fill="currentColor">F</text>
+<circle cx="200" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="205" text-anchor="middle" font-size="15" fill="currentColor">H</text>
+<circle cx="280" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="280" y="205" text-anchor="middle" font-size="15" fill="currentColor">I</text>
+<circle cx="40" cy="280" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="40" y="285" text-anchor="middle" font-size="15" fill="currentColor">G</text>
+</svg>
+</div>
+
+**Ans** ต้นไม้ข้างบน
+
+---
+
+### ตัวอย่างโจทย์ 5
+
+จากต้นไม้ในรูป (ตัวเลขที่กิ่งคือค่าบนกิ่ง) จงเขียนโครงสร้างข้อมูลแบบตาราง (id, Parent, Node, Branch)
+
+<div align="center">
+<svg viewBox="0 0 440 320" width="440" role="img" aria-label="ต้นไม้ A ถึง F พร้อม leaf Y และ N" xmlns="http://www.w3.org/2000/svg">
+<line x1="230" y1="58" x2="140" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="179" y="78" text-anchor="end" font-size="13" fill="currentColor">1</text>
+<line x1="230" y1="58" x2="320" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="283" y="78" text-anchor="start" font-size="13" fill="currentColor">2</text>
+<line x1="140" y1="138" x2="80" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="104" y="158" text-anchor="end" font-size="13" fill="currentColor">3</text>
+<line x1="140" y1="138" x2="200" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="178" y="158" text-anchor="start" font-size="13" fill="currentColor">4</text>
+<line x1="320" y1="138" x2="280" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="294" y="158" text-anchor="end" font-size="13" fill="currentColor">5</text>
+<line x1="320" y1="138" x2="360" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="348" y="158" text-anchor="start" font-size="13" fill="currentColor">6</text>
+<line x1="80" y1="218" x2="40" y2="262" stroke="currentColor" stroke-width="1.5"/>
+<text x="54" y="238" text-anchor="end" font-size="13" fill="currentColor">7</text>
+<line x1="80" y1="218" x2="120" y2="262" stroke="currentColor" stroke-width="1.5"/>
+<text x="108" y="238" text-anchor="start" font-size="13" fill="currentColor">8</text>
+<line x1="200" y1="218" x2="200" y2="262" stroke="currentColor" stroke-width="1.5"/>
+<text x="208" y="238" text-anchor="start" font-size="13" fill="currentColor">9</text>
+<circle cx="230" cy="40" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="230" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+<circle cx="140" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="140" y="125" text-anchor="middle" font-size="15" fill="currentColor">B</text>
+<circle cx="320" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="320" y="125" text-anchor="middle" font-size="15" fill="currentColor">N</text>
+<circle cx="80" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="80" y="205" text-anchor="middle" font-size="15" fill="currentColor">Y</text>
+<circle cx="200" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="205" text-anchor="middle" font-size="15" fill="currentColor">N</text>
+<circle cx="280" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="280" y="205" text-anchor="middle" font-size="15" fill="currentColor">C</text>
+<circle cx="360" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="360" y="205" text-anchor="middle" font-size="15" fill="currentColor">D</text>
+<circle cx="40" cy="280" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="40" y="285" text-anchor="middle" font-size="15" fill="currentColor">Y</text>
+<circle cx="120" cy="280" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="120" y="285" text-anchor="middle" font-size="15" fill="currentColor">F</text>
+<circle cx="200" cy="280" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="285" text-anchor="middle" font-size="15" fill="currentColor">E</text>
+</svg>
+</div>
+
+#### Sol<sup>n</sup>
+
+ให้ id ตามชั้น จากบนลงล่าง ซ้ายไปขวา
+
+- ชั้น 1: A = 1
+- ชั้น 2: B = 2, N = 3
+- ชั้น 3: Y = 4, N = 5 (ลูกของ B), C = 6, D = 7 (ลูกของ N id 3)
+- ชั้น 4: Y = 8, F = 9 (ลูกของ Y id 4), E = 10 (ลูกของ N id 5)
+
+เติม Parent = id ของแม่ และ Branch = ค่าบนกิ่งที่ลงมาหา node นั้น
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">A</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">B</td><td align="center">1</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">N</td><td align="center">2</td></tr>
+  <tr><td align="center">4</td><td align="center">2</td><td align="center">Y</td><td align="center">3</td></tr>
+  <tr><td align="center">5</td><td align="center">2</td><td align="center">N</td><td align="center">4</td></tr>
+  <tr><td align="center">6</td><td align="center">3</td><td align="center">C</td><td align="center">5</td></tr>
+  <tr><td align="center">7</td><td align="center">3</td><td align="center">D</td><td align="center">6</td></tr>
+  <tr><td align="center">8</td><td align="center">4</td><td align="center">Y</td><td align="center">7</td></tr>
+  <tr><td align="center">9</td><td align="center">4</td><td align="center">F</td><td align="center">8</td></tr>
+  <tr><td align="center">10</td><td align="center">5</td><td align="center">E</td><td align="center">9</td></tr>
+</table>
+
+**Ans** ตารางข้างบน
+
+---
+
+### ตัวอย่างโจทย์ 6
+
+จากข้อมูลที่มี attribute แบบ Boolean 2 ตัว (A, B) ดังตารางต่อไปนี้ (ช่อง จำนวน คือจำนวนตัวอย่างที่มีค่าเหล่านั้น) จงเลือก attribute สำหรับ node ราก ระหว่าง A กับ B ด้วย Information Gain
+
+<table align="center">
+  <tr><th>A</th><th>B</th><th>Target</th><th>จำนวน</th></tr>
+  <tr><td align="center">0</td><td align="center">0</td><td align="center">-</td><td align="center">50</td></tr>
+  <tr><td align="center">0</td><td align="center">1</td><td align="center">-</td><td align="center">50</td></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">+</td><td align="center">100</td></tr>
+</table>
+
+#### Sol<sup>n</sup>
+
+จากสูตร
+
+$$\text{Entropy}(S)=-\sum_{c}p_c\log_{10}p_c,\qquad \text{Gain}(S,A)=\text{Entropy}(S)-\sum_{v\in A}\frac{|S_v|}{|S|}\,\text{Entropy}(S_v)$$
+
+$S$ มี $100+,100-$ (รวม 200)
+
+$$\text{Entropy}(S)=-\frac{100}{200}\log_{10}\frac{100}{200}-\frac{100}{200}\log_{10}\frac{100}{200}=0.3010$$
+
+**A** (0 $0+,100-$, 1 $100+,0-$)
+
+$$\text{Entropy}(S_{A=0})=0,\qquad \text{Entropy}(S_{A=1})=0$$
+
+$$\text{Gain}(S,A)=0.3010-\frac{100}{200}(0)-\frac{100}{200}(0)=0.3010$$
+
+**B** (0 $0+,50-$, 1 $100+,50-$)
+
+$$\text{Entropy}(S_{B=0})=0,\qquad \text{Entropy}(S_{B=1})=0.2764$$
+
+$$\text{Gain}(S,B)=0.3010-\frac{50}{200}(0)-\frac{150}{200}(0.2764)=0.0937$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S,A)=0.3010\ >\ \text{Gain}(S,B)=0.0937$$
+
+A แบ่งแล้วได้กิ่งที่บริสุทธิ์ทั้งสองกิ่ง (Entropy = 0) จึงเป็น leaf ทั้งสอง ส่วน B ยังเหลือกิ่ง $B=1$ ที่มีทั้ง + และ -
+
+<div align="center">
+<svg viewBox="0 0 260 176" width="260" role="img" aria-label="ต้นไม้ที่ใช้ A เป็น node ราก" xmlns="http://www.w3.org/2000/svg">
+<line x1="130" y1="58" x2="65" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="58" x2="195" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="130" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="92" y="88" text-anchor="end" font-size="13" fill="currentColor">0</text>
+<text x="65" y="141" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="170" y="88" text-anchor="start" font-size="13" fill="currentColor">1</text>
+<text x="195" y="141" text-anchor="middle" font-size="15" fill="currentColor">+</text>
+<text x="130" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+</svg>
+</div>
+
+เขียนเป็นตารางโครงสร้างข้อมูล
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">A</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">-</td><td align="center">0</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">+</td><td align="center">1</td></tr>
+</table>
+
+**Ans** ใช้ A เป็น node ราก (Gain = 0.3010 มากกว่า B ที่ได้ 0.0937) และได้ต้นไม้ตามรูปข้างบน
+
+---
+
+### ตัวอย่างโจทย์ 7
+
+จากข้อมูลที่มี attribute แบบ Boolean 2 ตัว (A, B) ดังตารางต่อไปนี้ (ช่อง จำนวน คือจำนวนตัวอย่างที่มีค่าเหล่านั้น) จงเลือก attribute สำหรับ node ราก ระหว่าง A กับ B ด้วย Information Gain
+
+<table align="center">
+  <tr><th>A</th><th>B</th><th>Target</th><th>จำนวน</th></tr>
+  <tr><td align="center">0</td><td align="center">0</td><td align="center">-</td><td align="center">50</td></tr>
+  <tr><td align="center">0</td><td align="center">1</td><td align="center">-</td><td align="center">50</td></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">-</td><td align="center">3</td></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">+</td><td align="center">100</td></tr>
+</table>
+
+#### Sol<sup>n</sup>
+
+จากสูตร
+
+$$\text{Entropy}(S)=-\sum_{c}p_c\log_{10}p_c,\qquad \text{Gain}(S,A)=\text{Entropy}(S)-\sum_{v\in A}\frac{|S_v|}{|S|}\,\text{Entropy}(S_v)$$
+
+$S$ มี $100+,103-$ (รวม 203)
+
+$$\text{Entropy}(S)=-\frac{100}{203}\log_{10}\frac{100}{203}-\frac{103}{203}\log_{10}\frac{103}{203}=0.3010$$
+
+**A** (0 $0+,100-$, 1 $100+,3-$)
+
+$$\text{Entropy}(S_{A=0})=0,\qquad \text{Entropy}(S_{A=1})=0.0572$$
+
+$$\text{Gain}(S,A)=0.3010-\frac{100}{203}(0)-\frac{103}{203}(0.0572)=0.2720$$
+
+**B** (0 $0+,53-$, 1 $100+,50-$)
+
+$$\text{Entropy}(S_{B=0})=0,\qquad \text{Entropy}(S_{B=1})=0.2764$$
+
+$$\text{Gain}(S,B)=0.3010-\frac{53}{203}(0)-\frac{150}{203}(0.2764)=0.0968$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S,A)=0.2720\ >\ \text{Gain}(S,B)=0.0968$$
+
+A ได้กิ่ง $A=0$ ที่บริสุทธิ์ และกิ่ง $A=1$ ที่เหลือเพียง $100+,3-$ จึงเป็น node ราก ส่วนกิ่ง $A=1$ ยังมีทั้ง + และ - ต้องแบ่งต่อด้วย B (เหลือ attribute เดียว) ได้ $B=0\to$ **-** และ $B=1\to$ **+**
+
+<div align="center">
+<svg viewBox="0 0 390 272" width="390" role="img" aria-label="ต้นไม้ที่ใช้ A เป็น node ราก แล้วแบ่งต่อด้วย B" xmlns="http://www.w3.org/2000/svg">
+<line x1="162" y1="58" x2="65" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="162" y1="58" x2="260" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<line x1="260" y1="154" x2="195" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="260" y1="154" x2="325" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="301" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="260" cy="136" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="162" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="108" y="88" text-anchor="end" font-size="13" fill="currentColor">0</text>
+<text x="65" y="141" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="219" y="86" text-anchor="start" font-size="13" fill="currentColor">1</text>
+<text x="222" y="184" text-anchor="end" font-size="13" fill="currentColor">0</text>
+<text x="195" y="237" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="300" y="184" text-anchor="start" font-size="13" fill="currentColor">1</text>
+<text x="325" y="237" text-anchor="middle" font-size="15" fill="currentColor">+</text>
+<text x="260" y="141" text-anchor="middle" font-size="15" fill="currentColor">B</text>
+<text x="162" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+</svg>
+</div>
+
+เขียนเป็นตารางโครงสร้างข้อมูล
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">A</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">-</td><td align="center">0</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">B</td><td align="center">1</td></tr>
+  <tr><td align="center">4</td><td align="center">3</td><td align="center">-</td><td align="center">0</td></tr>
+  <tr><td align="center">5</td><td align="center">3</td><td align="center">+</td><td align="center">1</td></tr>
+</table>
+
+**Ans** ใช้ A เป็น node ราก (Gain = 0.2720 มากกว่า B ที่ได้ 0.0968) และได้ต้นไม้ตามรูปข้างบน
+
+---
+
+### ตัวอย่างโจทย์ 8
+
+จากข้อมูลในตารางต่อไปนี้ จงสร้างต้นไม้ ID3 (เลือก attribute ด้วย Information Gain) ให้ครบทุกกิ่ง แล้วเขียนเป็นตารางโครงสร้างข้อมูล
+
+<table align="center">
+  <tr><th>#</th><th>Size</th><th>Color</th><th>Shape</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">big</td><td align="center">red</td><td align="center">circle</td><td align="center">+</td></tr>
+  <tr><td align="center">2</td><td align="center">small</td><td align="center">red</td><td align="center">circle</td><td align="center">+</td></tr>
+  <tr><td align="center">3</td><td align="center">small</td><td align="center">red</td><td align="center">square</td><td align="center">-</td></tr>
+  <tr><td align="center">4</td><td align="center">big</td><td align="center">blue</td><td align="center">circle</td><td align="center">-</td></tr>
+</table>
+
+#### Sol<sup>n</sup>
+
+**1. หา node ราก**
+
+จากสูตร
+
+$$\text{Entropy}(S)=-\sum_{c}p_c\log_{10}p_c,\qquad \text{Gain}(S,A)=\text{Entropy}(S)-\sum_{v\in A}\frac{|S_v|}{|S|}\,\text{Entropy}(S_v)$$
+
+$S$ มี $2+,2-$ (รวม 4)
+
+$$\text{Entropy}(S)=-\frac{2}{4}\log_{10}\frac{2}{4}-\frac{2}{4}\log_{10}\frac{2}{4}=0.3010$$
+
+**Size** (big $1+,1-$, small $1+,1-$)
+
+$$\text{Entropy}(S_{Size=big})=0.3010,\qquad \text{Entropy}(S_{Size=small})=0.3010$$
+
+$$\text{Gain}(S,Size)=0.3010-\frac{2}{4}(0.3010)-\frac{2}{4}(0.3010)=0.0000$$
+
+**Color** (red $2+,1-$, blue $0+,1-$)
+
+$$\text{Entropy}(S_{Color=red})=0.2764,\qquad \text{Entropy}(S_{Color=blue})=0$$
+
+$$\text{Gain}(S,Color)=0.3010-\frac{3}{4}(0.2764)-\frac{1}{4}(0)=0.0937$$
+
+**Shape** (circle $2+,1-$, square $0+,1-$)
+
+$$\text{Entropy}(S_{Shape=circle})=0.2764,\qquad \text{Entropy}(S_{Shape=square})=0$$
+
+$$\text{Gain}(S,Shape)=0.3010-\frac{3}{4}(0.2764)-\frac{1}{4}(0)=0.0937$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S,Color)=0.0937\ =\ \text{Gain}(S,Shape)=0.0937\ >\ \text{Gain}(S,Size)=0.0000$$
+
+Color และ Shape มี Gain เท่ากันและมากที่สุด เลือกตัวแรกตามลำดับในตาราง จึงเลือก Color เป็น node ราก
+
+กิ่งที่ Entropy = 0 เป็น leaf: blue $\to$ **-**
+
+**2. กิ่ง red** พิจารณาเฉพาะตารางที่เหลือ
+
+<table align="center">
+  <tr><th>#</th><th>Size</th><th>Shape</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">big</td><td align="center">circle</td><td align="center">+</td></tr>
+  <tr><td align="center">2</td><td align="center">small</td><td align="center">circle</td><td align="center">+</td></tr>
+  <tr><td align="center">3</td><td align="center">small</td><td align="center">square</td><td align="center">-</td></tr>
+</table>
+
+$$\text{Entropy}(S_{Color=red})=-\frac{2}{3}\log_{10}\frac{2}{3}-\frac{1}{3}\log_{10}\frac{1}{3}=0.2764$$
+
+**Size** (big $1+,0-$, small $1+,1-$)
+
+$$\text{Entropy}(S_{Size=big})=0,\qquad \text{Entropy}(S_{Size=small})=0.3010$$
+
+$$\text{Gain}(S_{Color=red},Size)=0.2764-\frac{1}{3}(0)-\frac{2}{3}(0.3010)=0.0757$$
+
+**Shape** (circle $2+,0-$, square $0+,1-$)
+
+$$\text{Entropy}(S_{Shape=circle})=0,\qquad \text{Entropy}(S_{Shape=square})=0$$
+
+$$\text{Gain}(S_{Color=red},Shape)=0.2764-\frac{2}{3}(0)-\frac{1}{3}(0)=0.2764$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S_{Color=red},Shape)=0.2764\ >\ \text{Gain}(S_{Color=red},Size)=0.0757$$
+
+Shape มี Gain มากที่สุด จึงเป็น node ของกิ่ง red
+
+กิ่งที่ Entropy = 0 เป็น leaf: circle $\to$ **+**, square $\to$ **-**
+
+**ต้นไม้ที่ได้**
+
+<div align="center">
+<svg viewBox="0 0 390 272" width="390" role="img" aria-label="ต้นไม้ ID3 ของข้อมูลรูปทรง" xmlns="http://www.w3.org/2000/svg">
+<line x1="228" y1="58" x2="130" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="154" x2="65" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="154" x2="195" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="228" y1="58" x2="325" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="130" cy="136" rx="43" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="301" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="228" cy="40" rx="43" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="173" y="86" text-anchor="end" font-size="13" fill="currentColor">red</text>
+<text x="92" y="184" text-anchor="end" font-size="13" fill="currentColor">circle</text>
+<text x="65" y="237" text-anchor="middle" font-size="15" fill="currentColor">+</text>
+<text x="170" y="184" text-anchor="start" font-size="13" fill="currentColor">square</text>
+<text x="195" y="237" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="130" y="141" text-anchor="middle" font-size="15" fill="currentColor">Shape</text>
+<text x="284" y="88" text-anchor="start" font-size="13" fill="currentColor">blue</text>
+<text x="325" y="141" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="228" y="45" text-anchor="middle" font-size="15" fill="currentColor">Color</text>
+</svg>
+</div>
+
+เขียนเป็นตารางโครงสร้างข้อมูล (id ตามชั้น จากบนลงล่าง ซ้ายไปขวา)
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">Color</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">Shape</td><td align="center">red</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">-</td><td align="center">blue</td></tr>
+  <tr><td align="center">4</td><td align="center">2</td><td align="center">+</td><td align="center">circle</td></tr>
+  <tr><td align="center">5</td><td align="center">2</td><td align="center">-</td><td align="center">square</td></tr>
+</table>
+
+**Ans** ต้นไม้และตารางข้างบน
+
+---
+
+### ตัวอย่างโจทย์ 9
 
 จากข้อมูลในตารางต่อไปนี้ จงสร้างต้นไม้ ID3 (เลือก attribute ด้วย Information Gain) ให้ครบทุกกิ่ง แล้วเขียนเป็นตารางโครงสร้างข้อมูล
 
@@ -1103,3 +1990,246 @@ Wind มี Gain มากที่สุด จึงเป็น node ขอ�
 </table>
 
 **Ans** ต้นไม้ข้างบนและตารางโครงสร้างข้อมูล
+
+---
+
+### ตัวอย่างโจทย์ 10
+
+จากข้อมูลในตารางต่อไปนี้ จงสร้างต้นไม้ ID3 (เลือก attribute ด้วย Information Gain) ให้ครบทุกกิ่ง แล้วเขียนเป็นตารางโครงสร้างข้อมูล
+
+<table align="center">
+  <tr><th>#</th><th>A</th><th>B</th><th>C</th><th>D</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">2</td><td align="center">1</td><td align="center">2</td><td align="center">+</td></tr>
+  <tr><td align="center">2</td><td align="center">2</td><td align="center">1</td><td align="center">1</td><td align="center">2</td><td align="center">-</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">2</td><td align="center">2</td><td align="center">2</td><td align="center">+</td></tr>
+  <tr><td align="center">4</td><td align="center">3</td><td align="center">2</td><td align="center">2</td><td align="center">1</td><td align="center">-</td></tr>
+  <tr><td align="center">5</td><td align="center">1</td><td align="center">2</td><td align="center">4</td><td align="center">2</td><td align="center">+</td></tr>
+  <tr><td align="center">6</td><td align="center">3</td><td align="center">2</td><td align="center">1</td><td align="center">2</td><td align="center">-</td></tr>
+  <tr><td align="center">7</td><td align="center">1</td><td align="center">2</td><td align="center">1</td><td align="center">3</td><td align="center">-</td></tr>
+  <tr><td align="center">8</td><td align="center">2</td><td align="center">1</td><td align="center">1</td><td align="center">1</td><td align="center">-</td></tr>
+</table>
+
+#### Sol<sup>n</sup>
+
+**1. หา node ราก**
+
+จากสูตร
+
+$$\text{Entropy}(S)=-\sum_{c}p_c\log_{10}p_c,\qquad \text{Gain}(S,A)=\text{Entropy}(S)-\sum_{v\in A}\frac{|S_v|}{|S|}\,\text{Entropy}(S_v)$$
+
+$S$ มี $3+,5-$ (รวม 8)
+
+$$\text{Entropy}(S)=-\frac{3}{8}\log_{10}\frac{3}{8}-\frac{5}{8}\log_{10}\frac{5}{8}=0.2873$$
+
+**A** (1 $3+,1-$, 2 $0+,2-$, 3 $0+,2-$)
+
+$$\text{Entropy}(S_{A=1})=0.2442,\qquad \text{Entropy}(S_{A=2})=0,\qquad \text{Entropy}(S_{A=3})=0$$
+
+$$\text{Gain}(S,A)=0.2873-\frac{4}{8}(0.2442)-\frac{2}{8}(0)-\frac{2}{8}(0)=0.1652$$
+
+**B** (2 $3+,3-$, 1 $0+,2-$)
+
+$$\text{Entropy}(S_{B=2})=0.3010,\qquad \text{Entropy}(S_{B=1})=0$$
+
+$$\text{Gain}(S,B)=0.2873-\frac{6}{8}(0.3010)-\frac{2}{8}(0)=0.0616$$
+
+**C** (1 $1+,4-$, 2 $1+,1-$, 4 $1+,0-$)
+
+$$\text{Entropy}(S_{C=1})=0.2173,\qquad \text{Entropy}(S_{C=2})=0.3010,\qquad \text{Entropy}(S_{C=4})=0$$
+
+$$\text{Gain}(S,C)=0.2873-\frac{5}{8}(0.2173)-\frac{2}{8}(0.3010)-\frac{1}{8}(0)=0.0762$$
+
+**D** (2 $3+,2-$, 1 $0+,2-$, 3 $0+,1-$)
+
+$$\text{Entropy}(S_{D=2})=0.2923,\qquad \text{Entropy}(S_{D=1})=0,\qquad \text{Entropy}(S_{D=3})=0$$
+
+$$\text{Gain}(S,D)=0.2873-\frac{5}{8}(0.2923)-\frac{2}{8}(0)-\frac{1}{8}(0)=0.1046$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S,A)=0.1652\ >\ \text{Gain}(S,D)=0.1046\ >\ \text{Gain}(S,C)=0.0762\ >\ \text{Gain}(S,B)=0.0616$$
+
+A มี Gain มากที่สุด จึงเป็น node ราก
+
+กิ่งที่ Entropy = 0 เป็น leaf: 2 $\to$ **-**, 3 $\to$ **-**
+
+**2. กิ่ง A = 1** พิจารณาเฉพาะตารางที่เหลือ
+
+<table align="center">
+  <tr><th>#</th><th>B</th><th>C</th><th>D</th><th>Target</th></tr>
+  <tr><td align="center">1</td><td align="center">2</td><td align="center">1</td><td align="center">2</td><td align="center">+</td></tr>
+  <tr><td align="center">3</td><td align="center">2</td><td align="center">2</td><td align="center">2</td><td align="center">+</td></tr>
+  <tr><td align="center">5</td><td align="center">2</td><td align="center">4</td><td align="center">2</td><td align="center">+</td></tr>
+  <tr><td align="center">7</td><td align="center">2</td><td align="center">1</td><td align="center">3</td><td align="center">-</td></tr>
+</table>
+
+$$\text{Entropy}(S_{A=1})=-\frac{3}{4}\log_{10}\frac{3}{4}-\frac{1}{4}\log_{10}\frac{1}{4}=0.2442$$
+
+**B** (2 $3+,1-$)
+
+$$\text{Entropy}(S_{B=2})=0.2442$$
+
+$$\text{Gain}(S_{A=1},B)=0.2442-\frac{4}{4}(0.2442)=0.0000$$
+
+**C** (1 $1+,1-$, 2 $1+,0-$, 4 $1+,0-$)
+
+$$\text{Entropy}(S_{C=1})=0.3010,\qquad \text{Entropy}(S_{C=2})=0,\qquad \text{Entropy}(S_{C=4})=0$$
+
+$$\text{Gain}(S_{A=1},C)=0.2442-\frac{2}{4}(0.3010)-\frac{1}{4}(0)-\frac{1}{4}(0)=0.0937$$
+
+**D** (2 $3+,0-$, 3 $0+,1-$)
+
+$$\text{Entropy}(S_{D=2})=0,\qquad \text{Entropy}(S_{D=3})=0$$
+
+$$\text{Gain}(S_{A=1},D)=0.2442-\frac{3}{4}(0)-\frac{1}{4}(0)=0.2442$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S_{A=1},D)=0.2442\ >\ \text{Gain}(S_{A=1},C)=0.0937\ >\ \text{Gain}(S_{A=1},B)=0.0000$$
+
+D มี Gain มากที่สุด จึงเป็น node ของกิ่ง A = 1
+
+กิ่งที่ Entropy = 0 เป็น leaf: 2 $\to$ **+**, 3 $\to$ **-**
+
+**ต้นไม้ที่ได้**
+
+<div align="center">
+<svg viewBox="0 0 520 272" width="520" role="img" aria-label="ต้นไม้ ID3 ของข้อมูล A B C D" xmlns="http://www.w3.org/2000/svg">
+<line x1="292" y1="58" x2="130" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="154" x2="65" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="154" x2="195" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="292" y1="58" x2="325" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="292" y1="58" x2="455" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="130" cy="136" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="301" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="431" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="292" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="205" y="86" text-anchor="end" font-size="13" fill="currentColor">1</text>
+<text x="92" y="184" text-anchor="end" font-size="13" fill="currentColor">2</text>
+<text x="65" y="237" text-anchor="middle" font-size="15" fill="currentColor">+</text>
+<text x="170" y="184" text-anchor="start" font-size="13" fill="currentColor">3</text>
+<text x="195" y="237" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="130" y="141" text-anchor="middle" font-size="15" fill="currentColor">D</text>
+<text x="317" y="88" text-anchor="start" font-size="13" fill="currentColor">2</text>
+<text x="325" y="141" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="382" y="88" text-anchor="start" font-size="13" fill="currentColor">3</text>
+<text x="455" y="141" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="292" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+</svg>
+</div>
+
+เขียนเป็นตารางโครงสร้างข้อมูล (id ตามชั้น จากบนลงล่าง ซ้ายไปขวา)
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">A</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">D</td><td align="center">1</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">-</td><td align="center">2</td></tr>
+  <tr><td align="center">4</td><td align="center">1</td><td align="center">-</td><td align="center">3</td></tr>
+  <tr><td align="center">5</td><td align="center">2</td><td align="center">+</td><td align="center">2</td></tr>
+  <tr><td align="center">6</td><td align="center">2</td><td align="center">-</td><td align="center">3</td></tr>
+</table>
+
+**Ans** ต้นไม้และตารางข้างบน
+
+---
+
+### แบบฝึกหัด 1
+
+จากต้นไม้ในรูป (ตัวเลขที่กิ่งคือค่าบนกิ่ง) จงเขียนโครงสร้างข้อมูลแบบตาราง (id, Parent, Node, Branch)
+
+<div align="center">
+<svg viewBox="0 0 440 320" width="440" role="img" aria-label="ต้นไม้ A ถึง J พร้อมค่าบนกิ่ง" xmlns="http://www.w3.org/2000/svg">
+<line x1="200" y1="58" x2="80" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="134" y="78" text-anchor="end" font-size="13" fill="currentColor">1</text>
+<line x1="200" y1="58" x2="200" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="208" y="78" text-anchor="start" font-size="13" fill="currentColor">2</text>
+<line x1="200" y1="58" x2="320" y2="102" stroke="currentColor" stroke-width="1.5"/>
+<text x="268" y="78" text-anchor="start" font-size="13" fill="currentColor">3</text>
+<line x1="80" y1="138" x2="40" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="54" y="158" text-anchor="end" font-size="13" fill="currentColor">4</text>
+<line x1="80" y1="138" x2="120" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="108" y="158" text-anchor="start" font-size="13" fill="currentColor">5</text>
+<line x1="200" y1="138" x2="200" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="208" y="158" text-anchor="start" font-size="13" fill="currentColor">6</text>
+<line x1="320" y1="138" x2="280" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="294" y="158" text-anchor="end" font-size="13" fill="currentColor">7</text>
+<line x1="320" y1="138" x2="360" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<text x="348" y="158" text-anchor="start" font-size="13" fill="currentColor">8</text>
+<line x1="200" y1="218" x2="200" y2="262" stroke="currentColor" stroke-width="1.5"/>
+<text x="208" y="238" text-anchor="start" font-size="13" fill="currentColor">9</text>
+<circle cx="200" cy="40" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+<circle cx="80" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="80" y="125" text-anchor="middle" font-size="15" fill="currentColor">B</text>
+<circle cx="200" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="125" text-anchor="middle" font-size="15" fill="currentColor">C</text>
+<circle cx="320" cy="120" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="320" y="125" text-anchor="middle" font-size="15" fill="currentColor">D</text>
+<circle cx="40" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="40" y="205" text-anchor="middle" font-size="15" fill="currentColor">E</text>
+<circle cx="120" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="120" y="205" text-anchor="middle" font-size="15" fill="currentColor">F</text>
+<circle cx="200" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="205" text-anchor="middle" font-size="15" fill="currentColor">G</text>
+<circle cx="280" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="280" y="205" text-anchor="middle" font-size="15" fill="currentColor">H</text>
+<circle cx="360" cy="200" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="360" y="205" text-anchor="middle" font-size="15" fill="currentColor">I</text>
+<circle cx="200" cy="280" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="200" y="285" text-anchor="middle" font-size="15" fill="currentColor">J</text>
+</svg>
+</div>
+
+### แบบฝึกหัด 2
+
+จากตารางโครงสร้างข้อมูลของต้นไม้ต่อไปนี้ จงวาดต้นไม้
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">A</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">B</td><td align="center">1</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">C</td><td align="center">2</td></tr>
+  <tr><td align="center">4</td><td align="center">2</td><td align="center">Y</td><td align="center">3</td></tr>
+  <tr><td align="center">5</td><td align="center">2</td><td align="center">N</td><td align="center">4</td></tr>
+  <tr><td align="center">6</td><td align="center">3</td><td align="center">D</td><td align="center">5</td></tr>
+  <tr><td align="center">7</td><td align="center">3</td><td align="center">Y</td><td align="center">6</td></tr>
+  <tr><td align="center">8</td><td align="center">6</td><td align="center">N</td><td align="center">7</td></tr>
+  <tr><td align="center">9</td><td align="center">6</td><td align="center">Y</td><td align="center">8</td></tr>
+</table>
+
+### แบบฝึกหัด 3
+
+จากข้อมูลในตารางต่อไปนี้ จงหา Entropy ของข้อมูลทั้งหมด และ Information Gain ของแต่ละ attribute (log ฐาน 10) แล้วเลือก attribute สำหรับ node ราก
+
+<table align="center">
+  <tr><th>#</th><th>Age</th><th>Income</th><th>Student</th><th>Buy</th></tr>
+  <tr><td align="center">1</td><td align="center">Old</td><td align="center">Low</td><td align="center">No</td><td align="center">Yes</td></tr>
+  <tr><td align="center">2</td><td align="center">Old</td><td align="center">Low</td><td align="center">No</td><td align="center">No</td></tr>
+  <tr><td align="center">3</td><td align="center">Old</td><td align="center">Low</td><td align="center">Yes</td><td align="center">No</td></tr>
+  <tr><td align="center">4</td><td align="center">Middle</td><td align="center">High</td><td align="center">Yes</td><td align="center">Yes</td></tr>
+  <tr><td align="center">5</td><td align="center">Middle</td><td align="center">Low</td><td align="center">Yes</td><td align="center">Yes</td></tr>
+  <tr><td align="center">6</td><td align="center">Young</td><td align="center">Low</td><td align="center">Yes</td><td align="center">No</td></tr>
+  <tr><td align="center">7</td><td align="center">Middle</td><td align="center">High</td><td align="center">No</td><td align="center">Yes</td></tr>
+  <tr><td align="center">8</td><td align="center">Old</td><td align="center">High</td><td align="center">Yes</td><td align="center">No</td></tr>
+</table>
+
+### แบบฝึกหัด 4
+
+จากข้อมูลในตารางต่อไปนี้ จงสร้างต้นไม้ ID3 (เลือก attribute ด้วย Information Gain) ให้ครบทุกกิ่ง แล้วเขียนเป็นตารางโครงสร้างข้อมูล
+
+<table align="center">
+  <tr><th>Day</th><th>Weather</th><th>Temp</th><th>Wind</th><th>Play</th></tr>
+  <tr><td align="center">1</td><td align="center">Rainy</td><td align="center">Cool</td><td align="center">Weak</td><td align="center">Yes</td></tr>
+  <tr><td align="center">2</td><td align="center">Sunny</td><td align="center">Cool</td><td align="center">Strong</td><td align="center">Yes</td></tr>
+  <tr><td align="center">3</td><td align="center">Sunny</td><td align="center">Hot</td><td align="center">Strong</td><td align="center">No</td></tr>
+  <tr><td align="center">4</td><td align="center">Cloudy</td><td align="center">Cool</td><td align="center">Weak</td><td align="center">No</td></tr>
+  <tr><td align="center">5</td><td align="center">Sunny</td><td align="center">Hot</td><td align="center">Weak</td><td align="center">No</td></tr>
+  <tr><td align="center">6</td><td align="center">Cloudy</td><td align="center">Hot</td><td align="center">Weak</td><td align="center">No</td></tr>
+  <tr><td align="center">7</td><td align="center">Rainy</td><td align="center">Cool</td><td align="center">Strong</td><td align="center">Yes</td></tr>
+  <tr><td align="center">8</td><td align="center">Sunny</td><td align="center">Cool</td><td align="center">Weak</td><td align="center">No</td></tr>
+  <tr><td align="center">9</td><td align="center">Rainy</td><td align="center">Hot</td><td align="center">Weak</td><td align="center">No</td></tr>
+  <tr><td align="center">10</td><td align="center">Cloudy</td><td align="center">Cool</td><td align="center">Strong</td><td align="center">Yes</td></tr>
+</table>

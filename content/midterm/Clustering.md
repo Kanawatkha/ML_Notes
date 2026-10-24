@@ -228,9 +228,9 @@ label เหมือน iter 2 ทุกจุด จึงหยุด
 <text x="230" y="84" text-anchor="middle" font-size="13" fill="currentColor">x₃</text>
 <circle cx="275" cy="58" r="6" fill="currentColor" stroke="currentColor" stroke-width="2"/>
 <text x="275" y="46" text-anchor="middle" font-size="13" fill="currentColor">x₄</text>
-<line x1="111" y1="184" x2="124" y2="196" stroke="currentColor" stroke-width="2"/>
-<line x1="124" y1="184" x2="111" y2="196" stroke="currentColor" stroke-width="2"/>
-<text x="117" y="208" text-anchor="middle" font-size="13" fill="currentColor">c₁</text>
+<line x1="111" y1="166" x2="124" y2="178" stroke="currentColor" stroke-width="2"/>
+<line x1="124" y1="166" x2="111" y2="178" stroke="currentColor" stroke-width="2"/>
+<text x="117" y="196" text-anchor="middle" font-size="13" fill="currentColor">c₁</text>
 <line x1="246" y1="71" x2="259" y2="83" stroke="currentColor" stroke-width="2"/>
 <line x1="259" y1="71" x2="246" y2="83" stroke="currentColor" stroke-width="2"/>
 <text x="266" y="96" text-anchor="start" font-size="13" fill="currentColor">c₂</text>
@@ -240,3 +240,44 @@ label เหมือน iter 2 ทุกจุด จึงหยุด
 วงกลมโปร่ง = กลุ่ม 1, วงกลมทึบ = กลุ่ม 2, × = centroid สุดท้าย
 
 **Ans** กลุ่ม 1 = $\{x_1,x_2\}$ มี $c_1=\begin{bmatrix}1.5&1\end{bmatrix}$ และกลุ่ม 2 = $\{x_3,x_4\}$ มี $c_2=\begin{bmatrix}4.5&3.5\end{bmatrix}$
+
+### แบบฝึกหัด 1
+
+จากข้อมูลในตารางต่อไปนี้ จงจัดกลุ่มด้วย K-Means เมื่อ $k=2$ ใช้ระยะแบบ Manhattan เริ่มจาก $c_1=\begin{bmatrix}6&5\end{bmatrix}$, $c_2=\begin{bmatrix}6&3\end{bmatrix}$ ทำซ้ำจนกลุ่มไม่เปลี่ยน แล้วหา centroid สุดท้ายและกลุ่มของแต่ละจุด
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th></tr>
+  <tr><td align="center">x₁</td><td align="center">7</td><td align="center">0</td></tr>
+  <tr><td align="center">x₂</td><td align="center">6</td><td align="center">3</td></tr>
+  <tr><td align="center">x₃</td><td align="center">9</td><td align="center">0</td></tr>
+  <tr><td align="center">x₄</td><td align="center">0</td><td align="center">1</td></tr>
+  <tr><td align="center">x₅</td><td align="center">6</td><td align="center">5</td></tr>
+</table>
+
+### แบบฝึกหัด 2
+
+จากข้อมูลในตารางต่อไปนี้ จงจัดกลุ่มด้วย K-Means เมื่อ $k=2$ ใช้ระยะแบบ Manhattan เริ่มจาก $c_1=\begin{bmatrix}8&2&2\end{bmatrix}$, $c_2=\begin{bmatrix}6&1&0\end{bmatrix}$ ทำซ้ำจนกลุ่มไม่เปลี่ยน แล้วหา centroid สุดท้ายและกลุ่มของแต่ละจุด
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th></tr>
+  <tr><td align="center">x₁</td><td align="center">3</td><td align="center">5</td><td align="center">3</td></tr>
+  <tr><td align="center">x₂</td><td align="center">8</td><td align="center">2</td><td align="center">2</td></tr>
+  <tr><td align="center">x₃</td><td align="center">2</td><td align="center">8</td><td align="center">0</td></tr>
+  <tr><td align="center">x₄</td><td align="center">7</td><td align="center">3</td><td align="center">2</td></tr>
+  <tr><td align="center">x₅</td><td align="center">6</td><td align="center">1</td><td align="center">0</td></tr>
+</table>
+
+### แบบฝึกหัด 3
+
+จากข้อมูลในตารางต่อไปนี้ จงจัดกลุ่มด้วย K-Means เมื่อ $k=3$ ใช้ระยะแบบ Manhattan เริ่มจาก $c_1=\begin{bmatrix}8&2\end{bmatrix}$, $c_2=\begin{bmatrix}6&2\end{bmatrix}$, $c_3=\begin{bmatrix}1&0\end{bmatrix}$ ทำซ้ำจนกลุ่มไม่เปลี่ยน แล้วหา centroid สุดท้ายและกลุ่มของแต่ละจุด
+
+<table align="center">
+  <tr><th>#</th><th>A₁</th><th>A₂</th></tr>
+  <tr><td align="center">x₁</td><td align="center">5</td><td align="center">3</td></tr>
+  <tr><td align="center">x₂</td><td align="center">8</td><td align="center">2</td></tr>
+  <tr><td align="center">x₃</td><td align="center">6</td><td align="center">9</td></tr>
+  <tr><td align="center">x₄</td><td align="center">1</td><td align="center">0</td></tr>
+  <tr><td align="center">x₅</td><td align="center">6</td><td align="center">2</td></tr>
+  <tr><td align="center">x₆</td><td align="center">0</td><td align="center">2</td></tr>
+</table>
+

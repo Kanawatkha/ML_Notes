@@ -31,10 +31,11 @@ Decision D15 in `PLAN.md`: no Playwright e2e suite by default. Add it only if th
 | Sections | 3 | 4 | 1 | 8 |
 | Sub-topics | 0 | 4 | 0 | 4 |
 | Leaves | 3 | 7 | 1 | 11 |
-| Examples | 4 | 12 | 2 | 18 |
-| Tables | 9 | 28 | 8 | 45 |
-| Figures | 0 | 6 | 1 | 7 |
-| Display formulas | 73 | 123 | 37 | 233 |
+| Examples | 4 | 22 | 2 | 28 |
+| Exercises | 6 | 18 | 3 | 27 |
+| Tables | 15 | 65 | 11 | 91 |
+| Figures | 0 | 16 | 1 | 17 |
+| Display formulas | 73 | 192 | 37 | 302 |
 
 8. **Stats.** `home.json` and `meta.json` numbers equal the counts above (the hero numbers are never typed by hand).
 

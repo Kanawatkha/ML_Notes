@@ -47,6 +47,7 @@ Current shape (use as the Phase 2 snapshot):
 | Sub-topic | `### N.M Title` | Numbered; only under a `##` |
 | Example heading | `###`, `####` (any level from 3 to 4) whose text starts with `ตัวอย่างโจทย์` | `ตัวอย่างโจทย์`, `ตัวอย่างโจทย์ 2`, `ตัวอย่างโจทย์: กรณี $\det=0$` (math allowed in the title) |
 | Sol marker | a heading one level below its example, whose text is exactly `Sol<sup>n</sup>` | `####` or `#####`; not a node |
+| Exercise | a heading that starts with `แบบฝึกหัด`, at the same level as the examples of its node, followed by the problem only | `###` under a section, `####` under a sub-topic; no Sol heading below it |
 | Ans | a paragraph that starts with `**Ans**` | Runs to the next heading, `---` or end of file |
 | Paragraph | plain lines | Thai text with inline math and bold |
 | Bold label paragraph | a paragraph that is only `**...**`, or starts with a bold label (`**1. Forward** จากสูตร`) | Flagged for styling (`label`, `step`), text unchanged |
@@ -83,7 +84,8 @@ type Block =
   | { t: 'table'; head: Cell[][]; rows: Cell[][] }      // head = leading rows whose cells are all <th>
   | { t: 'figure'; svg: string; label: string }         // validated SVG markup; label from aria-label
   | { t: 'note'; c: Block[] }
-  | { t: 'example'; id: string; index: number; title: Inline[]; problem: Block[]; solLabel: Inline[]; sol: Block[]; ans: Block[] };
+  | { t: 'example'; id: string; index: number; title: Inline[]; problem: Block[]; solLabel: Inline[]; sol: Block[]; ans: Block[] }
+  | { t: 'exercise'; id: string; index: number; title: Inline[]; problem: Block[] };
 
 type ContentNode = {
   id: string;              // "<page>", "<page>/1", "<page>/1.2"
@@ -94,15 +96,16 @@ type ContentNode = {
   lead: Block[];           // page only: the first paragraph
   explain: Block[];        // theory and formulas, never examples
   examples: Block[];       // the node's own examples (each an `example` block), in order
+  exercises: Block[];      // the node's own exercises (each an `exercise` block), in order, after the examples
   children: ContentNode[];
   source: { file: string; line: number };
 };
 
-type PageStats = { sections: number; subtopics: number; leaves: number; examples: number };
+type PageStats = { sections: number; subtopics: number; leaves: number; examples: number; exercises: number };
 type PageFile = { id: string; title: Inline[]; root: ContentNode; stats: PageStats };
 type PageMeta = { id: string; title: Inline[]; lead: Block[]; stats: PageStats };
-type OutlineNode = { id: string; kind: NodeKind; number?: string; title: Inline[]; explain: boolean; examples: number; children: OutlineNode[] };
-type HomeFile = { pages: { id: string; title: Inline[]; outline: OutlineNode }[]; stats: { topics: number; leaves: number; examples: number } };
+type OutlineNode = { id: string; kind: NodeKind; number?: string; title: Inline[]; explain: boolean; examples: number; exercises: number; children: OutlineNode[] };
+type HomeFile = { pages: { id: string; title: Inline[]; outline: OutlineNode }[]; stats: { topics: number; leaves: number; examples: number; exercises: number } };
 ```
 
 `home.json` carries only the outline (ids, numbers, titles, whether a node has its own explanation, example counts) and the stats; the Home diagram loads a page chunk when a topic is opened. `meta.json` is one object keyed by page id (title, lead, stats) so the heroes paint before the big chunk arrives.
@@ -120,6 +123,8 @@ An **example** starts at a heading whose text begins with `ตัวอย่า
 - `ans` = the `**Ans**` paragraph plus any blocks after it inside the example (today always just the paragraph).
 - Every example must have exactly one Sol heading (error otherwise). An example without an `**Ans**` paragraph is valid (warning).
 - A `---` inside an example is ignored.
+
+An **exercise** starts at a heading whose text begins with `แบบฝึกหัด` and holds only a problem (any blocks: text, tables, formulas, figures). It has no Sol heading and no `**Ans**`; a heading below it is an error, and so is an exercise with no blocks. Exercises attach to the nearest section or sub-topic above as `exercises`, with ids `<parent id>/pr<K>` (for example `classification/1.2/pr1`) and a running `index` per page. They come after the examples of their node (an example after an exercise is an error), and a section or sub-topic with exercises must have at least one example (tested). They are not part of the round-trip exceptions: their text and formulas are checked like everything else.
 
 ## 5. Node tree rules
 
@@ -185,7 +190,7 @@ Git-ignored. Regenerate with `npm run content`. The report lists, per page, node
 2. Every formula compiles in KaTeX strict mode with no warning.
 3. Every SVG passes section 7; every table passes section 6.
 4. Every node id is unique; every number agrees with its parent.
-5. Every example has exactly one Sol heading; no Sol heading or `**Ans**` paragraph appears outside an example.
+5. Every example has exactly one Sol heading; no Sol heading or `**Ans**` paragraph appears outside an example. An exercise has neither.
 6. Round trip: converting the data back to normalized text equals the normalized Markdown (see `TESTING.md`). The Sol headings, `---` rules, `<div>` wrappers and `&nbsp;` are accounted for explicitly.
 7. Stats in `home.json` and `meta.json` equal the counts of the trees.
 

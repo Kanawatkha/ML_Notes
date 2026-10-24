@@ -32,7 +32,7 @@ export type BuildResult = {
 function uniquifyFigures(file: PageFile): void {
   let k = 0;
   walkNodes(file.root, (n) => {
-    walkBlocks([...n.lead, ...n.explain, ...n.examples], (b) => {
+    walkBlocks([...n.lead, ...n.explain, ...n.examples, ...n.exercises], (b) => {
       if (b.t === 'figure') b.svg = uniquifyIds(b.svg, `${file.id}-f${++k}`);
     });
   });
@@ -44,9 +44,9 @@ function checkTree(file: PageFile, rel: string, errors: string[]): void {
   walkNodes(file.root, (n) => {
     if (seen.has(n.id)) errors.push(`${rel}: duplicate node id ${n.id}`);
     seen.add(n.id);
-    walkBlocks(n.examples, (b) => {
-      if (b.t !== 'example') return;
-      if (seen.has(b.id)) errors.push(`${rel}: duplicate example id ${b.id}`);
+    walkBlocks([...n.examples, ...n.exercises], (b) => {
+      if (b.t !== 'example' && b.t !== 'exercise') return;
+      if (seen.has(b.id)) errors.push(`${rel}: duplicate example or exercise id ${b.id}`);
       seen.add(b.id);
     });
   });
@@ -133,6 +133,7 @@ export function buildContent(root: string, pages: readonly PageSource[]): BuildR
       topics: built.length,
       leaves: built.reduce((n, p) => n + p.file.stats.leaves, 0),
       examples: built.reduce((n, p) => n + p.file.stats.examples, 0),
+      exercises: built.reduce((n, p) => n + p.file.stats.exercises, 0),
     },
   };
   const meta: Record<string, PageMeta> = {};

@@ -146,7 +146,7 @@ Vertical rhythm: `section` (80 px) between the three parts on desktop, 48 px on 
 ### HomeHero
 
 - Desktop (>= 1024): two columns, 6/12 text, 6/12 card; tablet and phone: stacked, card below.
-- Text: course label (`type-mono`, `body-muted`), title "ML Notes" (`type-hero`, `ink`, tracking -0.02 em), lead (`type-body-lg`, `ink`), then a stat row of three items separated by vertical `hairline` rules: big number in `type-card-heading` (Space Grotesk, `tabular-nums`) with its Thai label under it in `type-caption` `body-muted`. Numbers are computed from the content: 3 big topics, 11 leaf topics, 18 examples (snapshot-tested).
+- Text: course label (`type-mono`, `body-muted`), title "ML Notes" (`type-hero`, `ink`, tracking -0.02 em), lead (`type-body-lg`, `ink`), then a stat row of four items separated by vertical `hairline` rules: big number in `type-card-heading` (Space Grotesk, `tabular-nums`) with its Thai label under it in `type-caption` `body-muted`. Numbers are computed from the content: 3 big topics, 11 leaf topics, 28 examples, 27 exercises (snapshot-tested).
 - Illustration card (`hero-photo-card`): radius `lg` 22, `deep-green` field, a 4:3 drawing (on phones limited to 45% of the viewport height), holding the **Home illustration** (A3): a thin-line plot in `on-dark` at 70% opacity with `coral` accents.
 - No call-to-action button (the diagram is right below). A small `button-secondary` "แผนผังแนวข้อสอบ ↓" link scrolls to the diagram on phones only.
 
@@ -259,6 +259,15 @@ Ans strip                                            pale-green fill, 3 px deep-
 - The running example number (`EX 01` ...) is generated per page; the heading text stays exactly as written.
 - Step paragraphs that start with a bold numbered label (`**1. Forward** จากสูตร`, `**iter 2** Assign`) get 24 px space above and a 2 px `hairline` rule on the left of the step (no text change).
 - Hover (hover-capable devices only): border turns `ink` (`fast`); no lift, no shadow.
+
+
+### 5.4b Exercise card
+
+- Marks a problem to solve alone. It must never be mistaken for a worked example, so it differs in surface and border: `soft-stone` fill, 1 px dashed border (`ink` at 40%), radius `md`, padding 20 (32 from `md` up), no Sol label and no Ans strip.
+- Header: the chip `PR 03` (coral outline, the running number in the page) and the title "แบบฝึกหัด N" in `type-feature-heading`; then the problem blocks (text, table, formulas, figure).
+- The first exercise of a topic is preceded by a group label (a 1 px `ink` rule on top, "แบบฝึกหัด" in `type-feature-heading`, and the hint "ลองทำเองก่อน แล้วค่อยเทียบวิธีกับตัวอย่างโจทย์ด้านบน" in `body-muted`).
+- Order on a page: the theory of a topic, its examples (EX), then its exercises (PR). Exercises rise on scroll like example cards (A9).
+- The contents rail lists them after the examples as `PR 03`; the heroes (Home and topic pages) count them beside the examples.
 
 ### 5.5 Block rendering
 

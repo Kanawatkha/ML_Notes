@@ -139,7 +139,69 @@ describe('page tree', () => {
   });
 
   it('counts sections, sub-topics, leaves and examples', () => {
-    expect(file.stats).toEqual({ sections: 2, subtopics: 2, leaves: 3, examples: 2 });
+    expect(file.stats).toEqual({ sections: 2, subtopics: 2, leaves: 3, examples: 2, exercises: 0 });
+  });
+});
+
+describe('exercises', () => {
+  const md = String.raw`# T
+
+Lead.
+
+## 1. Alpha
+
+Theory.
+
+### ตัวอย่างโจทย์
+
+Problem
+
+#### Sol<sup>n</sup>
+
+steps
+
+**Ans** x
+
+### แบบฝึกหัด 1
+
+First problem $x^2$
+
+<table align="center">
+  <tr><th>#</th><th>x</th></tr>
+  <tr><td align="center">1</td><td align="center">2</td></tr>
+</table>
+
+### แบบฝึกหัด 2
+
+Second problem
+
+## 2. Beta
+
+### 2.1 Gamma
+
+#### แบบฝึกหัด 1
+
+Problem under a sub-topic
+`;
+  const { file } = convert(md);
+
+  it('keeps an exercise as a heading and a problem, with the ids pr1, pr2 and a running index', () => {
+    const alpha = find(file.root, 't/1')!;
+    const gamma = find(file.root, 't/2.1')!;
+    const ex = alpha.exercises as Extract<Block, { t: 'exercise' }>[];
+    expect(ex.map((b) => [b.id, b.index])).toEqual([
+      ['t/1/pr1', 1],
+      ['t/1/pr2', 2],
+    ]);
+    expect(text(ex[0].title)).toBe('แบบฝึกหัด 1');
+    expect(ex[0].problem.map((b) => b.t)).toEqual(['p', 'table']);
+    expect((gamma.exercises[0] as Extract<Block, { t: 'exercise' }>).id).toBe('t/2.1/pr1');
+    expect((gamma.exercises[0] as Extract<Block, { t: 'exercise' }>).index).toBe(3);
+  });
+
+  it('counts exercises apart from examples', () => {
+    expect(file.stats).toMatchObject({ examples: 1, exercises: 3 });
+    expect(find(file.root, 't/1')!.examples).toHaveLength(1);
   });
 });
 
@@ -247,6 +309,27 @@ describe('errors', () => {
     ['Thai outside \\text in math', `${base}\n$ก$\n`, /KaTeX/],
     ['unmatched dollar', `${base}\nprice $5\n`, /unmatched/],
     ['a second title', `${base}\n# Again\n`, /exactly one level-1/],
+  ])('rejects %s', (_name, md, re) => {
+    expect(() => convert(md)).toThrow(re);
+  });
+
+  it.each([
+    [
+      'a Sol heading below an exercise',
+      `${base}\n### แบบฝึกหัด 1\n\nproblem\n\n#### Sol<sup>n</sup>\n\na\n`,
+      /no solution/,
+    ],
+    ['an exercise without a problem', `${base}\n### แบบฝึกหัด 1\n`, /needs a problem/],
+    [
+      'an example after an exercise',
+      `${base}\n### แบบฝึกหัด 1\n\nproblem\n\n### ตัวอย่างโจทย์\n\np\n\n#### Sol<sup>n</sup>\n\na\n`,
+      /before the exercises/,
+    ],
+    [
+      'an exercise outside a section',
+      '# T\n\nLead.\n\n## แบบฝึกหัด 1\n\nproblem\n',
+      /must sit under a section/,
+    ],
   ])('rejects %s', (_name, md, re) => {
     expect(() => convert(md)).toThrow(re);
   });

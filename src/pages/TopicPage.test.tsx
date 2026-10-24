@@ -44,13 +44,18 @@ describe('TopicPage', () => {
     expect(screen.getByText('ตัวอย่างโจทย์').previousElementSibling).toHaveTextContent(
       String(counts.classification.examples),
     );
+    expect(screen.getByText('แบบฝึกหัด').previousElementSibling).toHaveTextContent(
+      String(counts.classification.exercises),
+    );
     await waitFor(() => expect(document.title).toBe('Classification | ML Notes'));
   });
 
   it('loads and renders the content after the hero', async () => {
     const { container } = renderPage('/regression', 'regression');
     await waitFor(() =>
-      expect(container.querySelectorAll('article')).toHaveLength(counts.regression.examples),
+      expect(container.querySelectorAll('article')).toHaveLength(
+        counts.regression.examples + counts.regression.exercises,
+      ),
     );
     expect(container.querySelectorAll('table')).toHaveLength(counts.regression.tables);
     expect(screen.getByText('ภาพรวม')).toBeInTheDocument();
@@ -80,7 +85,9 @@ describe('TopicPage', () => {
     expect(screen.getByRole('alert')).toHaveTextContent(UI_TEXT.loadError);
     retry.click();
     await waitFor(() =>
-      expect(container.querySelectorAll('article')).toHaveLength(counts.clustering.examples),
+      expect(container.querySelectorAll('article')).toHaveLength(
+        counts.clustering.examples + counts.clustering.exercises,
+      ),
     );
   });
 
@@ -104,7 +111,9 @@ describe('TopicPage', () => {
       fireEvent.click(screen.getByRole('button', { name: UI_TEXT.railOpen }));
       fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: /ID3/ }));
       await waitFor(() => expect(jumpTo).toHaveBeenCalledWith('classification/4'));
-      expect(container.querySelectorAll('article')).toHaveLength(counts.classification.examples);
+      expect(container.querySelectorAll('article')).toHaveLength(
+        counts.classification.examples + counts.classification.exercises,
+      );
       expect(container.querySelector('[id="classification/4"]')).not.toBeNull();
     } finally {
       vi.unstubAllGlobals();

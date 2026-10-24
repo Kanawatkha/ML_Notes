@@ -113,6 +113,11 @@ export function RailTree({ entries, position, progress, onSelect, className }: R
             EX {String(e.exIndex).padStart(2, '0')}
           </span>
         ) : null}
+        {e.prIndex ? (
+          <span className="type-mono shrink-0 text-body-muted tabular">
+            PR {String(e.prIndex).padStart(2, '0')}
+          </span>
+        ) : null}
         <span className="min-w-0">{e.label}</span>
       </button>
     );

@@ -232,6 +232,33 @@ $$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{2.046875}{3}\approx0.68
 
 **Ans** $y=0.75x+0.375$, $\hat y(4)=3.375$, $\text{MAE}\approx0.7083$, $\text{MSE}\approx0.6823$
 
+### แบบฝึกหัด 1
+
+จากข้อมูลในตารางต่อไปนี้ จงหา $R$ ของ Linear Regression $y=ax+b$ ด้วยรูปแบบเมทริกซ์ แล้วทำนายค่า $y$ เมื่อ $x=6$ และหา MAE
+
+<table align="center">
+  <tr><th>#</th><th>x</th><th>y</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">2</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">5</td></tr>
+  <tr><td align="center">3</td><td align="center">2</td><td align="center">9</td></tr>
+  <tr><td align="center">4</td><td align="center">3</td><td align="center">6</td></tr>
+  <tr><td align="center">5</td><td align="center">4</td><td align="center">8</td></tr>
+  <tr><td align="center">6</td><td align="center">5</td><td align="center">12</td></tr>
+</table>
+
+### แบบฝึกหัด 2
+
+จากข้อมูลในตารางต่อไปนี้ จงหา $R$ ของ Linear Regression $y=ax+b$ ด้วยรูปแบบเมทริกซ์ แล้วทำนายค่า $y$ เมื่อ $x=8$ และหา MAE
+
+<table align="center">
+  <tr><th>#</th><th>x</th><th>y</th></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">11</td></tr>
+  <tr><td align="center">2</td><td align="center">2</td><td align="center">11</td></tr>
+  <tr><td align="center">3</td><td align="center">4</td><td align="center">1</td></tr>
+  <tr><td align="center">4</td><td align="center">5</td><td align="center">4</td></tr>
+  <tr><td align="center">5</td><td align="center">7</td><td align="center">0</td></tr>
+</table>
+
 ---
 
 ## 2. Nonlinear Regression (Polynomial)
@@ -323,6 +350,31 @@ $$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{10}5=2$$
 
 **Ans** $y=x^2+x$, $\hat y(3)=12$, $\text{MAE}=1.2$, $\text{MSE}=2$
 
+### แบบฝึกหัด 1
+
+จากข้อมูลในตารางต่อไปนี้ จงหา $R$ ของ Polynomial Regression degree 2 $y=ax^2+bx+c$ ด้วยรูปแบบเมทริกซ์ แล้วทำนายค่า $y$ เมื่อ $x=4$ และหา MSE
+
+<table align="center">
+  <tr><th>#</th><th>x</th><th>y</th></tr>
+  <tr><td align="center">1</td><td align="center">-1</td><td align="center">2</td></tr>
+  <tr><td align="center">2</td><td align="center">0</td><td align="center">5</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">10</td></tr>
+  <tr><td align="center">4</td><td align="center">2</td><td align="center">5</td></tr>
+  <tr><td align="center">5</td><td align="center">3</td><td align="center">-1</td></tr>
+</table>
+
+### แบบฝึกหัด 2
+
+จากข้อมูลในตารางต่อไปนี้ จงหา $R$ ของ Polynomial Regression degree 2 $y=ax^2+bx+c$ ด้วยรูปแบบเมทริกซ์ แล้วทำนายค่า $y$ เมื่อ $x=2$ และหา MSE
+
+<table align="center">
+  <tr><th>#</th><th>x</th><th>y</th></tr>
+  <tr><td align="center">1</td><td align="center">-3</td><td align="center">0</td></tr>
+  <tr><td align="center">2</td><td align="center">-1</td><td align="center">0</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">1</td></tr>
+  <tr><td align="center">4</td><td align="center">3</td><td align="center">9</td></tr>
+</table>
+
 ---
 
 ## 3. K-NN Regression
@@ -396,3 +448,32 @@ $$D_{63}=1\ <\ D_{64}=2\ <\ D_{62}=3\ <\ D_{61}=4\ <\ D_{65}=5$$
 - $k=3$: $(1,2,3)\to(\text{\textcircled{3}},\text{\textcircled{4}},\text{\textcircled{2}})\to(y=5,8,2)$ ดังนั้น $\hat y=\dfrac{5+8+2}{3}=5$
 
 **Ans** $k=1$ ได้ $\hat y=5$, $k=2$ ได้ $\hat y=6.5$, $k=3$ ได้ $\hat y=5$
+
+### แบบฝึกหัด 1
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของ $x=3$ ด้วย K-NN Regression เมื่อ $k=1,2,3$ (ระยะ $|x_q-x_i|$ และใช้ค่าเฉลี่ยของ $y$)
+
+<table align="center">
+  <tr><th>#</th><th>x</th><th>y</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">5</td></tr>
+  <tr><td align="center">2</td><td align="center">4</td><td align="center">10</td></tr>
+  <tr><td align="center">3</td><td align="center">5</td><td align="center">2</td></tr>
+  <tr><td align="center">4</td><td align="center">7</td><td align="center">10</td></tr>
+  <tr><td align="center">5</td><td align="center">11</td><td align="center">3</td></tr>
+  <tr><td align="center">6</td><td align="center">13</td><td align="center">11</td></tr>
+</table>
+
+### แบบฝึกหัด 2
+
+จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของ $x=11$ ด้วย K-NN Regression เมื่อ $k=1,2,3$ (ระยะ $|x_q-x_i|$ และใช้ค่าเฉลี่ยของ $y$)
+
+<table align="center">
+  <tr><th>#</th><th>x</th><th>y</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">11</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">4</td></tr>
+  <tr><td align="center">3</td><td align="center">8</td><td align="center">10</td></tr>
+  <tr><td align="center">4</td><td align="center">10</td><td align="center">3</td></tr>
+  <tr><td align="center">5</td><td align="center">12</td><td align="center">9</td></tr>
+  <tr><td align="center">6</td><td align="center">13</td><td align="center">1</td></tr>
+</table>
+

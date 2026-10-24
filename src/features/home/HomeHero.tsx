@@ -36,6 +36,7 @@ export function HomeHero({ home, diagramId }: HomeHeroProps) {
               { value: home.stats.topics, label: UI_TEXT.statTopics },
               { value: home.stats.leaves, label: UI_TEXT.statLeaves },
               { value: home.stats.examples, label: UI_TEXT.statExamples },
+              { value: home.stats.exercises, label: UI_TEXT.statExercises },
             ]}
           />
         ) : (

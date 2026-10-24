@@ -3,7 +3,7 @@ import { BlockList } from '@/components/content/BlockRenderer';
 import { InlineContent } from '@/components/content/InlineContent';
 import { Chip } from '@/components/ui/Chip';
 import { StatRow } from '@/components/ui/StatRow';
-import { KIND_LABEL, PAGES } from '@/config/site';
+import { KIND_LABEL, PAGES, UI_TEXT } from '@/config/site';
 import type { PageMeta } from '@/content/types';
 import { BAND_CLASS } from '@/lib/bands';
 import { cn } from '@/lib/cn';
@@ -49,7 +49,8 @@ export function TopicHero({ meta, page, illustration }: TopicHeroProps) {
           tone="dark"
           stats={[
             { value: meta.stats.sections + meta.stats.subtopics, label: 'หัวข้อ' },
-            { value: meta.stats.examples, label: 'ตัวอย่างโจทย์' },
+            { value: meta.stats.examples, label: UI_TEXT.statExamples },
+            { value: meta.stats.exercises, label: UI_TEXT.statExercises },
           ]}
         />
       </div>

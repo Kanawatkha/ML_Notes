@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import type { Block } from '@/content/types';
 import { ExampleCard } from '@/components/content/ExampleCard';
+import { ExerciseCard } from '@/components/content/ExerciseCard';
 import { FigureBlock } from '@/components/content/FigureBlock';
 import { InlineContent } from '@/components/content/InlineContent';
 import { ScrollArea } from '@/components/content/ScrollArea';
@@ -72,5 +73,7 @@ export function BlockRenderer({ block }: { block: Block }) {
       );
     case 'example':
       return <ExampleCard block={block} level={3} />;
+    case 'exercise':
+      return <ExerciseCard block={block} level={3} />;
   }
 }

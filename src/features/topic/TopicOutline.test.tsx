@@ -1,6 +1,6 @@
 import { act, render } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { PAGES } from '@/config/site';
+import { PAGES, UI_TEXT } from '@/config/site';
 import type { Block, Inline } from '@/content/types';
 import { counts, fileOf } from '@/test/content';
 import { FIRST_UNITS, TopicOutline } from './TopicOutline';
@@ -16,28 +16,56 @@ function countMath(blocks: Block[]): number {
 }
 
 describe('buildUnits', () => {
-  it('lists the overview, each section and sub-topic, and their examples in source order', () => {
+  it('lists the overview, each section and sub-topic, and their examples and exercises in source order', () => {
     expect(buildUnits(fileOf('classification')).map((u) => u.id)).toEqual([
       'classification/1',
       'classification/1.1',
       'classification/1.1/ex1',
+      'classification/1.1/ex2',
+      'classification/1.1/pr1',
+      'classification/1.1/pr2',
       'classification/1.2',
       'classification/1.2/ex1',
       'classification/1.2/ex2',
+      'classification/1.2/pr1',
+      'classification/1.2/pr2',
       'classification/1.3',
       'classification/1.3/ex1',
       'classification/1.3/ex2',
+      'classification/1.3/pr1',
+      'classification/1.3/pr2',
       'classification/1.4',
       'classification/1.4/ex1',
+      'classification/1.4/ex2',
+      'classification/1.4/pr1',
+      'classification/1.4/pr2',
       'classification/2',
       'classification/2/ex1',
       'classification/2/ex2',
+      'classification/2/pr1',
+      'classification/2/pr2',
+      'classification/2/pr3',
       'classification/3',
       'classification/3/ex1',
+      'classification/3/ex2',
+      'classification/3/pr1',
+      'classification/3/pr2',
+      'classification/3/pr3',
       'classification/4',
       'classification/4/ex1',
       'classification/4/ex2',
       'classification/4/ex3',
+      'classification/4/ex4',
+      'classification/4/ex5',
+      'classification/4/ex6',
+      'classification/4/ex7',
+      'classification/4/ex8',
+      'classification/4/ex9',
+      'classification/4/ex10',
+      'classification/4/pr1',
+      'classification/4/pr2',
+      'classification/4/pr3',
+      'classification/4/pr4',
     ]);
   });
 
@@ -56,7 +84,7 @@ describe.each(PAGES.map((p) => p.id))('the %s page, everything mounted', (id) =>
     expect(container.querySelectorAll('section[id]').length).toBe(
       c.sections + c.subtopics + (file.root.explain.length > 0 ? 1 : 0),
     );
-    expect(container.querySelectorAll('article').length).toBe(c.examples);
+    expect(container.querySelectorAll('article').length).toBe(c.examples + c.exercises);
     for (const n of [
       file.root,
       ...file.root.children,
@@ -88,11 +116,31 @@ describe.each(PAGES.map((p) => p.id))('the %s page, everything mounted', (id) =>
     expect(levels[0]).toBe(2);
   });
 
-  it('gives every example card an Ans strip', () => {
+  it('gives every example card an Ans strip and every exercise card a problem only', () => {
     const { container } = render(<TopicOutline file={file} />);
-    for (const article of container.querySelectorAll('article')) {
+    const examples = container.querySelectorAll('article[id*="/ex"]');
+    const exercises = container.querySelectorAll('article[id*="/pr"]');
+    expect(examples.length).toBe(c.examples);
+    expect(exercises.length).toBe(c.exercises);
+    for (const article of examples) {
       expect(article.querySelector('.bg-pale-green'), article.id).not.toBeNull();
     }
+    for (const article of exercises) {
+      expect(article.querySelector('.bg-pale-green'), article.id).toBeNull();
+      expect(article.textContent, article.id).not.toMatch(/Soln|\bAns\b/);
+      expect(article.className, article.id).toContain('border-dashed');
+    }
+  });
+
+  it('labels the first exercise of each topic with the group name, and only that one', () => {
+    const { container } = render(<TopicOutline file={file} />);
+    const owners = file.root.children
+      .flatMap((s) => [s, ...s.children])
+      .filter((n) => n.exercises.length > 0);
+    const labels = [...container.querySelectorAll('p')].filter(
+      (p) => p.textContent === UI_TEXT.exercisesLabel,
+    );
+    expect(labels).toHaveLength(owners.length);
   });
 });
 

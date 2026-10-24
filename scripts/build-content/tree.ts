@@ -36,6 +36,8 @@ export function blockText(b: Block): string {
       return b.c.map(blockText).join(' ');
     case 'example':
       return [...b.problem, ...b.sol, ...b.ans].map(blockText).join(' ');
+    case 'exercise':
+      return b.problem.map(blockText).join(' ');
   }
 }
 
@@ -49,6 +51,7 @@ export function walkBlocks(blocks: Block[], fn: (b: Block) => void): void {
       walkBlocks(b.sol, fn);
       walkBlocks(b.ans, fn);
     }
+    if (b.t === 'exercise') walkBlocks(b.problem, fn);
   }
 }
 
@@ -119,14 +122,25 @@ export function buildRaw(tokens: Token[], file: string): Raw {
 
 /* ---------- nodes (CONTENT-SCHEMA.md section 5) ---------- */
 
-type Ctx = { page: string; file: string; warn: (m: string) => void; examples: number };
+type Ctx = {
+  page: string;
+  file: string;
+  warn: (m: string) => void;
+  examples: number;
+  exercises: number;
+};
 
 const EXAMPLE_PREFIX = 'ตัวอย่างโจทย์';
+const EXERCISE_PREFIX = 'แบบฝึกหัด';
 const SECTION_RE = /^(\d+)\.\s+/;
 const SUBTOPIC_RE = /^(\d+\.\d+)\s+/;
 
 function isExampleHeading(title: Inline[]): boolean {
   return inlineText(title).trim().startsWith(EXAMPLE_PREFIX);
+}
+
+function isExerciseHeading(title: Inline[]): boolean {
+  return inlineText(title).trim().startsWith(EXERCISE_PREFIX);
 }
 
 /** Splits a leading number off a heading title; the remaining inlines are the title. */
@@ -170,6 +184,22 @@ function buildExample(raw: Raw, parentId: string, k: number, ctx: Ctx): Block {
   };
 }
 
+function buildExercise(raw: Raw, parentId: string, k: number, ctx: Ctx): Block {
+  const where = `${ctx.file}:${raw.line}`;
+  if (raw.children.length > 0) {
+    throw new Error(`${where}: an exercise has no solution, so nothing may sit below its heading`);
+  }
+  if (raw.blocks.length === 0) throw new Error(`${where}: an exercise needs a problem`);
+  ctx.exercises++;
+  return {
+    t: 'exercise',
+    id: `${parentId}/pr${k}`,
+    index: ctx.exercises,
+    title: raw.title,
+    problem: raw.blocks,
+  };
+}
+
 function buildNode(
   raw: Raw,
   kind: 'section' | 'subtopic',
@@ -198,20 +228,28 @@ function buildNode(
     lead: [],
     explain: raw.blocks,
     examples: [],
+    exercises: [],
     children: [],
     source: { file: ctx.file, line: raw.line },
   };
   let k = 0;
+  let p = 0;
   for (const child of raw.children) {
     if (isExampleHeading(child.title)) {
       if (child.level !== raw.level + 1)
         throw new Error(`${ctx.file}:${child.line}: example heading at the wrong level`);
+      if (node.exercises.length > 0)
+        throw new Error(`${ctx.file}:${child.line}: examples come before the exercises`);
       node.examples.push(buildExample(child, id, ++k, ctx));
+    } else if (isExerciseHeading(child.title)) {
+      if (child.level !== raw.level + 1)
+        throw new Error(`${ctx.file}:${child.line}: exercise heading at the wrong level`);
+      node.exercises.push(buildExercise(child, id, ++p, ctx));
     } else if (kind === 'section') {
       node.children.push(buildNode(child, 'subtopic', ctx, node));
     } else {
       throw new Error(
-        `${ctx.file}:${child.line}: a sub-topic can only contain examples ("${EXAMPLE_PREFIX}")`,
+        `${ctx.file}:${child.line}: a sub-topic can only contain examples ("${EXAMPLE_PREFIX}") and exercises ("${EXERCISE_PREFIX}")`,
       );
     }
   }
@@ -224,7 +262,7 @@ export function buildPage(
   page: { id: string; file: string },
   warn: (m: string) => void,
 ): PageFile {
-  const ctx: Ctx = { page: page.id, file: page.file, warn, examples: 0 };
+  const ctx: Ctx = { page: page.id, file: page.file, warn, examples: 0, exercises: 0 };
   const first = raw.blocks[0];
   if (!first || first.t !== 'p')
     throw new Error(`${page.file}:${raw.line}: the title must be followed by a lead paragraph`);
@@ -237,12 +275,13 @@ export function buildPage(
     lead: [first],
     explain: raw.blocks.slice(1),
     examples: [],
+    exercises: [],
     children: [],
     source: { file: page.file, line: raw.line },
   };
   for (const child of raw.children) {
-    if (isExampleHeading(child.title))
-      throw new Error(`${ctx.file}:${child.line}: an example must sit under a section`);
+    if (isExampleHeading(child.title) || isExerciseHeading(child.title))
+      throw new Error(`${ctx.file}:${child.line}: an example or exercise must sit under a section`);
     root.children.push(buildNode(child, 'section', ctx, root));
   }
   root.children.forEach((s, i) => {

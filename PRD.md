@@ -61,10 +61,10 @@ Navigation: a top navbar only (logo left, three page tabs centered, share button
 An interactive, animated diagram that grows to the right, carried over from the 1322201 site and restyled. Root node "Midterm" toggles open. Open: the three topics slide out, connected by curves, each tagged Supervised or Unsupervised. Open a topic: its sections appear in the next column (Regression: 3, Classification: 4, Clustering: 1). Open a section that has sub-topics (K-NN): its sub-topics appear in the next column. A leaf (a section or sub-topic without children) is a link that opens the topic page at that part. The diagram shows the scope only: no explanation, formulas or examples. Nothing overlays anything. Detailed behavior: `UI-SPEC.md` section 4.
 
 ### F2 Home: hero and diagram
-Above the diagram a compact editorial hero (course label, title, one Thai lead line, three numbers counted from the content, an animated thin-line illustration). The diagram is full width with no frame, as on the 1322201 site. There is nothing below it (the topic cards were removed after launch).
+Above the diagram a compact editorial hero (course label, title, one Thai lead line, four numbers counted from the content, an animated thin-line illustration). The diagram is full width with no frame, as on the 1322201 site. There is nothing below it (the topic cards were removed after launch).
 
 ### F3 Topic pages
-One long page per big topic: a coloured feature band (hero) with the topic illustration, an overview panel with the page's shared formulas, then every section in source order with its theory and formulas, and every example as a card with the problem, `Sol`, the steps, and the `Ans` strip. A collapsible contents rail on the left (icon toggle, no label) with progress rings, a drawer on phones, a reading-progress line and a back-to-top button.
+One long page per big topic: a coloured feature band (hero) with the topic illustration, an overview panel with the page's shared formulas, then every section in source order with its theory and formulas, and every example as a card with the problem, `Sol`, the steps, and the `Ans` strip, followed by the exercises of that topic (problem only, no solution, in a visibly different card). A collapsible contents rail on the left (icon toggle, no label) with progress rings, a drawer on phones, a reading-progress line and a back-to-top button.
 
 ### F4 Share
 A share button in the navbar. On devices with the Web Share API it opens the native share sheet with the current page address. Otherwise it opens a centered dialog with a QR code of the address and a copy-link field (carried over from 1322201, own QR encoder, no dependency).
@@ -102,7 +102,7 @@ Name "ML Notes". Original logo (`UI-SPEC.md` section 11): three data points on a
 
 1. The three Markdown files convert without error or warning and the round-trip test passes.
 2. Home: the root opens to three topics, every section with sub-topics (K-NN) opens its sub-topics, and every leaf is a link that lands on the right section of its topic page.
-3. Each topic page renders all of its Markdown: 3 + 4 + 1 sections, 4 K-NN sub-topics, 18 examples (4 + 12 + 2), every table, formula and figure. Counts are snapshot-tested.
+3. Each topic page renders all of its Markdown: 3 + 4 + 1 sections, 4 K-NN sub-topics, 28 worked examples (4 + 22 + 2) and 27 exercises (6 + 18 + 3), every table, formula and figure. Counts are snapshot-tested.
 4. The rail (desktop) and drawer (phone) reach every section, sub-topic and example; the highlight follows scrolling.
 5. Share opens the native sheet where supported, otherwise the QR dialog; the QR code scans to the current address; copy works.
 6. All animations in `UI-SPEC.md` section 9 work, hold 60 fps on a mid-range phone in a manual check, and are off under `prefers-reduced-motion`.

@@ -170,6 +170,13 @@ Goal: the three Markdown files to typed, tested data.
 - [x] Tag `v1.0.0` on e702418, pushed on the owner's order
 - [x] Pages URL ready to share: https://kanawatkha.github.io/ML_Notes/
 
+## After launch: examples and exercises (v1.2)
+
+- [x] Every worked example in `docs/` (notebooks, slides, code) was counted against the notes and every number of the notes was recomputed by independent programs (Regression 4, K-NN 6, Perceptron 2, FFBP 1, ID3 3, K-Means 2 all correct; one misplaced centroid in a K-Means figure and one loose wording about the square root fixed)
+- [x] Added the lecturer's examples that were missing: FFBP with all weights 0, the parameter count 2-2-3-4-5-1, K-NN data B for Euclidean and Manhattan, the five tree-and-table structure examples, the two Boolean A/B gain comparisons, the four-row shape data and the A B C D class work. Not added (beyond the midterm scope): continuous attributes, gain ratio, Fuzzy C-Means, Mahalanobis. The Regression notebook has no numeric example (its data are random), so the four Regression examples stay as they were
+- [x] New content kind **exercise** (`แบบฝึกหัด N`, problem only): pipeline, data model, ExerciseCard, rail entries `PR nn`, hero counts; 27 exercises (Regression 6, K-NN 8, Perceptron 3, FFBP 3, ID3 4, K-Means 3), each checked by program for a unique answer, no accidental ties and stable rounding
+- Counts now: 28 examples and 27 exercises; `classification.json` is 2.0 MB raw and 94 KB gzip (budget 150), Lighthouse mobile performance 92 to 93 on the topic pages
+
 ## Future (not planned)
 
 - A "แสดงเฉลย" switch on topic pages to hide Sol and Ans for self-testing (1322201 exam pages have one).

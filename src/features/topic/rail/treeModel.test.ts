@@ -38,13 +38,21 @@ describe('buildRailTree', () => {
       number: '1.2',
       subtopicId: 'classification/1.2',
     });
-    expect(cosine.children.map((c) => `${c.kind}:${c.exIndex}`)).toEqual([
-      'example:2',
+    expect(cosine.children.map((c) => `${c.kind}:${c.exIndex ?? c.prIndex}`)).toEqual([
       'example:3',
+      'example:4',
+      'exercise:3',
+      'exercise:4',
     ]);
 
     const perceptron = tree('classification')[1];
-    expect(perceptron.children.map((c) => c.kind)).toEqual(['example', 'example']);
+    expect(perceptron.children.map((c) => c.kind)).toEqual([
+      'example',
+      'example',
+      'exercise',
+      'exercise',
+      'exercise',
+    ]);
     expect(perceptron.children[0]).toMatchObject({
       label: 'ตัวอย่างโจทย์ 1',
       sectionId: 'classification/2',

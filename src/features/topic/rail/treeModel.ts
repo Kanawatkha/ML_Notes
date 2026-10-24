@@ -2,7 +2,7 @@ import type { ContentNode, PageFile } from '@/content/types';
 import { UI_TEXT } from '@/config/site';
 import { plainText } from '@/lib/text';
 
-export type RailKind = 'overview' | 'section' | 'subtopic' | 'example';
+export type RailKind = 'overview' | 'section' | 'subtopic' | 'example' | 'exercise';
 
 /** One line of the contents: the overview, a section, a sub-topic or an example. */
 export type RailEntry = {
@@ -14,6 +14,8 @@ export type RailEntry = {
   number?: string;
   /** Running number of an example in the page, for the "EX 03" tag. */
   exIndex?: number;
+  /** Running number of an exercise in the page, for the "PR 03" tag. */
+  prIndex?: number;
   /** The section this entry is or sits in (the overview is its own section). */
   sectionId: string;
   /** The sub-topic this entry is or sits in. */
@@ -31,7 +33,7 @@ function truncate(text: string): string {
 }
 
 function exampleEntries(node: ContentNode, sectionId: string, subtopicId?: string): RailEntry[] {
-  return node.examples.flatMap((block) =>
+  const examples = node.examples.flatMap((block) =>
     block.t !== 'example'
       ? []
       : [
@@ -46,6 +48,22 @@ function exampleEntries(node: ContentNode, sectionId: string, subtopicId?: strin
           },
         ],
   );
+  const exercises = node.exercises.flatMap((block) =>
+    block.t !== 'exercise'
+      ? []
+      : [
+          {
+            id: block.id,
+            kind: 'exercise' as const,
+            label: truncate(plainText(block.title)),
+            prIndex: block.index,
+            sectionId,
+            ...(subtopicId ? { subtopicId } : {}),
+            children: [],
+          },
+        ],
+  );
+  return [...examples, ...exercises];
 }
 
 /**

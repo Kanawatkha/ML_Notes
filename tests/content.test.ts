@@ -31,33 +31,36 @@ describe('the real content', () => {
         subtopics: 0,
         leaves: 3,
         examples: 4,
-        tables: 9,
+        exercises: 6,
+        tables: 15,
         figures: 0,
         lists: 1,
         displayFormulas: 73,
-        inlineFormulas: 108,
+        inlineFormulas: 134,
       },
       classification: {
         sections: 4,
         subtopics: 4,
         leaves: 7,
-        examples: 12,
-        tables: 28,
-        figures: 6,
-        lists: 11,
-        displayFormulas: 123,
-        inlineFormulas: 199,
+        examples: 22,
+        exercises: 18,
+        tables: 65,
+        figures: 16,
+        lists: 17,
+        displayFormulas: 192,
+        inlineFormulas: 319,
       },
       clustering: {
         sections: 1,
         subtopics: 0,
         leaves: 1,
         examples: 2,
-        tables: 8,
+        exercises: 3,
+        tables: 11,
         figures: 1,
         lists: 1,
         displayFormulas: 37,
-        inlineFormulas: 22,
+        inlineFormulas: 32,
       },
     });
   });
@@ -108,7 +111,28 @@ describe('the real content', () => {
       });
       expect(indexes, p.file.id).toEqual(indexes.map((_, i) => i + 1));
     }
-    expect(count).toBe(18);
+    expect(count).toBe(28);
+  });
+
+  it('gives every exercise a heading and a problem, numbered in order, after the examples of its node', () => {
+    let count = 0;
+    for (const p of result.pages) {
+      const indexes: number[] = [];
+      walkNodes(p.file.root, (n) => {
+        for (const b of n.exercises) {
+          if (b.t !== 'exercise') throw new Error('exercises must hold exercise blocks');
+          count++;
+          indexes.push(b.index);
+          expect(b.problem.length, b.id).toBeGreaterThan(0);
+          expect(b.id, b.id).toMatch(/\/pr\d+$/);
+        }
+        if (n.exercises.length > 0) {
+          expect(n.examples.length, `${n.id} has exercises but no example`).toBeGreaterThan(0);
+        }
+      });
+      expect(indexes, p.file.id).toEqual(indexes.map((_, i) => i + 1));
+    }
+    expect(count).toBe(27);
   });
 
   it('gives every page a lead paragraph and keeps examples out of explain', () => {
@@ -126,7 +150,7 @@ describe('the real content', () => {
     const seen = new Set<string>();
     for (const p of result.pages) {
       walkNodes(p.file.root, (n) => {
-        walkBlocks([...n.explain, ...n.examples], (b) => {
+        walkBlocks([...n.explain, ...n.examples, ...n.exercises], (b) => {
           if (b.t === 'table') {
             const rows = [...b.head, ...b.rows];
             expect(new Set(rows.map((r) => r.length)).size, n.id).toBe(1);
@@ -153,20 +177,21 @@ describe('the real content', () => {
   });
 
   it('derives the numbers of the heroes and of Home from the data', () => {
-    expect(result.home.stats).toEqual({ topics: 3, leaves: 11, examples: 18 });
+    expect(result.home.stats).toEqual({ topics: 3, leaves: 11, examples: 28, exercises: 27 });
     expect(result.meta.classification.stats).toEqual({
       sections: 4,
       subtopics: 4,
       leaves: 7,
-      examples: 12,
+      examples: 22,
+      exercises: 18,
     });
     const knn = result.home.pages[1].outline.children[0];
     expect(knn).toMatchObject({ id: 'classification/1', explain: true, examples: 0 });
-    expect(knn.children.map((c) => `${c.number}:${c.examples}`)).toEqual([
-      '1.1:1',
-      '1.2:2',
-      '1.3:2',
-      '1.4:1',
+    expect(knn.children.map((c) => `${c.number}:${c.examples}:${c.exercises}`)).toEqual([
+      '1.1:2:2',
+      '1.2:2:2',
+      '1.3:2:2',
+      '1.4:2:2',
     ]);
   });
 });
