@@ -78,7 +78,7 @@ export function TopicOutline({ file, mountAll = false }: TopicOutlineProps) {
   const units = useMemo(() => buildUnits(file), [file]);
   const { limit, demand } = useUnitLimit(units.length, mountAll);
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 [&>div:first-child>section]:pt-0">
       {units.map((unit, i) =>
         i < limit ? (
           <div key={unit.id} className="contents">

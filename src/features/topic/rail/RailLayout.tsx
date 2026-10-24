@@ -73,7 +73,7 @@ export function RailLayout({ file, beforeJump, children }: RailLayoutProps) {
         )}
       >
         <div className="relative z-10">
-          <div className="sticky top-20 mt-10">
+          <div className="sticky top-20">
             <RailToggle
               open={railOpen}
               onClick={() => setRailOpen((open) => !open)}
@@ -84,7 +84,7 @@ export function RailLayout({ file, beforeJump, children }: RailLayoutProps) {
         <div aria-hidden={!railOpen} inert={!railOpen}>
           <div
             className={cn(
-              'sticky top-20 mt-10 w-[248px] transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none',
+              'sticky top-20 w-[248px] transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none',
               railOpen ? 'translate-x-0 opacity-100' : '-translate-x-[264px] opacity-0',
             )}
           >
