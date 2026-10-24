@@ -67,11 +67,21 @@ describe('contents on a wide screen', () => {
   it('gives the room of the rail to the page body when it folds, with a transition on the columns', () => {
     const { container } = renderLayout();
     const grid = container.querySelector('.grid') as HTMLElement;
-    expect(grid.className).toContain('grid-cols-[48px_264px_minmax(0,1fr)]');
+    expect(grid.className).toContain('grid-cols-[264px_minmax(0,1fr)]');
     expect(grid.className).toContain('transition-[grid-template-columns]');
     expect(grid.className).toContain('motion-reduce:transition-none');
     fireEvent.click(screen.getByRole('button', { name: UI_TEXT.railClose }));
-    expect(grid.className).toContain('grid-cols-[48px_0px_minmax(0,1fr)]');
+    expect(grid.className).toContain('grid-cols-[0px_minmax(0,1fr)]');
+  });
+
+  it('puts the toggle in the page margin, outside the grid, and keeps it when the rail folds', () => {
+    const { container } = renderLayout();
+    const grid = container.querySelector('.grid') as HTMLElement;
+    const toggle = screen.getByRole('button', { name: UI_TEXT.railClose });
+    expect(grid.contains(toggle)).toBe(false);
+    expect(toggle.closest('.absolute')?.className).toContain('left-[calc(var(--rail-pad)-60px)]');
+    fireEvent.click(toggle);
+    expect(screen.getByRole('button', { name: UI_TEXT.railOpen })).toBeInTheDocument();
   });
 
   it('runs beforeJump, then jumps to the id of the pressed entry', () => {

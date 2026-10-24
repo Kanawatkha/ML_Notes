@@ -14,6 +14,14 @@ import { buildRailTree } from './treeModel';
 const RAIL_ID = 'contents-rail';
 const DRAWER_ID = 'contents-drawer';
 
+/**
+ * Room the toggle needs in the page margin: 60 px (48 px button, 12 px gap) plus an 8 px distance
+ * from the window edge, less the margin the page already has: the 24 px gutter of the 1200 px
+ * column plus half of what that column leaves. On a wide screen it is 0 and the button sits
+ * entirely outside the content; on a narrow desktop the content makes room instead.
+ */
+const RAIL_PAD = '[--rail-pad:max(0px,calc(44px_-_max(0px,calc((100vw_-_1200px)/2))))]';
+
 /** id of the empty element after the page body; the last section runs up to it. */
 export const TOPIC_END_ID = 'topic-end';
 
@@ -27,9 +35,9 @@ type RailLayoutProps = {
 /**
  * Puts the contents next to the page body (UI-SPEC.md section 6).
  *
- * Desktop (1024 px and up): an icon button in a narrow gutter folds a sticky rail. The body takes
- * all the room that is left, so it is as wide as the page margins allow with the rail open and
- * wider with it folded. The width of the rail column is animated (a CSS transition on the grid
+ * Desktop (1024 px and up): an icon button in the page margin, outside the content and right-aligned
+ * to its edge, folds a sticky rail. The body takes all the room that is left, so it is as wide as
+ * the hero with the rail folded and narrower by the rail with it open. The width of the rail column is animated (a CSS transition on the grid
  * columns), so the body grows and shrinks with it. Reduced motion changes at once.
  *
  * Below that: one column, a round floating button at the bottom left, and the same contents in a
@@ -66,13 +74,9 @@ export function RailLayout({ file, beforeJump, children }: RailLayoutProps) {
 
   if (desktop) {
     return (
-      <div
-        className={cn(
-          'grid overflow-x-clip transition-[grid-template-columns] duration-[380ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
-          railOpen ? 'grid-cols-[48px_264px_minmax(0,1fr)]' : 'grid-cols-[48px_0px_minmax(0,1fr)]',
-        )}
-      >
-        <div className="relative z-10">
+      <div className={cn('relative pl-[var(--rail-pad)]', RAIL_PAD)}>
+        {/* the toggle sits in the page margin, right-aligned to the content edge */}
+        <div className="absolute inset-y-0 left-[calc(var(--rail-pad)-60px)] z-10 w-12">
           <div className="sticky top-20">
             <RailToggle
               open={railOpen}
@@ -81,25 +85,32 @@ export function RailLayout({ file, beforeJump, children }: RailLayoutProps) {
             />
           </div>
         </div>
-        <div aria-hidden={!railOpen} inert={!railOpen}>
-          <div
-            className={cn(
-              'sticky top-20 w-[248px] transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none',
-              railOpen ? 'translate-x-0 opacity-100' : '-translate-x-[264px] opacity-0',
-            )}
-          >
-            <nav id={RAIL_ID} aria-label={UI_TEXT.railLabel}>
-              <RailTree
-                entries={entries}
-                position={reading.position}
-                progress={reading.progress}
-                onSelect={select}
-                className="max-h-[calc(100dvh-8rem)]"
-              />
-            </nav>
+        <div
+          className={cn(
+            'grid overflow-x-clip transition-[grid-template-columns] duration-[380ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+            railOpen ? 'grid-cols-[264px_minmax(0,1fr)]' : 'grid-cols-[0px_minmax(0,1fr)]',
+          )}
+        >
+          <div aria-hidden={!railOpen} inert={!railOpen}>
+            <div
+              className={cn(
+                'sticky top-20 w-[248px] transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none',
+                railOpen ? 'translate-x-0 opacity-100' : '-translate-x-[264px] opacity-0',
+              )}
+            >
+              <nav id={RAIL_ID} aria-label={UI_TEXT.railLabel}>
+                <RailTree
+                  entries={entries}
+                  position={reading.position}
+                  progress={reading.progress}
+                  onSelect={select}
+                  className="max-h-[calc(100dvh-8rem)]"
+                />
+              </nav>
+            </div>
           </div>
+          <div className="w-full">{children}</div>
         </div>
-        <div className="w-full">{children}</div>
       </div>
     );
   }

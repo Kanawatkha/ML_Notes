@@ -216,7 +216,7 @@ Connectors: cubic Bezier from the parent's right-middle to each child's left-mid
 <Navbar /> <ReadingProgress />
 <main>
   <TopicHero />                   coloured feature band
-  <div grid>                      >= 1024: [ 48 px toggle gutter | 264 px rail | content ]
+  <div grid>                      >= 1024: [ 264 px rail | content ], toggle in the page margin
     <Rail />                      sticky, foldable; < 1024: drawer
     <article>
       <OverviewPanel />           the page's shared formulas (when present)
@@ -280,11 +280,11 @@ Carried over from the NLP Notes rail, restyled.
 ### 6.1 Toggle (`RailToggle`)
 
 - Icon only, 44 px circle, `primary` fill, `on-dark` icon; `aria-label` "เปิดสารบัญ" / "ปิดสารบัญ", `aria-expanded`, `aria-controls`. A list icon morphs into a cross (A12).
-- Desktop: sticky in its own 48 px gutter left of the rail; stays when the rail is folded. Tablet and phone: floating at bottom-left (16 px plus safe area).
+- Desktop: sticky in the page margin, outside the content and right-aligned to its edge (12 px gap); the content makes room only when the window margin is too small for it (about 1024 to 1250 px), keeping 8 px from the window edge. It stays when the rail is folded, and the body is then as wide as the hero. Tablet and phone: floating at bottom-left (16 px plus safe area).
 
 ### 6.2 Desktop rail (>= 1024)
 
-- Grid `48 px | 264 px | content`; the rail (248 px) is sticky at `top: 80px`, scrolls inside itself, open by default.
+- Grid `264 px | content`; the rail (248 px) is sticky at `top: 80px`, scrolls inside itself, open by default.
 - Folding animates `grid-template-columns` (380 ms, ease-out); the content grows into the room. The folded rail is `inert` and `aria-hidden`.
 
 ### 6.3 Tree
