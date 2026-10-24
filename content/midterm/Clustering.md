@@ -19,7 +19,7 @@
 
 Distance (Manhattan)
 
-$$d(\vec a,\vec b)=\|\vec a-\vec b\|_1=|a_1-b_1|+|a_2-b_2|+|a_3-b_3|$$
+$$d(x_i,c_j)=\sum_{m}|x_{im}-c_{jm}|$$
 
 Assign
 

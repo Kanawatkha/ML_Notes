@@ -17,23 +17,23 @@
 
 Euclidean
 
-$$d(\vec a,\vec b)=\|\vec a-\vec b\|_2=\sqrt{(a_1-b_1)^2+(a_2-b_2)^2+(a_3-b_3)^2}$$
+$$\|\vec x_i-\vec x_j\|_2=\sqrt{\Delta A_1^2+\Delta A_2^2+\Delta A_3^2}$$
 
 Cosine
 
-$$\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}$$
+$$\cos\theta=\frac{\vec x_i\cdot\vec x_j}{|\vec x_i||\vec x_j|}$$
 
 Squared Euclidean
 
-$$d^2(\vec a,\vec b)=\|\vec a-\vec b\|_2^2=(a_1-b_1)^2+(a_2-b_2)^2+(a_3-b_3)^2$$
+$$\|\vec x_i-\vec x_j\|_2^2=\Delta A_1^2+\Delta A_2^2+\Delta A_3^2$$
 
 Manhattan
 
-$$d(\vec a,\vec b)=\|\vec a-\vec b\|_1=|a_1-b_1|+|a_2-b_2|+|a_3-b_3|$$
+$$\|\vec x_i-\vec x_j\|_1=|\Delta A_1|+|\Delta A_2|+|\Delta A_3|$$
 
 ### 1.1 Euclidean
 
-$$d(\vec a,\vec b)=\|\vec a-\vec b\|_2=\sqrt{(a_1-b_1)^2+(a_2-b_2)^2+(a_3-b_3)^2}$$
+$$\|\vec x_i-\vec x_j\|_2=\sqrt{\Delta A_1^2+\Delta A_2^2+\Delta A_3^2}$$
 
 #### ตัวอย่างโจทย์ 1
 
@@ -275,7 +275,7 @@ $$D_{41}=7.68\ \le\ D_{42}=7.68\ <\ D_{43}=8.37$$
 
 ### 1.2 Cosine
 
-$$\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}\qquad\left(\theta=\arccos\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}\right)$$
+$$\cos\theta=\frac{\vec x_i\cdot\vec x_j}{|\vec x_i||\vec x_j|}\qquad\left(\theta=\arccos\frac{\vec x_i\cdot\vec x_j}{|\vec x_i||\vec x_j|}\right)$$
 
 ค่า $\cos\theta$ มาก = ใกล้กัน (มุมเล็ก) จึงเลือกค่ามากสุด
 
@@ -305,7 +305,7 @@ $$\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}\qquad\left(\theta=\arcco
 
 จากสูตร Cosine
 
-$$\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}$$
+$$\cos\theta=\frac{\vec x_i\cdot\vec x_j}{|\vec x_i||\vec x_j|}$$
 
 โดย $\vec x_4=[0,1,1]$ ได้ $|\vec x_4|=\sqrt{0+1+1}=\sqrt2$
 
@@ -363,7 +363,7 @@ $$D_{41}=0.63\ >\ D_{43}=0.22\ >\ D_{42}=-0.76$$
 
 จากสูตร Cosine
 
-$$\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}$$
+$$\cos\theta=\frac{\vec x_i\cdot\vec x_j}{|\vec x_i||\vec x_j|}$$
 
 โดย $\vec x_4=[1,1,2]$ ได้ $|\vec x_4|=\sqrt{1+1+4}=\sqrt6$
 
@@ -421,7 +421,7 @@ $$D_{41}=0.98\ >\ D_{43}=0.83\ >\ D_{42}=0.76$$
 
 จากสูตร Cosine
 
-$$\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}$$
+$$\cos\theta=\frac{\vec x_i\cdot\vec x_j}{|\vec x_i||\vec x_j|}$$
 
 โดย $\vec x_4=[4,2,-3]$ ได้ $|\vec x_4|=\sqrt{16+4+9}=\sqrt{29}$
 
@@ -479,7 +479,7 @@ $$D_{41}=0.83\ >\ D_{42}=0.03\ >\ D_{43}=-0.50$$
 
 จากสูตร Cosine
 
-$$\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}$$
+$$\cos\theta=\frac{\vec x_i\cdot\vec x_j}{|\vec x_i||\vec x_j|}$$
 
 โดย $\vec x_4=[1,-2,1]$ ได้ $|\vec x_4|=\sqrt{1+4+1}=\sqrt{6}$
 
@@ -517,7 +517,7 @@ $$D_{43}=0.73\ >\ D_{41}=0.08\ =\ D_{42}=0.08$$
 
 ### 1.3 Squared Euclidean
 
-$$d^2(\vec a,\vec b)=\|\vec a-\vec b\|_2^2=(a_1-b_1)^2+(a_2-b_2)^2+(a_3-b_3)^2$$
+$$\|\vec x_i-\vec x_j\|_2^2=\Delta A_1^2+\Delta A_2^2+\Delta A_3^2$$
 
 ไม่ต้องถอดราก เพราะ $\sqrt{\ }$ เป็นฟังก์ชันเพิ่ม ลำดับใกล้-ไกลไม่เปลี่ยน
 
@@ -547,15 +547,15 @@ $$d^2(\vec a,\vec b)=\|\vec a-\vec b\|_2^2=(a_1-b_1)^2+(a_2-b_2)^2+(a_3-b_3)^2$$
 
 จากสูตร Squared Euclidean
 
-$$\|\vec x_i-\vec x_j\|^2=\Delta A_1^2+\Delta A_2^2+\Delta A_3^2$$
+$$\|\vec x_i-\vec x_j\|_2^2=\Delta A_1^2+\Delta A_2^2+\Delta A_3^2$$
 
 โดย $\vec x_4=[0,1,1]$
 
-$$D_{41}=\|\vec x_4-\vec x_1\|^2=(0-1)^2+(1-0)^2+(1-2)^2=1+1+1=3$$
+$$D_{41}=\|\vec x_4-\vec x_1\|_2^2=(0-1)^2+(1-0)^2+(1-2)^2=1+1+1=3$$
 
-$$D_{42}=\|\vec x_4-\vec x_2\|^2=(0-2)^2+(1-(-1))^2+(1-(-3))^2=4+4+16=24$$
+$$D_{42}=\|\vec x_4-\vec x_2\|_2^2=(0-2)^2+(1-(-1))^2+(1-(-3))^2=4+4+16=24$$
 
-$$D_{43}=\|\vec x_4-\vec x_3\|^2=(0-3)^2+(1-1)^2+(1-0)^2=9+0+1=10$$
+$$D_{43}=\|\vec x_4-\vec x_3\|_2^2=(0-3)^2+(1-1)^2+(1-0)^2=9+0+1=10$$
 
 ดังนั้น
 
@@ -605,15 +605,15 @@ $$D_{41}=3\ <\ D_{43}=10\ <\ D_{42}=24$$
 
 จากสูตร Squared Euclidean
 
-$$\|\vec x_i-\vec x_j\|^2=\Delta A_1^2+\Delta A_2^2+\Delta A_3^2$$
+$$\|\vec x_i-\vec x_j\|_2^2=\Delta A_1^2+\Delta A_2^2+\Delta A_3^2$$
 
 โดย $\vec x_4=[1,1,2]$
 
-$$D_{41}=\|\vec x_4-\vec x_1\|^2=(1-1)^2+(1-2)^2+(2-3)^2=0+1+1=2$$
+$$D_{41}=\|\vec x_4-\vec x_1\|_2^2=(1-1)^2+(1-2)^2+(2-3)^2=0+1+1=2$$
 
-$$D_{42}=\|\vec x_4-\vec x_2\|^2=(1-3)^2+(1-2)^2+(2-1)^2=4+1+1=6$$
+$$D_{42}=\|\vec x_4-\vec x_2\|_2^2=(1-3)^2+(1-2)^2+(2-1)^2=4+1+1=6$$
 
-$$D_{43}=\|\vec x_4-\vec x_3\|^2=(1-2)^2+(1-1)^2+(2-1)^2=1+0+1=2$$
+$$D_{43}=\|\vec x_4-\vec x_3\|_2^2=(1-2)^2+(1-1)^2+(2-1)^2=1+0+1=2$$
 
 ดังนั้น
 
@@ -759,7 +759,7 @@ $$D_{42}=59\ \le\ D_{43}=59\ <\ D_{41}=164$$
 
 ### 1.4 Manhattan
 
-$$d(\vec a,\vec b)=\|\vec a-\vec b\|_1=|a_1-b_1|+|a_2-b_2|+|a_3-b_3|$$
+$$\|\vec x_i-\vec x_j\|_1=|\Delta A_1|+|\Delta A_2|+|\Delta A_3|$$
 
 #### ตัวอย่างโจทย์ 1
 

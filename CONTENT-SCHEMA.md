@@ -20,7 +20,13 @@ export const PAGES = [
 ] as const;
 ```
 
-The pipeline reads exactly these sources. It never scans folders.
+The pipeline reads exactly these sources and the reference page declared next to them. It never scans folders.
+
+```ts
+export const REFERENCE_PAGE = { id: 'definitions', route: '/definitions', label: 'นิยาม', source: 'content/midterm/Definitions.md' } as const;
+```
+
+`Definitions.md` uses the same shapes as the topic files (title and lead, `## 1.` and `## 2.` sections, `### N.M` sub-topics, HTML tables) and has no examples or exercises. It is built apart from the topics: it is in `result.extra`, not in `result.pages`, and not in `home.json`.
 
 Current shape (use as the Phase 2 snapshot):
 

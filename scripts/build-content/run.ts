@@ -1,10 +1,10 @@
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
-import { PAGES } from '../../src/config/site.ts';
+import { PAGES, REFERENCE_PAGE } from '../../src/config/site.ts';
 import { buildContent, writeOutput } from './index.ts';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
-const result = buildContent(root, PAGES);
+const result = buildContent(root, PAGES, [REFERENCE_PAGE]);
 
 if (result.errors.length > 0) {
   console.error(`content: ${result.errors.length} error(s)`);
@@ -14,7 +14,7 @@ if (result.errors.length > 0) {
 
 writeOutput(result, `${root}src/content/generated`);
 const kb = (n: number) => `${(n / 1024).toFixed(1)} KB`;
-for (const p of result.pages) {
+for (const p of [...result.pages, ...result.extra]) {
   const c = p.counts;
   console.log(
     `content: ${p.file.id} -> ${kb(Buffer.byteLength(p.json))} (${kb(gzipSync(p.json).length)} gzip), ${c.sections} sections, ${c.subtopics} sub-topics, ${c.examples} examples`,

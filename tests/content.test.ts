@@ -5,11 +5,11 @@ import { gzipSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
 import { buildContent } from '../scripts/build-content/index.ts';
 import { walkBlocks, walkNodes } from '../scripts/build-content/tree.ts';
-import { PAGES } from '../src/config/site.ts';
+import { PAGES, REFERENCE_PAGE } from '../src/config/site.ts';
 import type { Block } from '../src/content/types.ts';
 
 const root = resolve(__dirname, '..');
-const result = buildContent(root, PAGES);
+const result = buildContent(root, PAGES, [REFERENCE_PAGE]);
 const byId = Object.fromEntries(result.pages.map((p) => [p.file.id, p]));
 
 describe('the real content', () => {
@@ -35,8 +35,8 @@ describe('the real content', () => {
         tables: 23,
         figures: 0,
         lists: 3,
-        displayFormulas: 145,
-        inlineFormulas: 240,
+        displayFormulas: 152,
+        inlineFormulas: 242,
       },
       classification: {
         sections: 4,
@@ -168,7 +168,7 @@ describe('the real content', () => {
   });
 
   it('stays inside the size budget (gzip)', () => {
-    for (const p of result.pages) {
+    for (const p of [...result.pages, ...result.extra]) {
       expect(gzipSync(p.json).length, p.file.id).toBeLessThan(200 * 1024);
     }
     expect(
@@ -193,6 +193,38 @@ describe('the real content', () => {
       '1.3:2:2',
       '1.4:2:2',
     ]);
+  });
+});
+
+describe('the definitions page', () => {
+  const page = result.extra.find((p) => p.file.id === 'definitions')!;
+
+  it('is built apart from the topics: it has no place in Home or its counts', () => {
+    expect(result.extra.map((p) => p.file.id)).toEqual(['definitions']);
+    expect(result.home.pages.map((p) => p.id)).toEqual([
+      'regression',
+      'classification',
+      'clustering',
+    ]);
+    expect(result.meta.definitions).toBeDefined();
+  });
+
+  it('has the definitions section, then the comparisons section, with no examples or exercises', () => {
+    expect(page.file.root.children.map((c) => [c.number, c.children.length])).toEqual([
+      ['1', 7],
+      ['2', 13],
+    ]);
+    expect(page.counts).toMatchObject({ examples: 0, exercises: 0 });
+  });
+
+  it('puts a table in every comparison', () => {
+    const comparisons = page.file.root.children[1].children;
+    for (const c of comparisons) {
+      expect(
+        c.explain.some((b) => b.t === 'table'),
+        c.id,
+      ).toBe(true);
+    }
   });
 });
 

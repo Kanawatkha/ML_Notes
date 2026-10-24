@@ -36,6 +36,20 @@ export const PAGES = [
 
 export type PageId = (typeof PAGES)[number]['id'];
 
+/**
+ * The reference page of definitions and comparisons. It is not a topic: it has no colour band, no
+ * place in the Home diagram and no share in the Home counts. It is built and routed like a page.
+ */
+export const REFERENCE_PAGE = {
+  id: 'definitions',
+  route: '/definitions',
+  label: 'นิยาม',
+  source: 'content/midterm/Definitions.md',
+} as const;
+
+/** Every id the content loaders know: the topics and the reference page. */
+export type ContentPageId = PageId | typeof REFERENCE_PAGE.id;
+
 export const HOME_ROUTE = '/';
 
 /** Thai labels shown to students, see UI-SPEC.md section 1. */
@@ -78,6 +92,8 @@ export const UI_TEXT = {
   exercisesHint: 'ลองทำเองก่อน แล้วกดดูเฉลยเพื่อเทียบคำตอบ',
   solutionShow: 'ดูเฉลย',
   solutionHide: 'ซ่อนเฉลย',
+  definitionsTag: 'Definitions',
+  definitionsLink: 'นิยามและการเปรียบเทียบ',
   updateReady: 'มีเวอร์ชันใหม่ พร้อมใช้งาน',
   updateAction: 'โหลดใหม่',
   offlineReady: 'ใช้งานออฟไลน์ได้แล้ว',

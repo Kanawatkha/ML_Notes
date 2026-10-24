@@ -64,9 +64,9 @@ $$3\times3:\quad C_{ij}=(-1)^{i+j}M_{ij},\qquad \text{adj}A=C^T,\qquad \det A=a_
 
 **K-NN Regression** ระยะ Manhattan
 
-$$d(\vec a,\vec b)=\sum_{j=1}^{n}|a_j-b_j|$$
+$$d(\vec x_i,\vec x_j)=\sum_{m}|x_{im}-x_{jm}|$$
 
-ข้อมูล 1 มิติ ($x$ ตัวเดียว) ได้ $d(x_q,x_i)=|x_q-x_i|$ แล้วทำนายด้วยค่าเฉลี่ยของ $y$ ของ $k$ จุดที่ใกล้ที่สุด
+ข้อมูล 1 มิติ ($x$ ตัวเดียว) ได้ $d(x_i,x_j)=|x_i-x_j|$ โดยจุดที่ต้องทำนายคือจุดสุดท้ายของตาราง (เช่น $x_4$ ได้ $D_{4i}=|x_4-x_i|$) แล้วทำนายด้วยค่าเฉลี่ยของ $y$ ของ $k$ จุดที่ใกล้ที่สุด
 
 $$\hat y=\frac1k\sum_{i=1}^{k}y_i$$
 
@@ -635,174 +635,209 @@ $\hat y=\dfrac1k\sum_{i=1}^{k}y_i$ เมื่อ $y_i$ คือค่า $y$ 
 
 ### ตัวอย่างโจทย์
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของข้อมูลลำดับที่ 4 ด้วย K-NN Regression เมื่อ $k=1,2,3$
+จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของข้อมูลลำดับที่ 6 ด้วย K-NN Regression เมื่อ $k=1,2,3$
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
-  <tr><td align="center">1</td><td align="center">1</td><td align="center">9</td></tr>
-  <tr><td align="center">2</td><td align="center">2</td><td align="center">7</td></tr>
-  <tr><td align="center">3</td><td align="center">8</td><td align="center">1</td></tr>
-  <tr><td align="center">4</td><td align="center">4</td><td align="center">?</td></tr>
+  <tr><td align="center">1</td><td align="center">3</td><td align="center">8</td></tr>
+  <tr><td align="center">2</td><td align="center">9</td><td align="center">5</td></tr>
+  <tr><td align="center">3</td><td align="center">12</td><td align="center">3</td></tr>
+  <tr><td align="center">4</td><td align="center">10</td><td align="center">7</td></tr>
+  <tr><td align="center">5</td><td align="center">6</td><td align="center">9</td></tr>
+  <tr><td align="center">6</td><td align="center">4</td><td align="center">?</td></tr>
 </table>
 
 #### Sol<sup>n</sup>
 
-ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 4 ที่สนใจ
+ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 6 ที่สนใจ
 
 <table align="center">
-  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
-  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>4</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>5</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>6</th><td align="center">D₆₁</td><td align="center">D₆₂</td><td align="center">D₆₃</td><td align="center">D₆₄</td><td align="center">D₆₅</td><td align="center">0</td></tr>
 </table>
 
 จากสูตร Manhattan
 
 $$d(x_i,x_j)=|x_i-x_j|$$
 
-โดย $x_4=4$
+โดย $x_6=4$
 
-$$D_{41}=|x_4-x_1|=|4-1|=3$$
+$$D_{61}=|x_6-x_1|=|4-3|=1$$
 
-$$D_{42}=|x_4-x_2|=|4-2|=2$$
+$$D_{62}=|x_6-x_2|=|4-9|=5$$
 
-$$D_{43}=|x_4-x_3|=|4-8|=4$$
+$$D_{63}=|x_6-x_3|=|4-12|=8$$
+
+$$D_{64}=|x_6-x_4|=|4-10|=6$$
+
+$$D_{65}=|x_6-x_5|=|4-6|=2$$
 
 ดังนั้น
 
 <table align="center">
-  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
-  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>4</th><td align="center">3</td><td align="center">2</td><td align="center">4</td><td align="center">0</td></tr>
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>4</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>5</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>6</th><td align="center">1</td><td align="center">5</td><td align="center">8</td><td align="center">6</td><td align="center">2</td><td align="center">0</td></tr>
 </table>
 
-จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+จากตาราง $D$ แถวที่ 6 เรียงจากน้อยไปมาก
 
-$$D_{42}=2\ <\ D_{41}=3\ <\ D_{43}=4$$
+$$D_{61}=1\ <\ D_{65}=2\ <\ D_{62}=5\ <\ D_{64}=6\ <\ D_{63}=8$$
 
 เลือก $k$ ตัวแรก แล้วเฉลี่ยค่า $y$
 
-- $k=1$: $2\to(\text{\textcircled{2}})\to(y=7)$ ดังนั้น $\hat y=7$
-- $k=2$: $(2,3)\to(\text{\textcircled{2}},\text{\textcircled{1}})\to(y=7,9)$ ดังนั้น $\hat y=\dfrac{7+9}{2}=8$
-- $k=3$: $(2,3,4)\to(\text{\textcircled{2}},\text{\textcircled{1}},\text{\textcircled{3}})\to(y=7,9,1)$ ดังนั้น $\hat y=\dfrac{7+9+1}{3}=5.6666666667$
+- $k=1$: $1\to(\text{\textcircled{1}})\to(y=8)$ ดังนั้น $\hat y=8$
+- $k=2$: $(1,2)\to(\text{\textcircled{1}},\text{\textcircled{5}})\to(y=8,9)$ ดังนั้น $\hat y=\dfrac{8+9}{2}=8.5$
+- $k=3$: $(1,2,5)\to(\text{\textcircled{1}},\text{\textcircled{5}},\text{\textcircled{2}})\to(y=8,9,5)$ ดังนั้น $\hat y=\dfrac{8+9+5}{3}=7.3333333333$
 
-**Ans** $k=1$ ได้ $\hat y=7$, $k=2$ ได้ $\hat y=8$, $k=3$ ได้ $\hat y=5.6666666667$
+**Ans** $k=1$ ได้ $\hat y=8$, $k=2$ ได้ $\hat y=8.5$, $k=3$ ได้ $\hat y=7.3333333333$
 
 ### แบบฝึกหัด 1
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของ $x=4$ ด้วย K-NN Regression เมื่อ $k=1,2,3$ (ระยะ $|x_q-x_i|$ และใช้ค่าเฉลี่ยของ $y$)
+จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของ $x=7$ ด้วย K-NN Regression เมื่อ $k=1,3,5$ (ระยะ $|x_7-x_i|$ และใช้ค่าเฉลี่ยของ $y$)
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
-  <tr><td align="center">1</td><td align="center">5</td><td align="center">11</td></tr>
-  <tr><td align="center">2</td><td align="center">6</td><td align="center">3</td></tr>
-  <tr><td align="center">3</td><td align="center">10</td><td align="center">4</td></tr>
+  <tr><td align="center">1</td><td align="center">6</td><td align="center">10</td></tr>
+  <tr><td align="center">2</td><td align="center">11</td><td align="center">11</td></tr>
+  <tr><td align="center">3</td><td align="center">13</td><td align="center">1</td></tr>
+  <tr><td align="center">4</td><td align="center">5</td><td align="center">2</td></tr>
+  <tr><td align="center">5</td><td align="center">0</td><td align="center">3</td></tr>
+  <tr><td align="center">6</td><td align="center">10</td><td align="center">12</td></tr>
 </table>
 
 #### Sol<sup>n</sup>
 
-ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 4 ที่สนใจ
+ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 7 ที่สนใจ
 
 <table align="center">
-  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
-  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr>
+  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>4</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>5</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>6</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>7</th><td align="center">D₇₁</td><td align="center">D₇₂</td><td align="center">D₇₃</td><td align="center">D₇₄</td><td align="center">D₇₅</td><td align="center">D₇₆</td><td align="center">0</td></tr>
 </table>
 
 จากสูตร Manhattan
 
 $$d(x_i,x_j)=|x_i-x_j|$$
 
-โดย $x_4=4$
+โดย $x_7=7$
 
-$$D_{41}=|x_4-x_1|=|4-5|=1$$
+$$D_{71}=|x_7-x_1|=|7-6|=1$$
 
-$$D_{42}=|x_4-x_2|=|4-6|=2$$
+$$D_{72}=|x_7-x_2|=|7-11|=4$$
 
-$$D_{43}=|x_4-x_3|=|4-10|=6$$
+$$D_{73}=|x_7-x_3|=|7-13|=6$$
+
+$$D_{74}=|x_7-x_4|=|7-5|=2$$
+
+$$D_{75}=|x_7-x_5|=|7-0|=7$$
+
+$$D_{76}=|x_7-x_6|=|7-10|=3$$
 
 ดังนั้น
 
 <table align="center">
-  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
-  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>4</th><td align="center">1</td><td align="center">2</td><td align="center">6</td><td align="center">0</td></tr>
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr>
+  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>4</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>5</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>6</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>7</th><td align="center">1</td><td align="center">4</td><td align="center">6</td><td align="center">2</td><td align="center">7</td><td align="center">3</td><td align="center">0</td></tr>
 </table>
 
-จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+จากตาราง $D$ แถวที่ 7 เรียงจากน้อยไปมาก
 
-$$D_{41}=1\ <\ D_{42}=2\ <\ D_{43}=6$$
+$$D_{71}=1\ <\ D_{74}=2\ <\ D_{76}=3\ <\ D_{72}=4\ <\ D_{73}=6\ <\ D_{75}=7$$
 
 เลือก $k$ ตัวแรก แล้วเฉลี่ยค่า $y$
 
-- $k=1$: $1\to(\text{\textcircled{1}})\to(y=11)$ ดังนั้น $\hat y=11$
-- $k=2$: $(1,2)\to(\text{\textcircled{1}},\text{\textcircled{2}})\to(y=11,3)$ ดังนั้น $\hat y=\dfrac{11+3}{2}=7$
-- $k=3$: $(1,2,6)\to(\text{\textcircled{1}},\text{\textcircled{2}},\text{\textcircled{3}})\to(y=11,3,4)$ ดังนั้น $\hat y=\dfrac{11+3+4}{3}=6$
+- $k=1$: $1\to(\text{\textcircled{1}})\to(y=10)$ ดังนั้น $\hat y=10$
+- $k=3$: $(1,2,3)\to(\text{\textcircled{1}},\text{\textcircled{4}},\text{\textcircled{6}})\to(y=10,2,12)$ ดังนั้น $\hat y=\dfrac{10+2+12}{3}=8$
+- $k=5$: $(1,2,3,4,6)\to(\text{\textcircled{1}},\text{\textcircled{4}},\text{\textcircled{6}},\text{\textcircled{2}},\text{\textcircled{3}})\to(y=10,2,12,11,1)$ ดังนั้น $\hat y=\dfrac{10+2+12+11+1}{5}=7.2$
 
-**Ans** $k=1$ ได้ $\hat y=11$, $k=2$ ได้ $\hat y=7$, $k=3$ ได้ $\hat y=6$
+**Ans** $k=1$ ได้ $\hat y=10$, $k=3$ ได้ $\hat y=8$, $k=5$ ได้ $\hat y=7.2$
 
 ### แบบฝึกหัด 2
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของ $x=9$ ด้วย K-NN Regression เมื่อ $k=1,2,3$ (ระยะ $|x_q-x_i|$ และใช้ค่าเฉลี่ยของ $y$)
+จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของ $x=9$ ด้วย K-NN Regression เมื่อ $k=1,2,3$ (ระยะ $|x_6-x_i|$ และใช้ค่าเฉลี่ยของ $y$)
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
-  <tr><td align="center">1</td><td align="center">2</td><td align="center">11</td></tr>
-  <tr><td align="center">2</td><td align="center">7</td><td align="center">11</td></tr>
-  <tr><td align="center">3</td><td align="center">11</td><td align="center">9</td></tr>
+  <tr><td align="center">1</td><td align="center">2</td><td align="center">5</td></tr>
+  <tr><td align="center">2</td><td align="center">13</td><td align="center">3</td></tr>
+  <tr><td align="center">3</td><td align="center">5</td><td align="center">11</td></tr>
+  <tr><td align="center">4</td><td align="center">3</td><td align="center">1</td></tr>
+  <tr><td align="center">5</td><td align="center">6</td><td align="center">1</td></tr>
 </table>
 
 #### Sol<sup>n</sup>
 
-ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 4 ที่สนใจ
+ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 6 ที่สนใจ
 
 <table align="center">
-  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
-  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>4</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>5</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>6</th><td align="center">D₆₁</td><td align="center">D₆₂</td><td align="center">D₆₃</td><td align="center">D₆₄</td><td align="center">D₆₅</td><td align="center">0</td></tr>
 </table>
 
 จากสูตร Manhattan
 
 $$d(x_i,x_j)=|x_i-x_j|$$
 
-โดย $x_4=9$
+โดย $x_6=9$
 
-$$D_{41}=|x_4-x_1|=|9-2|=7$$
+$$D_{61}=|x_6-x_1|=|9-2|=7$$
 
-$$D_{42}=|x_4-x_2|=|9-7|=2$$
+$$D_{62}=|x_6-x_2|=|9-13|=4$$
 
-$$D_{43}=|x_4-x_3|=|9-11|=2$$
+$$D_{63}=|x_6-x_3|=|9-5|=4$$
+
+$$D_{64}=|x_6-x_4|=|9-3|=6$$
+
+$$D_{65}=|x_6-x_5|=|9-6|=3$$
 
 ดังนั้น
 
 <table align="center">
-  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
-  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>4</th><td align="center">7</td><td align="center">2</td><td align="center">2</td><td align="center">0</td></tr>
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>4</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>5</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>6</th><td align="center">7</td><td align="center">4</td><td align="center">4</td><td align="center">6</td><td align="center">3</td><td align="center">0</td></tr>
 </table>
 
-จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+จากตาราง $D$ แถวที่ 6 เรียงจากน้อยไปมาก
 
-$$D_{42}=2\ \le\ D_{43}=2\ <\ D_{41}=7$$
+$$D_{65}=3\ <\ D_{62}=4\ \le\ D_{63}=4\ <\ D_{64}=6\ <\ D_{61}=7$$
 
 ค่าเท่ากันเรียงตามลำดับในตาราง
 
 เลือก $k$ ตัวแรก แล้วเฉลี่ยค่า $y$
 
-- $k=1$: $2\to(\text{\textcircled{2}})\to(y=11)$ ดังนั้น $\hat y=11$
-- $k=2$: $(2,2)\to(\text{\textcircled{2}},\text{\textcircled{3}})\to(y=11,9)$ ดังนั้น $\hat y=\dfrac{11+9}{2}=10$
-- $k=3$: $(2,2,7)\to(\text{\textcircled{2}},\text{\textcircled{3}},\text{\textcircled{1}})\to(y=11,9,11)$ ดังนั้น $\hat y=\dfrac{11+9+11}{3}=10.3333333333$
+- $k=1$: $3\to(\text{\textcircled{5}})\to(y=1)$ ดังนั้น $\hat y=1$
+- $k=2$: $(3,4)\to(\text{\textcircled{5}},\text{\textcircled{2}})\to(y=1,3)$ ดังนั้น $\hat y=\dfrac{1+3}{2}=2$
+- $k=3$: $(3,4,4)\to(\text{\textcircled{5}},\text{\textcircled{2}},\text{\textcircled{3}})\to(y=1,3,11)$ ดังนั้น $\hat y=\dfrac{1+3+11}{3}=5$
 
-**Ans** $k=1$ ได้ $\hat y=11$, $k=2$ ได้ $\hat y=10$, $k=3$ ได้ $\hat y=10.3333333333$
+**Ans** $k=1$ ได้ $\hat y=1$, $k=2$ ได้ $\hat y=2$, $k=3$ ได้ $\hat y=5$

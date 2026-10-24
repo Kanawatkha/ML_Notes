@@ -18,7 +18,7 @@ Decision D15 in `PLAN.md`: no Playwright e2e suite by default. Add it only if th
 
 ## 2. Content pipeline checks (Phase 2)
 
-1. **Parse coverage.** Every file declared in `PAGES` parses. A file not in `PAGES` is never read (test: a broken file placed in `content/midterm/` does not fail the build). Unknown constructs, HTML tags or attributes fail with file and line.
+1. **Parse coverage.** Every file declared in `PAGES` (and the reference page) parses. A file not in `PAGES` is never read (test: a broken file placed in `content/midterm/` does not fail the build). Unknown constructs, HTML tags or attributes fail with file and line.
 2. **Round trip.** Convert generated data back to normalized text and compare with the normalized Markdown. Normalization: collapse whitespace, drop `---` rules and `<div align="center">` wrappers, decode `&nbsp;`, flatten HTML tables to their cell texts in order, keep math source verbatim, account for the Sol headings and the `**Ans**` lead. Zero diff is required. This guarantees "the same words as the Markdown".
 3. **KaTeX strict.** Every inline and display formula compiles with `throwOnError: true, strict: 'error'` and produces no warning (Thai only inside `\text{}`).
 4. **SVG rules.** No blank line, well-formed XML, `viewBox` and `aria-label` present, no scripts or event handlers, no external references, `currentColor` only, ids unique per page after rewriting.

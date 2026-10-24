@@ -95,7 +95,7 @@ ML_Notes/
 
 ## 4. Data flow in detail
 
-1. `scripts/build-content` reads the files declared in `PAGES` (`src/config/site.ts`), parses blocks (Markdown plus the allowed HTML), builds each page tree (`CONTENT-SCHEMA.md` section 5), pre-renders every formula with KaTeX (strict, HTML plus MathML), validates tables and SVG, runs the round trip, and writes `generated/<page>.json`, `generated/home.json`, `generated/meta.json` and `report.txt`.
+1. `scripts/build-content` reads the files declared in `PAGES` and the reference page `REFERENCE_PAGE` (`src/config/site.ts`; the reference page gets its own json and meta entry but no place in `home.json`), parses blocks (Markdown plus the allowed HTML), builds each page tree (`CONTENT-SCHEMA.md` section 5), pre-renders every formula with KaTeX (strict, HTML plus MathML), validates tables and SVG, runs the round trip, and writes `generated/<page>.json`, `generated/home.json`, `generated/meta.json` and `report.txt`.
 2. `TopicPage` paints the navbar and hero from `meta.json` (small, preloaded), then two frames later (`useAfterPaint`) loads `generated/<page>.json` with a skeleton, then mounts sections and cards in batches.
 3. `HomePage` paints the hero and the diagram root from `home.json`; opening a topic in the diagram loads that page's chunk (already prefetched on idle) to show leaf blocks and examples.
 4. `BlockRenderer` maps `block.t` to a component; an unknown type fails the type check.
@@ -125,7 +125,7 @@ app    ->  pages, components, config
 
 ## 7. Routing
 
-- `HashRouter` (GitHub Pages cannot rewrite deep links). Routes: `/`, one route per `PAGES` entry, `*`. Each route is code-split with `React.lazy`; `TopicPage` is one component that reads its page id from the route.
+- `HashRouter` (GitHub Pages cannot rewrite deep links). Routes: `/`, one route per `PAGES` entry, `/definitions` (`REFERENCE_PAGE`), `*`. Each route is code-split with `React.lazy`; `TopicPage` and `DefinitionsPage` are thin wrappers over one `ContentPage` (hero from the meta file, then the rail and outline); they differ only in the hero.
 - `?s=<node>` on a topic route: after the content mounts, `jumpTo(node)` runs once. In-page navigation (rail entries) does not change the URL.
 - `?p=...&x=1` on Home: the diagram's open path (UI-SPEC 4.2).
 

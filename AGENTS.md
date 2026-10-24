@@ -4,7 +4,7 @@ Instructions for any AI coding agent working in this repository. Humans can read
 
 ## Overview
 
-ML Notes is a static, frontend-only study site for the midterm of course 1322308 Machine Learning (PIM). It has four pages: Home (an interactive diagram of the exam scope), Regression, Classification and Clustering. Content lives in three Markdown files under `content/midterm/`. A Node build script turns them into typed data. A React app renders the data and ships as a PWA on GitHub Pages.
+ML Notes is a static, frontend-only study site for the midterm of course 1322308 Machine Learning (PIM). It has five pages: Home (an interactive diagram of the exam scope), Regression, Classification, Clustering and Definitions (a reference of definitions and comparisons). Content lives in four Markdown files under `content/midterm/`. A Node build script turns them into typed data. A React app renders the data and ships as a PWA on GitHub Pages.
 
 It reuses code from two sibling projects in the same course folder tree, read-only references: 1322201 Digital Logic Notes (`../../1322201 การออกแบบดิจิทัลลอจิก/midterm/`: home diagram, share dialog, pipeline) and 1323404 NLP Notes (`../../1323404 การประมวลผลภาษาธรรมชาติ/NLP_Notes/`: contents rail, CSS animation layer, PAGES-driven build). Copy and adapt as `ARCHITECTURE.md` section 3 says; never edit those folders.
 

@@ -1,10 +1,10 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { UI_TEXT } from '@/config/site';
+import { UI_TEXT, type PageId } from '@/config/site';
 import * as loaders from '@/content/loaders';
 import { jumpTo } from '@/lib/jumpTo';
-import { counts, fileOf, metaMap } from '@/test/content';
+import { counts, metaMap } from '@/test/content';
 import TopicPage from './TopicPage';
 
 vi.mock('@/content/loaders', async () => {
@@ -17,7 +17,7 @@ vi.mock('@/content/loaders', async () => {
 });
 vi.mock('@/lib/jumpTo', () => ({ jumpTo: vi.fn(() => true) }));
 
-function renderPage(path: string, id: Parameters<typeof fileOf>[0]) {
+function renderPage(path: string, id: PageId) {
   return render(
     <MemoryRouter initialEntries={[path]}>
       <TopicPage pageId={id} />

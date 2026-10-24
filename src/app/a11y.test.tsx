@@ -55,14 +55,15 @@ describe('axe: no serious or critical violations', () => {
     expect(await violations()).toEqual([]);
   }, 20000);
 
-  it.each(['/regression', '/classification', '/clustering'])(
+  it.each(['/regression', '/classification', '/clustering', '/definitions'])(
     'the page %s on a wide screen',
     async (path) => {
       mockViewport(true);
       renderAt(path);
       await screen.findByRole('navigation', { name: UI_TEXT.railLabel }, { timeout: 15000 });
       await waitFor(
-        () => expect(document.querySelectorAll('article[id]').length).toBeGreaterThan(0),
+        () =>
+          expect(document.querySelectorAll('article[id], section[id]').length).toBeGreaterThan(0),
         {
           timeout: 15000,
         },

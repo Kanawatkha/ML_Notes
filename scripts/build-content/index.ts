@@ -21,6 +21,8 @@ export type BuiltPage = {
 
 export type BuildResult = {
   pages: BuiltPage[];
+  /** Pages that are built and written but are not topics (no place in `home`). */
+  extra: BuiltPage[];
   home: HomeFile;
   meta: Record<string, PageMeta>;
   warnings: string[];
@@ -103,17 +105,25 @@ export function convertMarkdown(
 }
 
 /** Converts every declared page. Reads only `pages[].source`, never scans folders. Never writes. */
-export function buildContent(root: string, pages: readonly PageSource[]): BuildResult {
+export function buildContent(
+  root: string,
+  pages: readonly PageSource[],
+  extraPages: readonly PageSource[] = [],
+): BuildResult {
   const warnings: string[] = [];
   const errors: string[] = [];
   const built: BuiltPage[] = [];
+  const extra: BuiltPage[] = [];
 
-  for (const page of pages) {
+  for (const [page, into] of [
+    ...pages.map((p) => [p, built] as const),
+    ...extraPages.map((p) => [p, extra] as const),
+  ]) {
     const rel = page.source;
     try {
       const md = readFileSync(join(root, page.source), 'utf8');
       const file = convertMarkdown(md, { id: page.id, file: rel }, (m) => warnings.push(m));
-      built.push({ file, source: rel, counts: countsOf(file), json: JSON.stringify(file) });
+      into.push({ file, source: rel, counts: countsOf(file), json: JSON.stringify(file) });
     } catch (e) {
       errors.push(
         e instanceof Error && e.message.startsWith(rel)
@@ -137,7 +147,7 @@ export function buildContent(root: string, pages: readonly PageSource[]): BuildR
     },
   };
   const meta: Record<string, PageMeta> = {};
-  for (const p of built) {
+  for (const p of [...built, ...extra]) {
     meta[p.file.id] = {
       id: p.file.id,
       title: p.file.title,
@@ -147,7 +157,7 @@ export function buildContent(root: string, pages: readonly PageSource[]): BuildR
   }
 
   const report = renderReport(
-    built.map((p) => ({
+    [...built, ...extra].map((p) => ({
       file: p.file,
       source: p.source,
       counts: p.counts,
@@ -156,13 +166,14 @@ export function buildContent(root: string, pages: readonly PageSource[]): BuildR
     })),
     warnings,
   );
-  return { pages: built, home, meta, warnings, errors, report };
+  return { pages: built, extra, home, meta, warnings, errors, report };
 }
 
 export function writeOutput(result: BuildResult, outDir: string): void {
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
-  for (const p of result.pages) writeFileSync(join(outDir, `${p.file.id}.json`), p.json);
+  for (const p of [...result.pages, ...result.extra])
+    writeFileSync(join(outDir, `${p.file.id}.json`), p.json);
   writeFileSync(join(outDir, 'home.json'), JSON.stringify(result.home));
   writeFileSync(join(outDir, 'meta.json'), JSON.stringify(result.meta));
   writeFileSync(join(outDir, 'report.txt'), result.report);

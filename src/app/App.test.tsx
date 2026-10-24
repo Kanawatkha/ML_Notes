@@ -25,13 +25,17 @@ describe('routes', () => {
     ['/regression', 'Regression'],
     ['/classification', 'Classification'],
     ['/clustering', 'Clustering'],
+    ['/definitions', 'Definitions'],
   ])('renders the %s page', async (path, label) => {
     renderAt(path);
     // the first load of a page chunk transforms megabytes of generated JSON: allow for a cold cache
     expect(
       await screen.findByRole('heading', { level: 1, name: label }, { timeout: 15000 }),
     ).toBeInTheDocument();
-    await waitFor(() => expect(document.title).toBe(`${label} | ML Notes`), { timeout: 15000 });
+    await waitFor(
+      () => expect(document.title).toBe(`${path === '/definitions' ? 'นิยาม' : label} | ML Notes`),
+      { timeout: 15000 },
+    );
   });
 
   it('shows the not-found page with a link back Home for unknown routes', async () => {

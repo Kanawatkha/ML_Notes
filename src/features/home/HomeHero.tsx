@@ -1,8 +1,8 @@
 import { HomeIllustration } from '@/components/illustrations/HomeIllustration';
-import { Button } from '@/components/ui/Button';
+import { Button, ButtonLink } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { StatRow } from '@/components/ui/StatRow';
-import { SITE_NAME, UI_TEXT } from '@/config/site';
+import { REFERENCE_PAGE, SITE_NAME, UI_TEXT } from '@/config/site';
 import type { HomeFile } from '@/content/types';
 import { prefersReducedMotion } from '@/lib/motion';
 
@@ -42,9 +42,14 @@ export function HomeHero({ home, diagramId }: HomeHeroProps) {
         ) : (
           <div className="h-[72px]" aria-hidden="true" />
         )}
-        <Button variant="secondary" onClick={toDiagram} className="self-start md:hidden">
-          {UI_TEXT.diagramTitle} ↓
-        </Button>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <ButtonLink variant="outline" to={REFERENCE_PAGE.route}>
+            {UI_TEXT.definitionsLink}
+          </ButtonLink>
+          <Button variant="secondary" onClick={toDiagram} className="md:hidden">
+            {UI_TEXT.diagramTitle} ↓
+          </Button>
+        </div>
       </div>
       <HomeIllustration />
     </section>

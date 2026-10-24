@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { PAGES, REPO_NAME, SITE_NAME } from './site';
+import { PAGES, REFERENCE_PAGE, REPO_NAME, SITE_NAME } from './site';
 
 describe('site config', () => {
   it('uses the GitHub repository name for the Pages base path', () => {
@@ -11,6 +11,12 @@ describe('site config', () => {
 
   it('declares the three topic pages', () => {
     expect(PAGES.map((p) => p.id)).toEqual(['regression', 'classification', 'clustering']);
+  });
+
+  it('declares the definitions page apart from the topics, with its own route and source', () => {
+    expect(PAGES.map((p) => p.id)).not.toContain(REFERENCE_PAGE.id);
+    expect(PAGES.map((p) => p.route)).not.toContain(REFERENCE_PAGE.route);
+    expect(existsSync(resolve(__dirname, '../..', REFERENCE_PAGE.source))).toBe(true);
   });
 
   it('gives every page a unique route and an existing Markdown source', () => {

@@ -1,7 +1,7 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
-import { UI_TEXT } from '@/config/site';
+import { REFERENCE_PAGE, UI_TEXT } from '@/config/site';
 import { homeFile } from '@/test/content';
 import HomePage from './HomePage';
 
@@ -30,6 +30,15 @@ describe('HomePage', () => {
     expect(screen.getByText(UI_TEXT.courseLabel)).toBeInTheDocument();
     await waitFor(() => expect(document.title).toBe('ML Notes'));
     await screen.findByText(UI_TEXT.statExamples);
+  });
+
+  it('links to the definitions page, which is not counted among the topics', async () => {
+    renderHome();
+    expect(screen.getByRole('link', { name: UI_TEXT.definitionsLink })).toHaveAttribute(
+      'href',
+      REFERENCE_PAGE.route,
+    );
+    expect(homeFile.pages.map((p) => p.id)).not.toContain(REFERENCE_PAGE.id);
   });
 
   it('counts the topics, leaves and examples from the home file', async () => {

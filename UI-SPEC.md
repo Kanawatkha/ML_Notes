@@ -283,6 +283,14 @@ Ans strip                                            pale-green fill, 3 px deep-
 | Sol label | Pill `Solⁿ` (`soft-stone`, radius `full`, `type-caption` 500), from the heading `Sol<sup>n</sup>` |
 | Ans | Strip as in 5.4 |
 
+### 5.6 Definitions page (`#/definitions`)
+
+- A reference page built from `Definitions.md` (section 1 definitions, section 2 comparisons). It uses the same body as the topic pages: contents rail, section headers, `?s=` links, back to top.
+- Hero: the light surface `soft-stone` with ink text, a mono tag "Definitions", the title, the lead and one count (topics). No colour band, no illustration, no `data-surface="dark"`.
+- Navbar: a fourth tab "นิยาม" after the three topics, with a hollow dot (outline `ink`) instead of a colour dot; mobile menu: a fifth row numbered 04 with a hollow square, below a hairline.
+- Home: an outline button "นิยามและการเปรียบเทียบ" under the numbers. The page is not in the diagram and not in the Home counts.
+- Comparison tables are ordinary HTML tables (first column row headers); the wide one (four distances) scrolls sideways like any table.
+
 ## 6. Contents rail (topic pages)
 
 Carried over from the NLP Notes rail, restyled.

@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter, useNavigate } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Navbar } from '@/components/layout/Navbar';
-import { PAGES, UI_TEXT } from '@/config/site';
+import { PAGES, REFERENCE_PAGE, UI_TEXT } from '@/config/site';
 
 function renderAt(path: string) {
   let go: (to: string) => void = () => {};
@@ -38,7 +38,7 @@ describe('tabs', () => {
   it('lists the topic pages in order and marks the current one', () => {
     renderAt('/classification');
     const nav = screen.getByRole('navigation', { name: 'ML Notes' });
-    const labels = PAGES.map((p) => p.label);
+    const labels = [...PAGES.map((p) => p.label), REFERENCE_PAGE.label];
     for (const label of labels) {
       expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument();
     }
@@ -70,7 +70,11 @@ describe('mobile menu', () => {
     expect(toggle).toHaveAttribute('aria-expanded', 'true');
     expect(toggle).toHaveAccessibleName(UI_TEXT.menuClose);
     const rows = within(menu).getAllByRole('link');
-    expect(rows.map((r) => r.getAttribute('href'))).toEqual(['/', ...PAGES.map((p) => p.route)]);
+    expect(rows.map((r) => r.getAttribute('href'))).toEqual([
+      '/',
+      ...PAGES.map((p) => p.route),
+      REFERENCE_PAGE.route,
+    ]);
     expect(menu.contains(document.activeElement)).toBe(true);
     expect(document.documentElement.style.overflow).toBe('hidden');
 

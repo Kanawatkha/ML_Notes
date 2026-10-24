@@ -7,7 +7,7 @@ import { ReadingProgress } from '@/components/layout/ReadingProgress';
 import { ShareDialog } from '@/components/layout/ShareDialog';
 import { buttonClass } from '@/components/ui/buttonClass';
 import { Icon } from '@/components/ui/Icon';
-import { HOME_ROUTE, PAGES, SITE_NAME, UI_TEXT } from '@/config/site';
+import { HOME_ROUTE, PAGES, REFERENCE_PAGE, SITE_NAME, UI_TEXT } from '@/config/site';
 import { BAND_CLASS } from '@/lib/bands';
 import { cn } from '@/lib/cn';
 
@@ -27,7 +27,8 @@ export function Navbar() {
   const shareRef = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
   const open = openAt === pathname;
-  const onTopicPage = PAGES.some((page) => page.route === pathname);
+  const onTopicPage =
+    PAGES.some((page) => page.route === pathname) || pathname === REFERENCE_PAGE.route;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -91,6 +92,20 @@ export function Navbar() {
               </NavLink>
             </li>
           ))}
+          <li>
+            <NavLink
+              to={REFERENCE_PAGE.route}
+              className={({ isActive }) =>
+                cn(
+                  'type-button inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 whitespace-nowrap transition-colors duration-[160ms]',
+                  isActive ? 'border-primary text-primary' : 'border-transparent text-ink',
+                )
+              }
+            >
+              <span aria-hidden="true" className="size-2 rounded-full border border-ink" />
+              {REFERENCE_PAGE.label}
+            </NavLink>
+          </li>
         </ul>
 
         <div className="flex items-center gap-1 justify-self-end">
