@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { jumpTo } from './jumpTo';
+import { isGliding, jumpTo } from './jumpTo';
 
 afterEach(() => {
   document.body.innerHTML = '';
@@ -20,13 +20,23 @@ describe('jumpTo', () => {
     expect(window.location.hash).toBe(hash);
   });
 
-  it('uses smooth scrolling unless the visitor asked for less motion', () => {
-    document.body.innerHTML = '<h2 id="q3" tabindex="-1">ข้อ 3</h2>';
-    const el = document.getElementById('q3') as HTMLElement;
-    el.scrollIntoView = vi.fn();
-    window.matchMedia = vi.fn().mockReturnValue({ matches: false }) as typeof window.matchMedia;
-    jumpTo('q3');
-    expect(el.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
+  it('glides with scrollTo instead of the browser smooth scroll unless the visitor asked for less motion', () => {
+    vi.useFakeTimers();
+    try {
+      document.body.innerHTML = '<h2 id="q3" tabindex="-1">ข้อ 3</h2>';
+      const el = document.getElementById('q3') as HTMLElement;
+      el.scrollIntoView = vi.fn();
+      window.scrollTo = vi.fn() as typeof window.scrollTo;
+      window.matchMedia = vi.fn().mockReturnValue({ matches: false }) as typeof window.matchMedia;
+      jumpTo('q3');
+      expect(el.scrollIntoView).not.toHaveBeenCalled();
+      vi.advanceTimersByTime(100);
+      expect(window.scrollTo).toHaveBeenCalledWith(
+        expect.objectContaining({ behavior: 'instant' }),
+      );
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('marks the arrival for a moment, and restarts the mark when the same target is chosen again', () => {
@@ -35,6 +45,7 @@ describe('jumpTo', () => {
       document.body.innerHTML = '<h2 id="q3" tabindex="-1">ข้อ 3</h2>';
       const el = document.getElementById('q3') as HTMLElement;
       el.scrollIntoView = vi.fn();
+      window.scrollTo = vi.fn() as typeof window.scrollTo;
       window.matchMedia = vi.fn().mockReturnValue({ matches: false }) as typeof window.matchMedia;
 
       jumpTo('q3');
@@ -57,75 +68,120 @@ describe('jumpTo', () => {
   });
 });
 
-describe('jumpTo settling', () => {
-  /** A heading whose distance from the top of the window is read from `tops`, one value per look. */
-  function heading(tops: number[], margin = '96px') {
+describe('jumpTo glide', () => {
+  /** A heading that sits `gap` px below its scroll margin until the page has scrolled by `gap`. */
+  function heading(gap: number, drift = 0) {
     document.body.innerHTML = '<h2 id="i1" tabindex="-1" style="scroll-margin-top: 96px">x</h2>';
     const el = document.getElementById('i1') as HTMLElement;
     el.scrollIntoView = vi.fn();
-    const looks = [...tops];
-    el.getBoundingClientRect = () =>
-      ({ top: looks.length > 1 ? looks.shift() : looks[0] }) as DOMRect;
+    let y = 0;
+    window.scrollTo = vi.fn((o: ScrollToOptions) => {
+      y = o.top ?? 0;
+    }) as typeof window.scrollTo;
+    Object.defineProperty(window, 'scrollY', { configurable: true, get: () => y });
+    // the target moves by `drift` once the glide is half way, like cards that took their real size
+    el.getBoundingClientRect = () => ({ top: 96 + gap + (y > gap / 2 ? drift : 0) - y }) as DOMRect;
     vi.spyOn(window, 'getComputedStyle').mockReturnValue({
-      scrollMarginTop: margin,
+      scrollMarginTop: '96px',
     } as CSSStyleDeclaration);
-    return el;
+    return { el, position: () => y };
   }
 
   const motion = (reduced: boolean) => {
     window.matchMedia = vi.fn().mockReturnValue({ matches: reduced }) as typeof window.matchMedia;
   };
 
-  it('puts the target right again when the cards near it changed size during a smooth scroll', () => {
+  it('lands exactly on the target, even when the target moved on the way', () => {
     vi.useFakeTimers();
     try {
       motion(false);
-      const el = heading([380, 96]); // 284 px off, then in place
+      const { position } = heading(3000, 400);
       jumpTo('i1');
-      expect(el.scrollIntoView).toHaveBeenCalledTimes(1);
-
-      vi.advanceTimersByTime(1300);
-      expect(el.scrollIntoView).toHaveBeenCalledTimes(2);
-      expect(el.scrollIntoView).toHaveBeenLastCalledWith({ behavior: 'auto', block: 'start' });
-
-      vi.advanceTimersByTime(500); // checked again, now in place: nothing more
-      expect(el.scrollIntoView).toHaveBeenCalledTimes(2);
+      vi.advanceTimersByTime(2000);
+      expect(position()).toBe(3400);
     } finally {
       vi.useRealTimers();
     }
   });
 
-  it('does nothing more when the target is where the scroll margin puts it', () => {
+  it('never moves backwards on the way down', () => {
     vi.useFakeTimers();
     try {
       motion(false);
-      const el = heading([98]); // within 4 px of 96
+      const { position } = heading(2000);
       jumpTo('i1');
-      vi.advanceTimersByTime(3000);
-      expect(el.scrollIntoView).toHaveBeenCalledTimes(1);
+      let last = 0;
+      for (let t = 0; t < 1000; t += 16) {
+        vi.advanceTimersByTime(16);
+        expect(position()).toBeGreaterThanOrEqual(last);
+        last = position();
+      }
     } finally {
       vi.useRealTimers();
     }
   });
 
-  it('waits for the end of the scroll event when the browser sends one', () => {
+  it('takes longer for a long jump than a short one, and is capped', () => {
     vi.useFakeTimers();
     try {
       motion(false);
-      const el = heading([380, 96]);
+      const short = heading(300);
       jumpTo('i1');
-      window.dispatchEvent(new Event('scrollend'));
-      expect(el.scrollIntoView).toHaveBeenCalledTimes(2);
+      vi.advanceTimersByTime(300);
+      expect(short.position()).toBeLessThan(300);
+      vi.advanceTimersByTime(300);
+      expect(short.position()).toBe(300);
+
+      const long = heading(40000);
+      jumpTo('i1');
+      vi.advanceTimersByTime(950);
+      expect(long.position()).toBe(40000);
     } finally {
       vi.useRealTimers();
     }
   });
 
-  it('checks soon after an instant jump, and gives up after three corrections', () => {
+  it('hands the scroll back to the reader at once when they use the wheel', () => {
+    vi.useFakeTimers();
+    try {
+      motion(false);
+      const { position } = heading(3000);
+      jumpTo('i1');
+      vi.advanceTimersByTime(200);
+      const stopped = position();
+      expect(stopped).toBeGreaterThan(0);
+      window.dispatchEvent(new Event('wheel'));
+      vi.advanceTimersByTime(1000);
+      expect(position()).toBe(stopped);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('says when it has ended with a scrollend event, and is gliding until then', () => {
+    vi.useFakeTimers();
+    try {
+      motion(false);
+      heading(500);
+      const ended = vi.fn();
+      window.addEventListener('scrollend', ended);
+      jumpTo('i1');
+      expect(isGliding()).toBe(true);
+      vi.advanceTimersByTime(1000);
+      expect(isGliding()).toBe(false);
+      expect(ended).toHaveBeenCalledTimes(1);
+      window.removeEventListener('scrollend', ended);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('under reduced motion jumps at once, checks soon after, and gives up after three corrections', () => {
     vi.useFakeTimers();
     try {
       motion(true);
-      const el = heading([500]); // never gets right
+      const { el } = heading(500);
+      el.getBoundingClientRect = () => ({ top: 500 }) as DOMRect; // never gets right
       jumpTo('i1');
       expect(el.scrollIntoView).toHaveBeenCalledTimes(1);
       vi.advanceTimersByTime(130);

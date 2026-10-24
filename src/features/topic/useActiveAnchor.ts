@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { isGliding } from '@/lib/jumpTo';
 import { flattenRail, positionOf, type RailEntry, type ReadingPosition } from './rail/treeModel';
 
 /** A part of the page counts as "reached" once its top is this far below the top of the window. */
@@ -84,6 +85,7 @@ export function useActiveAnchor(entries: RailEntry[], endId: string) {
       if (!frame) frame = requestAnimationFrame(update);
     };
     const onScrollEnd = () => {
+      if (isGliding()) return;
       lockUntil.current = 0;
       schedule();
     };
