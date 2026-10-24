@@ -263,9 +263,10 @@ Ans strip                                            pale-green fill, 3 px deep-
 
 ### 5.4b Exercise card
 
-- Marks a problem to solve alone. It must never be mistaken for a worked example, so it differs in surface and border: `soft-stone` fill, 1 px dashed border (`ink` at 40%), radius `md`, padding 20 (32 from `md` up), no Sol label and no Ans strip.
+- Marks a problem to solve alone. It must never be mistaken for a worked example, so it differs in surface and border: `soft-stone` fill, 1 px dashed border (`ink` at 40%), radius `md`, padding 20 (32 from `md` up), the solution is hidden until the card's own button is pressed.
 - Header: the chip `PR 03` (coral outline, the running number in the page) and the title "แบบฝึกหัด N" in `type-feature-heading`; then the problem blocks (text, table, formulas, figure).
-- The first exercise of a topic is preceded by a group label (a 1 px `ink` rule on top, "แบบฝึกหัด" in `type-feature-heading`, and the hint "ลองทำเองก่อน แล้วค่อยเทียบวิธีกับตัวอย่างโจทย์ด้านบน" in `body-muted`).
+- The first exercise of a topic is preceded by a group label (a 1 px `ink` rule on top, "แบบฝึกหัด" in `type-feature-heading`, and the hint "ลองทำเองก่อน แล้วกดดูเฉลยเพื่อเทียบคำตอบ" in `body-muted`).
+- Below the problem: an outline button "ดูเฉลย" / "ซ่อนเฉลย" with a plus/minus icon, `aria-expanded` and `aria-controls`. Each card opens and closes on its own (local state, closed on load). Open, it shows the Sol label, the steps and the Ans strip below a hairline rule. The solution is not in the DOM while closed.
 - Order on a page: the theory of a topic, its examples (EX), then its exercises (PR). Exercises rise on scroll like example cards (A9).
 - The contents rail lists them after the examples as `PR 03`; the heroes (Home and topic pages) count them beside the examples.
 

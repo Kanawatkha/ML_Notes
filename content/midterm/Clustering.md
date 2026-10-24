@@ -254,6 +254,95 @@ label เหมือน iter 2 ทุกจุด จึงหยุด
   <tr><td align="center">x₅</td><td align="center">6</td><td align="center">5</td></tr>
 </table>
 
+#### Sol<sup>n</sup>
+
+**iter 1** Assign จากสูตร
+
+$$d(x_i,c_j)=\sum_{m}|x_{im}-c_{jm}|$$
+
+$$D_{11}=|7-6|+|0-5|=6,\qquad D_{12}=|7-6|+|0-3|=4$$
+
+$$D_{21}=|6-6|+|3-5|=2,\qquad D_{22}=|6-6|+|3-3|=0$$
+
+$$D_{31}=|9-6|+|0-5|=8,\qquad D_{32}=|9-6|+|0-3|=6$$
+
+$$D_{41}=|0-6|+|1-5|=10,\qquad D_{42}=|0-6|+|1-3|=8$$
+
+$$D_{51}=|6-6|+|5-5|=0,\qquad D_{52}=|6-6|+|5-3|=2$$
+
+เลือก centroid ที่ใกล้กว่า (ค่า $D$ น้อยกว่า)
+
+<table align="center">
+  <tr><th>D</th><th>c₁</th><th>c₂</th><th>Label</th></tr>
+  <tr><th>x₁</th><td align="center">6</td><td align="center">4</td><td align="center">2</td></tr>
+  <tr><th>x₂</th><td align="center">2</td><td align="center">0</td><td align="center">2</td></tr>
+  <tr><th>x₃</th><td align="center">8</td><td align="center">6</td><td align="center">2</td></tr>
+  <tr><th>x₄</th><td align="center">10</td><td align="center">8</td><td align="center">2</td></tr>
+  <tr><th>x₅</th><td align="center">0</td><td align="center">2</td><td align="center">1</td></tr>
+</table>
+
+Update จากสูตร
+
+$$c_1=x_5=\begin{bmatrix}6&5\end{bmatrix}$$
+
+$$c_2=\frac{x_1+x_2+x_3+x_4}{4}=\frac{\begin{bmatrix}7&0\end{bmatrix}+\begin{bmatrix}6&3\end{bmatrix}+\begin{bmatrix}9&0\end{bmatrix}+\begin{bmatrix}0&1\end{bmatrix}}{4}=\begin{bmatrix}5.5&1\end{bmatrix}$$
+
+**iter 2** Assign
+
+$$D_{11}=|7-6|+|0-5|=6,\qquad D_{12}=|7-5.5|+|0-1|=2.5$$
+
+$$D_{21}=|6-6|+|3-5|=2,\qquad D_{22}=|6-5.5|+|3-1|=2.5$$
+
+$$D_{31}=|9-6|+|0-5|=8,\qquad D_{32}=|9-5.5|+|0-1|=4.5$$
+
+$$D_{41}=|0-6|+|1-5|=10,\qquad D_{42}=|0-5.5|+|1-1|=5.5$$
+
+$$D_{51}=|6-6|+|5-5|=0,\qquad D_{52}=|6-5.5|+|5-1|=4.5$$
+
+เลือก centroid ที่ใกล้กว่า (ค่า $D$ น้อยกว่า)
+
+<table align="center">
+  <tr><th>D</th><th>c₁</th><th>c₂</th><th>Label</th></tr>
+  <tr><th>x₁</th><td align="center">6</td><td align="center">2.5</td><td align="center">2</td></tr>
+  <tr><th>x₂</th><td align="center">2</td><td align="center">2.5</td><td align="center">1</td></tr>
+  <tr><th>x₃</th><td align="center">8</td><td align="center">4.5</td><td align="center">2</td></tr>
+  <tr><th>x₄</th><td align="center">10</td><td align="center">5.5</td><td align="center">2</td></tr>
+  <tr><th>x₅</th><td align="center">0</td><td align="center">4.5</td><td align="center">1</td></tr>
+</table>
+
+label เปลี่ยน ($x_2$) จึงทำต่อ Update
+
+$$c_1=\frac{x_2+x_5}{2}=\frac{\begin{bmatrix}6&3\end{bmatrix}+\begin{bmatrix}6&5\end{bmatrix}}{2}=\begin{bmatrix}6&4\end{bmatrix}$$
+
+$$c_2=\frac{x_1+x_3+x_4}{3}=\frac{\begin{bmatrix}7&0\end{bmatrix}+\begin{bmatrix}9&0\end{bmatrix}+\begin{bmatrix}0&1\end{bmatrix}}{3}=\begin{bmatrix}5.33&0.33\end{bmatrix}$$
+
+**iter 3** Assign
+
+$$D_{11}=|7-6|+|0-4|=5,\qquad D_{12}=|7-5.33|+|0-0.33|=2$$
+
+$$D_{21}=|6-6|+|3-4|=1,\qquad D_{22}=|6-5.33|+|3-0.33|=3.33$$
+
+$$D_{31}=|9-6|+|0-4|=7,\qquad D_{32}=|9-5.33|+|0-0.33|=4$$
+
+$$D_{41}=|0-6|+|1-4|=9,\qquad D_{42}=|0-5.33|+|1-0.33|=6$$
+
+$$D_{51}=|6-6|+|5-4|=1,\qquad D_{52}=|6-5.33|+|5-0.33|=5.33$$
+
+เลือก centroid ที่ใกล้กว่า (ค่า $D$ น้อยกว่า)
+
+<table align="center">
+  <tr><th>D</th><th>c₁</th><th>c₂</th><th>Label</th></tr>
+  <tr><th>x₁</th><td align="center">5</td><td align="center">2</td><td align="center">2</td></tr>
+  <tr><th>x₂</th><td align="center">1</td><td align="center">3.33</td><td align="center">1</td></tr>
+  <tr><th>x₃</th><td align="center">7</td><td align="center">4</td><td align="center">2</td></tr>
+  <tr><th>x₄</th><td align="center">9</td><td align="center">6</td><td align="center">2</td></tr>
+  <tr><th>x₅</th><td align="center">1</td><td align="center">5.33</td><td align="center">1</td></tr>
+</table>
+
+label เหมือน iter 2 ทุกจุด จึงหยุด
+
+**Ans** กลุ่ม 1 = $\{x_2,x_5\}$ มี $c_1=\begin{bmatrix}6&4\end{bmatrix}$ และกลุ่ม 2 = $\{x_1,x_3,x_4\}$ มี $c_2=\begin{bmatrix}5.33&0.33\end{bmatrix}$
+
 ### แบบฝึกหัด 2
 
 จากข้อมูลในตารางต่อไปนี้ จงจัดกลุ่มด้วย K-Means เมื่อ $k=2$ ใช้ระยะแบบ Manhattan เริ่มจาก $c_1=\begin{bmatrix}8&2&2\end{bmatrix}$, $c_2=\begin{bmatrix}6&1&0\end{bmatrix}$ ทำซ้ำจนกลุ่มไม่เปลี่ยน แล้วหา centroid สุดท้ายและกลุ่มของแต่ละจุด
@@ -266,6 +355,95 @@ label เหมือน iter 2 ทุกจุด จึงหยุด
   <tr><td align="center">x₄</td><td align="center">7</td><td align="center">3</td><td align="center">2</td></tr>
   <tr><td align="center">x₅</td><td align="center">6</td><td align="center">1</td><td align="center">0</td></tr>
 </table>
+
+#### Sol<sup>n</sup>
+
+**iter 1** Assign จากสูตร
+
+$$d(x_i,c_j)=\sum_{m}|x_{im}-c_{jm}|$$
+
+$$D_{11}=|3-8|+|5-2|+|3-2|=9,\qquad D_{12}=|3-6|+|5-1|+|3-0|=10$$
+
+$$D_{21}=|8-8|+|2-2|+|2-2|=0,\qquad D_{22}=|8-6|+|2-1|+|2-0|=5$$
+
+$$D_{31}=|2-8|+|8-2|+|0-2|=14,\qquad D_{32}=|2-6|+|8-1|+|0-0|=11$$
+
+$$D_{41}=|7-8|+|3-2|+|2-2|=2,\qquad D_{42}=|7-6|+|3-1|+|2-0|=5$$
+
+$$D_{51}=|6-8|+|1-2|+|0-2|=5,\qquad D_{52}=|6-6|+|1-1|+|0-0|=0$$
+
+เลือก centroid ที่ใกล้กว่า (ค่า $D$ น้อยกว่า)
+
+<table align="center">
+  <tr><th>D</th><th>c₁</th><th>c₂</th><th>Label</th></tr>
+  <tr><th>x₁</th><td align="center">9</td><td align="center">10</td><td align="center">1</td></tr>
+  <tr><th>x₂</th><td align="center">0</td><td align="center">5</td><td align="center">1</td></tr>
+  <tr><th>x₃</th><td align="center">14</td><td align="center">11</td><td align="center">2</td></tr>
+  <tr><th>x₄</th><td align="center">2</td><td align="center">5</td><td align="center">1</td></tr>
+  <tr><th>x₅</th><td align="center">5</td><td align="center">0</td><td align="center">2</td></tr>
+</table>
+
+Update จากสูตร
+
+$$c_1=\frac{x_1+x_2+x_4}{3}=\frac{\begin{bmatrix}3&5&3\end{bmatrix}+\begin{bmatrix}8&2&2\end{bmatrix}+\begin{bmatrix}7&3&2\end{bmatrix}}{3}=\begin{bmatrix}6&3.33&2.33\end{bmatrix}$$
+
+$$c_2=\frac{x_3+x_5}{2}=\frac{\begin{bmatrix}2&8&0\end{bmatrix}+\begin{bmatrix}6&1&0\end{bmatrix}}{2}=\begin{bmatrix}4&4.5&0\end{bmatrix}$$
+
+**iter 2** Assign
+
+$$D_{11}=|3-6|+|5-3.33|+|3-2.33|=5.33,\qquad D_{12}=|3-4|+|5-4.5|+|3-0|=4.5$$
+
+$$D_{21}=|8-6|+|2-3.33|+|2-2.33|=3.67,\qquad D_{22}=|8-4|+|2-4.5|+|2-0|=8.5$$
+
+$$D_{31}=|2-6|+|8-3.33|+|0-2.33|=11,\qquad D_{32}=|2-4|+|8-4.5|+|0-0|=5.5$$
+
+$$D_{41}=|7-6|+|3-3.33|+|2-2.33|=1.67,\qquad D_{42}=|7-4|+|3-4.5|+|2-0|=6.5$$
+
+$$D_{51}=|6-6|+|1-3.33|+|0-2.33|=4.67,\qquad D_{52}=|6-4|+|1-4.5|+|0-0|=5.5$$
+
+เลือก centroid ที่ใกล้กว่า (ค่า $D$ น้อยกว่า)
+
+<table align="center">
+  <tr><th>D</th><th>c₁</th><th>c₂</th><th>Label</th></tr>
+  <tr><th>x₁</th><td align="center">5.33</td><td align="center">4.5</td><td align="center">2</td></tr>
+  <tr><th>x₂</th><td align="center">3.67</td><td align="center">8.5</td><td align="center">1</td></tr>
+  <tr><th>x₃</th><td align="center">11</td><td align="center">5.5</td><td align="center">2</td></tr>
+  <tr><th>x₄</th><td align="center">1.67</td><td align="center">6.5</td><td align="center">1</td></tr>
+  <tr><th>x₅</th><td align="center">4.67</td><td align="center">5.5</td><td align="center">1</td></tr>
+</table>
+
+label เปลี่ยน ($x_1$, $x_5$) จึงทำต่อ Update
+
+$$c_1=\frac{x_2+x_4+x_5}{3}=\frac{\begin{bmatrix}8&2&2\end{bmatrix}+\begin{bmatrix}7&3&2\end{bmatrix}+\begin{bmatrix}6&1&0\end{bmatrix}}{3}=\begin{bmatrix}7&2&1.33\end{bmatrix}$$
+
+$$c_2=\frac{x_1+x_3}{2}=\frac{\begin{bmatrix}3&5&3\end{bmatrix}+\begin{bmatrix}2&8&0\end{bmatrix}}{2}=\begin{bmatrix}2.5&6.5&1.5\end{bmatrix}$$
+
+**iter 3** Assign
+
+$$D_{11}=|3-7|+|5-2|+|3-1.33|=8.67,\qquad D_{12}=|3-2.5|+|5-6.5|+|3-1.5|=3.5$$
+
+$$D_{21}=|8-7|+|2-2|+|2-1.33|=1.67,\qquad D_{22}=|8-2.5|+|2-6.5|+|2-1.5|=10.5$$
+
+$$D_{31}=|2-7|+|8-2|+|0-1.33|=12.33,\qquad D_{32}=|2-2.5|+|8-6.5|+|0-1.5|=3.5$$
+
+$$D_{41}=|7-7|+|3-2|+|2-1.33|=1.67,\qquad D_{42}=|7-2.5|+|3-6.5|+|2-1.5|=8.5$$
+
+$$D_{51}=|6-7|+|1-2|+|0-1.33|=3.33,\qquad D_{52}=|6-2.5|+|1-6.5|+|0-1.5|=10.5$$
+
+เลือก centroid ที่ใกล้กว่า (ค่า $D$ น้อยกว่า)
+
+<table align="center">
+  <tr><th>D</th><th>c₁</th><th>c₂</th><th>Label</th></tr>
+  <tr><th>x₁</th><td align="center">8.67</td><td align="center">3.5</td><td align="center">2</td></tr>
+  <tr><th>x₂</th><td align="center">1.67</td><td align="center">10.5</td><td align="center">1</td></tr>
+  <tr><th>x₃</th><td align="center">12.33</td><td align="center">3.5</td><td align="center">2</td></tr>
+  <tr><th>x₄</th><td align="center">1.67</td><td align="center">8.5</td><td align="center">1</td></tr>
+  <tr><th>x₅</th><td align="center">3.33</td><td align="center">10.5</td><td align="center">1</td></tr>
+</table>
+
+label เหมือน iter 2 ทุกจุด จึงหยุด
+
+**Ans** กลุ่ม 1 = $\{x_2,x_4,x_5\}$ มี $c_1=\begin{bmatrix}7&2&1.33\end{bmatrix}$ และกลุ่ม 2 = $\{x_1,x_3\}$ มี $c_2=\begin{bmatrix}2.5&6.5&1.5\end{bmatrix}$
 
 ### แบบฝึกหัด 3
 
@@ -281,3 +459,138 @@ label เหมือน iter 2 ทุกจุด จึงหยุด
   <tr><td align="center">x₆</td><td align="center">0</td><td align="center">2</td></tr>
 </table>
 
+#### Sol<sup>n</sup>
+
+**iter 1** Assign จากสูตร
+
+$$d(x_i,c_j)=\sum_{m}|x_{im}-c_{jm}|$$
+
+$$D_{11}=|5-8|+|3-2|=4,\qquad D_{12}=|5-6|+|3-2|=2,\qquad D_{13}=|5-1|+|3-0|=7$$
+
+$$D_{21}=|8-8|+|2-2|=0,\qquad D_{22}=|8-6|+|2-2|=2,\qquad D_{23}=|8-1|+|2-0|=9$$
+
+$$D_{31}=|6-8|+|9-2|=9,\qquad D_{32}=|6-6|+|9-2|=7,\qquad D_{33}=|6-1|+|9-0|=14$$
+
+$$D_{41}=|1-8|+|0-2|=9,\qquad D_{42}=|1-6|+|0-2|=7,\qquad D_{43}=|1-1|+|0-0|=0$$
+
+$$D_{51}=|6-8|+|2-2|=2,\qquad D_{52}=|6-6|+|2-2|=0,\qquad D_{53}=|6-1|+|2-0|=7$$
+
+$$D_{61}=|0-8|+|2-2|=8,\qquad D_{62}=|0-6|+|2-2|=6,\qquad D_{63}=|0-1|+|2-0|=3$$
+
+เลือก centroid ที่ใกล้กว่า (ค่า $D$ น้อยกว่า)
+
+<table align="center">
+  <tr><th>D</th><th>c₁</th><th>c₂</th><th>c₃</th><th>Label</th></tr>
+  <tr><th>x₁</th><td align="center">4</td><td align="center">2</td><td align="center">7</td><td align="center">2</td></tr>
+  <tr><th>x₂</th><td align="center">0</td><td align="center">2</td><td align="center">9</td><td align="center">1</td></tr>
+  <tr><th>x₃</th><td align="center">9</td><td align="center">7</td><td align="center">14</td><td align="center">2</td></tr>
+  <tr><th>x₄</th><td align="center">9</td><td align="center">7</td><td align="center">0</td><td align="center">3</td></tr>
+  <tr><th>x₅</th><td align="center">2</td><td align="center">0</td><td align="center">7</td><td align="center">2</td></tr>
+  <tr><th>x₆</th><td align="center">8</td><td align="center">6</td><td align="center">3</td><td align="center">3</td></tr>
+</table>
+
+Update จากสูตร
+
+$$c_1=x_2=\begin{bmatrix}8&2\end{bmatrix}$$
+
+$$c_2=\frac{x_1+x_3+x_5}{3}=\frac{\begin{bmatrix}5&3\end{bmatrix}+\begin{bmatrix}6&9\end{bmatrix}+\begin{bmatrix}6&2\end{bmatrix}}{3}=\begin{bmatrix}5.67&4.67\end{bmatrix}$$
+
+$$c_3=\frac{x_4+x_6}{2}=\frac{\begin{bmatrix}1&0\end{bmatrix}+\begin{bmatrix}0&2\end{bmatrix}}{2}=\begin{bmatrix}0.5&1\end{bmatrix}$$
+
+**iter 2** Assign
+
+$$D_{11}=|5-8|+|3-2|=4,\qquad D_{12}=|5-5.67|+|3-4.67|=2.33,\qquad D_{13}=|5-0.5|+|3-1|=6.5$$
+
+$$D_{21}=|8-8|+|2-2|=0,\qquad D_{22}=|8-5.67|+|2-4.67|=5,\qquad D_{23}=|8-0.5|+|2-1|=8.5$$
+
+$$D_{31}=|6-8|+|9-2|=9,\qquad D_{32}=|6-5.67|+|9-4.67|=4.67,\qquad D_{33}=|6-0.5|+|9-1|=13.5$$
+
+$$D_{41}=|1-8|+|0-2|=9,\qquad D_{42}=|1-5.67|+|0-4.67|=9.33,\qquad D_{43}=|1-0.5|+|0-1|=1.5$$
+
+$$D_{51}=|6-8|+|2-2|=2,\qquad D_{52}=|6-5.67|+|2-4.67|=3,\qquad D_{53}=|6-0.5|+|2-1|=6.5$$
+
+$$D_{61}=|0-8|+|2-2|=8,\qquad D_{62}=|0-5.67|+|2-4.67|=8.33,\qquad D_{63}=|0-0.5|+|2-1|=1.5$$
+
+เลือก centroid ที่ใกล้กว่า (ค่า $D$ น้อยกว่า)
+
+<table align="center">
+  <tr><th>D</th><th>c₁</th><th>c₂</th><th>c₃</th><th>Label</th></tr>
+  <tr><th>x₁</th><td align="center">4</td><td align="center">2.33</td><td align="center">6.5</td><td align="center">2</td></tr>
+  <tr><th>x₂</th><td align="center">0</td><td align="center">5</td><td align="center">8.5</td><td align="center">1</td></tr>
+  <tr><th>x₃</th><td align="center">9</td><td align="center">4.67</td><td align="center">13.5</td><td align="center">2</td></tr>
+  <tr><th>x₄</th><td align="center">9</td><td align="center">9.33</td><td align="center">1.5</td><td align="center">3</td></tr>
+  <tr><th>x₅</th><td align="center">2</td><td align="center">3</td><td align="center">6.5</td><td align="center">1</td></tr>
+  <tr><th>x₆</th><td align="center">8</td><td align="center">8.33</td><td align="center">1.5</td><td align="center">3</td></tr>
+</table>
+
+label เปลี่ยน ($x_5$) จึงทำต่อ Update
+
+$$c_1=\frac{x_2+x_5}{2}=\frac{\begin{bmatrix}8&2\end{bmatrix}+\begin{bmatrix}6&2\end{bmatrix}}{2}=\begin{bmatrix}7&2\end{bmatrix}$$
+
+$$c_2=\frac{x_1+x_3}{2}=\frac{\begin{bmatrix}5&3\end{bmatrix}+\begin{bmatrix}6&9\end{bmatrix}}{2}=\begin{bmatrix}5.5&6\end{bmatrix}$$
+
+$$c_3=\frac{x_4+x_6}{2}=\frac{\begin{bmatrix}1&0\end{bmatrix}+\begin{bmatrix}0&2\end{bmatrix}}{2}=\begin{bmatrix}0.5&1\end{bmatrix}$$
+
+**iter 3** Assign
+
+$$D_{11}=|5-7|+|3-2|=3,\qquad D_{12}=|5-5.5|+|3-6|=3.5,\qquad D_{13}=|5-0.5|+|3-1|=6.5$$
+
+$$D_{21}=|8-7|+|2-2|=1,\qquad D_{22}=|8-5.5|+|2-6|=6.5,\qquad D_{23}=|8-0.5|+|2-1|=8.5$$
+
+$$D_{31}=|6-7|+|9-2|=8,\qquad D_{32}=|6-5.5|+|9-6|=3.5,\qquad D_{33}=|6-0.5|+|9-1|=13.5$$
+
+$$D_{41}=|1-7|+|0-2|=8,\qquad D_{42}=|1-5.5|+|0-6|=10.5,\qquad D_{43}=|1-0.5|+|0-1|=1.5$$
+
+$$D_{51}=|6-7|+|2-2|=1,\qquad D_{52}=|6-5.5|+|2-6|=4.5,\qquad D_{53}=|6-0.5|+|2-1|=6.5$$
+
+$$D_{61}=|0-7|+|2-2|=7,\qquad D_{62}=|0-5.5|+|2-6|=9.5,\qquad D_{63}=|0-0.5|+|2-1|=1.5$$
+
+เลือก centroid ที่ใกล้กว่า (ค่า $D$ น้อยกว่า)
+
+<table align="center">
+  <tr><th>D</th><th>c₁</th><th>c₂</th><th>c₃</th><th>Label</th></tr>
+  <tr><th>x₁</th><td align="center">3</td><td align="center">3.5</td><td align="center">6.5</td><td align="center">1</td></tr>
+  <tr><th>x₂</th><td align="center">1</td><td align="center">6.5</td><td align="center">8.5</td><td align="center">1</td></tr>
+  <tr><th>x₃</th><td align="center">8</td><td align="center">3.5</td><td align="center">13.5</td><td align="center">2</td></tr>
+  <tr><th>x₄</th><td align="center">8</td><td align="center">10.5</td><td align="center">1.5</td><td align="center">3</td></tr>
+  <tr><th>x₅</th><td align="center">1</td><td align="center">4.5</td><td align="center">6.5</td><td align="center">1</td></tr>
+  <tr><th>x₆</th><td align="center">7</td><td align="center">9.5</td><td align="center">1.5</td><td align="center">3</td></tr>
+</table>
+
+label เปลี่ยน ($x_1$) จึงทำต่อ Update
+
+$$c_1=\frac{x_1+x_2+x_5}{3}=\frac{\begin{bmatrix}5&3\end{bmatrix}+\begin{bmatrix}8&2\end{bmatrix}+\begin{bmatrix}6&2\end{bmatrix}}{3}=\begin{bmatrix}6.33&2.33\end{bmatrix}$$
+
+$$c_2=x_3=\begin{bmatrix}6&9\end{bmatrix}$$
+
+$$c_3=\frac{x_4+x_6}{2}=\frac{\begin{bmatrix}1&0\end{bmatrix}+\begin{bmatrix}0&2\end{bmatrix}}{2}=\begin{bmatrix}0.5&1\end{bmatrix}$$
+
+**iter 4** Assign
+
+$$D_{11}=|5-6.33|+|3-2.33|=2,\qquad D_{12}=|5-6|+|3-9|=7,\qquad D_{13}=|5-0.5|+|3-1|=6.5$$
+
+$$D_{21}=|8-6.33|+|2-2.33|=2,\qquad D_{22}=|8-6|+|2-9|=9,\qquad D_{23}=|8-0.5|+|2-1|=8.5$$
+
+$$D_{31}=|6-6.33|+|9-2.33|=7,\qquad D_{32}=|6-6|+|9-9|=0,\qquad D_{33}=|6-0.5|+|9-1|=13.5$$
+
+$$D_{41}=|1-6.33|+|0-2.33|=7.67,\qquad D_{42}=|1-6|+|0-9|=14,\qquad D_{43}=|1-0.5|+|0-1|=1.5$$
+
+$$D_{51}=|6-6.33|+|2-2.33|=0.67,\qquad D_{52}=|6-6|+|2-9|=7,\qquad D_{53}=|6-0.5|+|2-1|=6.5$$
+
+$$D_{61}=|0-6.33|+|2-2.33|=6.67,\qquad D_{62}=|0-6|+|2-9|=13,\qquad D_{63}=|0-0.5|+|2-1|=1.5$$
+
+เลือก centroid ที่ใกล้กว่า (ค่า $D$ น้อยกว่า)
+
+<table align="center">
+  <tr><th>D</th><th>c₁</th><th>c₂</th><th>c₃</th><th>Label</th></tr>
+  <tr><th>x₁</th><td align="center">2</td><td align="center">7</td><td align="center">6.5</td><td align="center">1</td></tr>
+  <tr><th>x₂</th><td align="center">2</td><td align="center">9</td><td align="center">8.5</td><td align="center">1</td></tr>
+  <tr><th>x₃</th><td align="center">7</td><td align="center">0</td><td align="center">13.5</td><td align="center">2</td></tr>
+  <tr><th>x₄</th><td align="center">7.67</td><td align="center">14</td><td align="center">1.5</td><td align="center">3</td></tr>
+  <tr><th>x₅</th><td align="center">0.67</td><td align="center">7</td><td align="center">6.5</td><td align="center">1</td></tr>
+  <tr><th>x₆</th><td align="center">6.67</td><td align="center">13</td><td align="center">1.5</td><td align="center">3</td></tr>
+</table>
+
+label เหมือน iter 3 ทุกจุด จึงหยุด
+
+**Ans** กลุ่ม 1 = $\{x_1,x_2,x_5\}$ มี $c_1=\begin{bmatrix}6.33&2.33\end{bmatrix}$ และกลุ่ม 2 = $\{x_3\}$ มี $c_2=\begin{bmatrix}6&9\end{bmatrix}$ และกลุ่ม 3 = $\{x_4,x_6\}$ มี $c_3=\begin{bmatrix}0.5&1\end{bmatrix}$

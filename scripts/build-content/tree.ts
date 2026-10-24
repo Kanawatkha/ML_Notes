@@ -35,9 +35,8 @@ export function blockText(b: Block): string {
     case 'note':
       return b.c.map(blockText).join(' ');
     case 'example':
-      return [...b.problem, ...b.sol, ...b.ans].map(blockText).join(' ');
     case 'exercise':
-      return b.problem.map(blockText).join(' ');
+      return [...b.problem, ...b.sol, ...b.ans].map(blockText).join(' ');
   }
 }
 
@@ -46,12 +45,11 @@ export function walkBlocks(blocks: Block[], fn: (b: Block) => void): void {
     fn(b);
     if (b.t === 'list') for (const it of b.items) walkBlocks(it.children, fn);
     if (b.t === 'note') walkBlocks(b.c, fn);
-    if (b.t === 'example') {
+    if (b.t === 'example' || b.t === 'exercise') {
       walkBlocks(b.problem, fn);
       walkBlocks(b.sol, fn);
       walkBlocks(b.ans, fn);
     }
-    if (b.t === 'exercise') walkBlocks(b.problem, fn);
   }
 }
 
@@ -156,13 +154,15 @@ function splitNumber(title: Inline[], re: RegExp): { number: string; title: Inli
   };
 }
 
-function buildExample(raw: Raw, parentId: string, k: number, ctx: Ctx): Block {
+function solved(
+  raw: Raw,
+  what: string,
+  ctx: Ctx,
+): { solLabel: Inline[]; sol: Block[]; ans: Block[] } {
   const where = `${ctx.file}:${raw.line}`;
   const sols = raw.children.filter((c) => isSolTitle(c.title));
   if (sols.length !== 1 || raw.children.length !== 1) {
-    throw new Error(
-      `${where}: an example needs exactly one "Sol" heading below it and nothing else`,
-    );
+    throw new Error(`${where}: ${what} needs exactly one "Sol" heading below it and nothing else`);
   }
   const sol = sols[0];
   if (sol.level !== raw.level + 1)
@@ -170,7 +170,16 @@ function buildExample(raw: Raw, parentId: string, k: number, ctx: Ctx): Block {
   if (sol.children.length > 0)
     throw new Error(`${ctx.file}:${sol.line}: a Sol heading cannot have headings below it`);
   const at = sol.blocks.findIndex(isAns);
-  if (at < 0) ctx.warn(`${where}: example without an "Ans" paragraph`);
+  if (at < 0) ctx.warn(`${where}: ${what} without an "Ans" paragraph`);
+  return {
+    solLabel: sol.title,
+    sol: at < 0 ? sol.blocks : sol.blocks.slice(0, at),
+    ans: at < 0 ? [] : sol.blocks.slice(at),
+  };
+}
+
+function buildExample(raw: Raw, parentId: string, k: number, ctx: Ctx): Block {
+  const s = solved(raw, 'an example', ctx);
   ctx.examples++;
   return {
     t: 'example',
@@ -178,18 +187,14 @@ function buildExample(raw: Raw, parentId: string, k: number, ctx: Ctx): Block {
     index: ctx.examples,
     title: raw.title,
     problem: raw.blocks,
-    solLabel: sol.title,
-    sol: at < 0 ? sol.blocks : sol.blocks.slice(0, at),
-    ans: at < 0 ? [] : sol.blocks.slice(at),
+    ...s,
   };
 }
 
 function buildExercise(raw: Raw, parentId: string, k: number, ctx: Ctx): Block {
-  const where = `${ctx.file}:${raw.line}`;
-  if (raw.children.length > 0) {
-    throw new Error(`${where}: an exercise has no solution, so nothing may sit below its heading`);
-  }
-  if (raw.blocks.length === 0) throw new Error(`${where}: an exercise needs a problem`);
+  const s = solved(raw, 'an exercise', ctx);
+  if (raw.blocks.length === 0)
+    throw new Error(`${ctx.file}:${raw.line}: an exercise needs a problem`);
   ctx.exercises++;
   return {
     t: 'exercise',
@@ -197,6 +202,7 @@ function buildExercise(raw: Raw, parentId: string, k: number, ctx: Ctx): Block {
     index: ctx.exercises,
     title: raw.title,
     problem: raw.blocks,
+    ...s,
   };
 }
 

@@ -48,11 +48,10 @@ export function countsOf(file: PageFile): Counts {
         c.tables++;
         for (const row of [...b.head, ...b.rows]) for (const cell of row) inline(cell.c);
       }
-      if (b.t === 'example') {
+      if (b.t === 'example' || b.t === 'exercise') {
         inline(b.title);
         inline(b.solLabel);
       }
-      if (b.t === 'exercise') inline(b.title);
     });
   });
   return c;

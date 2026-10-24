@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { BlockList } from '@/components/content/BlockRenderer';
 import { InlineContent } from '@/components/content/InlineContent';
+import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
+import { PlusMinusIcon } from '@/components/ui/PlusMinusIcon';
 import { UI_TEXT } from '@/config/site';
 import type { Block } from '@/content/types';
 import { useReveal } from '@/hooks/useReveal';
@@ -16,14 +19,17 @@ type ExerciseCardProps = {
 };
 
 /**
- * One exercise: a problem to solve by yourself, with no solution. It differs from a worked example
- * on purpose (soft-stone fill and a dashed border instead of a white card with a solid one), so
- * the two are never mistaken for each other. The first exercise of a topic has a ruled label above
- * it that names the group.
+ * One exercise: a problem to solve by yourself. It differs from a worked example on purpose
+ * (soft-stone fill and a dashed border instead of a white card with a solid one), so the two are
+ * never mistaken for each other. Its solution stays out of the page until this card's own button
+ * opens it; each card opens and closes independently. The first exercise of a topic has a ruled
+ * label above it that names the group.
  */
 export function ExerciseCard({ block, level, first = false }: ExerciseCardProps) {
   const Heading = level === 3 ? 'h3' : 'h4';
   const entrance = useReveal();
+  const [open, setOpen] = useState(false);
+  const solId = `${block.id}/sol`;
   return (
     <>
       {first ? (
@@ -45,6 +51,29 @@ export function ExerciseCard({ block, level, first = false }: ExerciseCardProps)
           </Heading>
         </header>
         <BlockList blocks={block.problem} />
+        <Button
+          variant="outline"
+          className="w-fit"
+          aria-expanded={open}
+          aria-controls={solId}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <PlusMinusIcon open={open} size={16} />
+          {open ? UI_TEXT.solutionHide : UI_TEXT.solutionShow}
+        </Button>
+        {open ? (
+          <div id={solId} className="flex flex-col gap-4 border-t border-ink/20 pt-4">
+            <p className="type-caption w-fit rounded-full bg-canvas px-3 py-1 font-medium">
+              <InlineContent nodes={block.solLabel} />
+            </p>
+            <BlockList blocks={block.sol} />
+            {block.ans.length > 0 ? (
+              <div className="rounded-xs border-l-[3px] border-deep-green bg-pale-green px-5 py-4">
+                <BlockList blocks={block.ans} />
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </article>
     </>
   );

@@ -91,7 +91,7 @@ Name "ML Notes". Original logo (`UI-SPEC.md` section 11): three data points on a
 
 | Area | Requirement |
 |---|---|
-| Performance | App shell under 150 KB gzip JS+CSS (no animation library); each content chunk under 150 KB gzip (fonts and KaTeX CSS excluded); LCP under 2.5 s on a mid-range phone over 4G; math pre-rendered at build time; animations use transform and opacity only |
+| Performance | App shell under 150 KB gzip JS+CSS (no animation library); each content chunk under 200 KB gzip (raised from 150 KB when the exercise solutions were added) (fonts and KaTeX CSS excluded); LCP under 2.5 s on a mid-range phone over 4G; math pre-rendered at build time; animations use transform and opacity only |
 | Accessibility | WCAG 2.2 AA contrast with the token pairings in `UI-SPEC.md` section 12 (coral and muted never carry text on white), full keyboard operation of the diagram, rail, drawer, menu and share dialog, `prefers-reduced-motion` honored, correct heading order, labels for icon-only controls and every figure |
 | Compatibility | Last 2 versions of Chrome, Safari, Firefox, Edge; iOS Safari 16+ |
 | Reliability | Build fails if any formula fails KaTeX strict, any SVG breaks the rules, an HTML tag is not on the allow list, a heading shape is not recognised, or the round-trip test fails |

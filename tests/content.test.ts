@@ -32,11 +32,11 @@ describe('the real content', () => {
         leaves: 3,
         examples: 4,
         exercises: 6,
-        tables: 15,
+        tables: 23,
         figures: 0,
-        lists: 1,
-        displayFormulas: 71,
-        inlineFormulas: 134,
+        lists: 3,
+        displayFormulas: 145,
+        inlineFormulas: 240,
       },
       classification: {
         sections: 4,
@@ -44,11 +44,11 @@ describe('the real content', () => {
         leaves: 7,
         examples: 22,
         exercises: 18,
-        tables: 65,
-        figures: 16,
-        lists: 17,
-        displayFormulas: 192,
-        inlineFormulas: 319,
+        tables: 86,
+        figures: 18,
+        lists: 26,
+        displayFormulas: 336,
+        inlineFormulas: 494,
       },
       clustering: {
         sections: 1,
@@ -56,11 +56,11 @@ describe('the real content', () => {
         leaves: 1,
         examples: 2,
         exercises: 3,
-        tables: 11,
+        tables: 21,
         figures: 1,
         lists: 1,
-        displayFormulas: 37,
-        inlineFormulas: 32,
+        displayFormulas: 111,
+        inlineFormulas: 61,
       },
     });
   });
@@ -169,7 +169,7 @@ describe('the real content', () => {
 
   it('stays inside the size budget (gzip)', () => {
     for (const p of result.pages) {
-      expect(gzipSync(p.json).length, p.file.id).toBeLessThan(150 * 1024);
+      expect(gzipSync(p.json).length, p.file.id).toBeLessThan(200 * 1024);
     }
     expect(
       gzipSync(JSON.stringify(result.home)).length + gzipSync(JSON.stringify(result.meta)).length,

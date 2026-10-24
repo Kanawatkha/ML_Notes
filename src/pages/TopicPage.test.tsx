@@ -57,6 +57,7 @@ describe('TopicPage', () => {
         counts.regression.examples + counts.regression.exercises,
       ),
     );
+    for (const b of container.querySelectorAll('button[aria-controls$="/sol"]')) fireEvent.click(b);
     expect(container.querySelectorAll('table')).toHaveLength(counts.regression.tables);
     expect(screen.getByText('ภาพรวม')).toBeInTheDocument();
     expect(jumpTo).not.toHaveBeenCalled();

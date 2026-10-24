@@ -165,6 +165,52 @@ $$D_{41}=1.41\ \le\ D_{43}=1.41\ <\ D_{42}=2.45$$
   <tr><td align="center">4</td><td align="center">8</td><td align="center">1</td><td align="center">2</td><td align="center">?</td></tr>
 </table>
 
+##### Sol<sup>n</sup>
+
+ตาราง $D$ (Euclidean) ทำเฉพาะแถวที่ 4 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+</table>
+
+จากสูตร Euclidean
+
+$$\|\vec x_i-\vec x_j\|_2=\sqrt{\Delta A_1^2+\Delta A_2^2+\Delta A_3^2}$$
+
+โดย $\vec x_4=[8,1,2]$
+
+$$D_{41}=\|\vec x_4-\vec x_1\|_2=\sqrt{(8-(-3))^2+(1-7)^2+(2-(-2))^2}=\sqrt{121+36+16}=\sqrt{173}\approx13.15$$
+
+$$D_{42}=\|\vec x_4-\vec x_2\|_2=\sqrt{(8-4)^2+(1-7)^2+(2-1)^2}=\sqrt{16+36+1}=\sqrt{53}\approx7.28$$
+
+$$D_{43}=\|\vec x_4-\vec x_3\|_2=\sqrt{(8-3)^2+(1-5)^2+(2-(-2))^2}=\sqrt{25+16+16}=\sqrt{57}\approx7.55$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">13.15</td><td align="center">7.28</td><td align="center">7.55</td><td align="center">0</td></tr>
+</table>
+
+จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+
+$$D_{42}=7.28\ <\ D_{43}=7.55\ <\ D_{41}=13.15$$
+
+เลือก $k$ ตัวแรก แล้วดู Target
+
+- $k=1$: $7.28\to(\text{\textcircled{2}})\to(N)$ ดังนั้น **N**
+- $k=2$: $(7.28,7.55)\to(\text{\textcircled{2}},\text{\textcircled{3}})\to(N,Y)$ เสมอกัน เลือกตัวแรก ดังนั้น **N**
+- $k=3$: $(7.28,7.55,13.15)\to(\text{\textcircled{2}},\text{\textcircled{3}},\text{\textcircled{1}})\to(N,Y,Y)$ ดังนั้น **Y**
+
+**Ans** $k=1$ ได้ **N**, $k=2$ ได้ **N**, $k=3$ ได้ **Y**
+
 #### แบบฝึกหัด 2
 
 จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Euclidean
@@ -176,6 +222,54 @@ $$D_{41}=1.41\ \le\ D_{43}=1.41\ <\ D_{42}=2.45$$
   <tr><td align="center">3</td><td align="center">-2</td><td align="center">9</td><td align="center">1</td><td align="center">N</td></tr>
   <tr><td align="center">4</td><td align="center">4</td><td align="center">4</td><td align="center">4</td><td align="center">?</td></tr>
 </table>
+
+##### Sol<sup>n</sup>
+
+ตาราง $D$ (Euclidean) ทำเฉพาะแถวที่ 4 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+</table>
+
+จากสูตร Euclidean
+
+$$\|\vec x_i-\vec x_j\|_2=\sqrt{\Delta A_1^2+\Delta A_2^2+\Delta A_3^2}$$
+
+โดย $\vec x_4=[4,4,4]$
+
+$$D_{41}=\|\vec x_4-\vec x_1\|_2=\sqrt{(4-(-3))^2+(4-5)^2+(4-7)^2}=\sqrt{49+1+9}=\sqrt{59}\approx7.68$$
+
+$$D_{42}=\|\vec x_4-\vec x_2\|_2=\sqrt{(4-3)^2+(4-1)^2+(4-(-3))^2}=\sqrt{1+9+49}=\sqrt{59}\approx7.68$$
+
+$$D_{43}=\|\vec x_4-\vec x_3\|_2=\sqrt{(4-(-2))^2+(4-9)^2+(4-1)^2}=\sqrt{36+25+9}=\sqrt{70}\approx8.37$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">7.68</td><td align="center">7.68</td><td align="center">8.37</td><td align="center">0</td></tr>
+</table>
+
+จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+
+$$D_{41}=7.68\ \le\ D_{42}=7.68\ <\ D_{43}=8.37$$
+
+ค่าเท่ากันเรียงตามลำดับในตาราง
+
+เลือก $k$ ตัวแรก แล้วดู Target
+
+- $k=1$: $7.68\to(\text{\textcircled{1}})\to(Y)$ ดังนั้น **Y**
+- $k=2$: $(7.68,7.68)\to(\text{\textcircled{1}},\text{\textcircled{2}})\to(Y,N)$ เสมอกัน เลือกตัวแรก ดังนั้น **Y**
+- $k=3$: $(7.68,7.68,8.37)\to(\text{\textcircled{1}},\text{\textcircled{2}},\text{\textcircled{3}})\to(Y,N,N)$ ดังนั้น **N**
+
+**Ans** $k=1$ ได้ **Y**, $k=2$ ได้ **Y**, $k=3$ ได้ **N**
 
 ---
 
@@ -313,6 +407,52 @@ $$D_{41}=0.98\ >\ D_{43}=0.83\ >\ D_{42}=0.76$$
   <tr><td align="center">4</td><td align="center">4</td><td align="center">2</td><td align="center">-3</td><td align="center">?</td></tr>
 </table>
 
+##### Sol<sup>n</sup>
+
+ตาราง $D$ (Cosine) ทำเฉพาะแถวที่ 4 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">1</td></tr>
+</table>
+
+จากสูตร Cosine
+
+$$\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}$$
+
+โดย $\vec x_4=[4,2,-3]$ ได้ $|\vec x_4|=\sqrt{16+4+9}=\sqrt{29}$
+
+$$D_{41}=\frac{\vec x_4\cdot\vec x_1}{|\vec x_4||\vec x_1|}=\frac{(4)(8)+(2)(4)+((-3))(0)}{\sqrt{29}\,\sqrt{64+16+0}}=\frac{40}{\sqrt{29}\,\sqrt{80}}=\frac{40}{\sqrt{2320}}\approx0.83$$
+
+$$D_{42}=\frac{\vec x_4\cdot\vec x_2}{|\vec x_4||\vec x_2|}=\frac{(4)((-3))+(2)(5)+((-3))((-1))}{\sqrt{29}\,\sqrt{9+25+1}}=\frac{1}{\sqrt{29}\,\sqrt{35}}=\frac{1}{\sqrt{1015}}\approx0.03$$
+
+$$D_{43}=\frac{\vec x_4\cdot\vec x_3}{|\vec x_4||\vec x_3|}=\frac{(4)((-2))+(2)(1)+((-3))(0)}{\sqrt{29}\,\sqrt{4+1+0}}=\frac{-6}{\sqrt{29}\,\sqrt{5}}=\frac{-6}{\sqrt{145}}\approx-0.50$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">0.83</td><td align="center">0.03</td><td align="center">-0.50</td><td align="center">1</td></tr>
+</table>
+
+Cosine ยิ่งมากยิ่งใกล้ จากตาราง $D$ แถวที่ 4 เรียงจากมากไปน้อย
+
+$$D_{41}=0.83\ >\ D_{42}=0.03\ >\ D_{43}=-0.50$$
+
+เลือก $k$ ตัวแรก แล้วดู Target
+
+- $k=1$: $0.83\to(\text{\textcircled{1}})\to(N)$ ดังนั้น **N**
+- $k=2$: $(0.83,0.03)\to(\text{\textcircled{1}},\text{\textcircled{2}})\to(N,Y)$ เสมอกัน เลือกตัวแรก ดังนั้น **N**
+- $k=3$: $(0.83,0.03,-0.50)\to(\text{\textcircled{1}},\text{\textcircled{2}},\text{\textcircled{3}})\to(N,Y,Y)$ ดังนั้น **Y**
+
+**Ans** $k=1$ ได้ **N**, $k=2$ ได้ **N**, $k=3$ ได้ **Y**
+
 #### แบบฝึกหัด 2
 
 จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Cosine
@@ -324,6 +464,54 @@ $$D_{41}=0.98\ >\ D_{43}=0.83\ >\ D_{42}=0.76$$
   <tr><td align="center">3</td><td align="center">4</td><td align="center">-2</td><td align="center">0</td><td align="center">Y</td></tr>
   <tr><td align="center">4</td><td align="center">1</td><td align="center">-2</td><td align="center">1</td><td align="center">?</td></tr>
 </table>
+
+##### Sol<sup>n</sup>
+
+ตาราง $D$ (Cosine) ทำเฉพาะแถวที่ 4 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">1</td></tr>
+</table>
+
+จากสูตร Cosine
+
+$$\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}$$
+
+โดย $\vec x_4=[1,-2,1]$ ได้ $|\vec x_4|=\sqrt{1+4+1}=\sqrt{6}$
+
+$$D_{41}=\frac{\vec x_4\cdot\vec x_1}{|\vec x_4||\vec x_1|}=\frac{(1)(4)+((-2))(0)+(1)((-3))}{\sqrt{6}\,\sqrt{16+0+9}}=\frac{1}{\sqrt{6}\,\sqrt{25}}=\frac{1}{\sqrt{150}}\approx0.08$$
+
+$$D_{42}=\frac{\vec x_4\cdot\vec x_2}{|\vec x_4||\vec x_2|}=\frac{(1)((-3))+((-2))(0)+(1)(4)}{\sqrt{6}\,\sqrt{9+0+16}}=\frac{1}{\sqrt{6}\,\sqrt{25}}=\frac{1}{\sqrt{150}}\approx0.08$$
+
+$$D_{43}=\frac{\vec x_4\cdot\vec x_3}{|\vec x_4||\vec x_3|}=\frac{(1)(4)+((-2))((-2))+(1)(0)}{\sqrt{6}\,\sqrt{16+4+0}}=\frac{8}{\sqrt{6}\,\sqrt{20}}=\frac{8}{\sqrt{120}}\approx0.73$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">0.08</td><td align="center">0.08</td><td align="center">0.73</td><td align="center">1</td></tr>
+</table>
+
+Cosine ยิ่งมากยิ่งใกล้ จากตาราง $D$ แถวที่ 4 เรียงจากมากไปน้อย
+
+$$D_{43}=0.73\ >\ D_{41}=0.08\ =\ D_{42}=0.08$$
+
+ค่าเท่ากันเรียงตามลำดับในตาราง
+
+เลือก $k$ ตัวแรก แล้วดู Target
+
+- $k=1$: $0.73\to(\text{\textcircled{3}})\to(Y)$ ดังนั้น **Y**
+- $k=2$: $(0.73,0.08)\to(\text{\textcircled{3}},\text{\textcircled{1}})\to(Y,N)$ เสมอกัน เลือกตัวแรก ดังนั้น **Y**
+- $k=3$: $(0.73,0.08,0.08)\to(\text{\textcircled{3}},\text{\textcircled{1}},\text{\textcircled{2}})\to(Y,N,N)$ ดังนั้น **N**
+
+**Ans** $k=1$ ได้ **Y**, $k=2$ ได้ **Y**, $k=3$ ได้ **N**
 
 ---
 
@@ -461,6 +649,52 @@ $$D_{41}=2\ \le\ D_{43}=2\ <\ D_{42}=6$$
   <tr><td align="center">4</td><td align="center">0</td><td align="center">6</td><td align="center">-2</td><td align="center">?</td></tr>
 </table>
 
+##### Sol<sup>n</sup>
+
+ตาราง $D$ (Squared Euclidean) ทำเฉพาะแถวที่ 4 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+</table>
+
+จากสูตร Squared Euclidean
+
+$$\|\vec x_i-\vec x_j\|_2^2=\Delta A_1^2+\Delta A_2^2+\Delta A_3^2$$
+
+โดย $\vec x_4=[0,6,-2]$
+
+$$D_{41}=\|\vec x_4-\vec x_1\|_2^2=(0-7)^2+(6-(-3))^2+((-2)-(-1))^2=49+81+1=131$$
+
+$$D_{42}=\|\vec x_4-\vec x_2\|_2^2=(0-0)^2+(6-5)^2+((-2)-8)^2=0+1+100=101$$
+
+$$D_{43}=\|\vec x_4-\vec x_3\|_2^2=(0-4)^2+(6-5)^2+((-2)-3)^2=16+1+25=42$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">131</td><td align="center">101</td><td align="center">42</td><td align="center">0</td></tr>
+</table>
+
+จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+
+$$D_{43}=42\ <\ D_{42}=101\ <\ D_{41}=131$$
+
+เลือก $k$ ตัวแรก แล้วดู Target
+
+- $k=1$: $42\to(\text{\textcircled{3}})\to(N)$ ดังนั้น **N**
+- $k=2$: $(42,101)\to(\text{\textcircled{3}},\text{\textcircled{2}})\to(N,Y)$ เสมอกัน เลือกตัวแรก ดังนั้น **N**
+- $k=3$: $(42,101,131)\to(\text{\textcircled{3}},\text{\textcircled{2}},\text{\textcircled{1}})\to(N,Y,Y)$ ดังนั้น **Y**
+
+**Ans** $k=1$ ได้ **N**, $k=2$ ได้ **N**, $k=3$ ได้ **Y**
+
 #### แบบฝึกหัด 2
 
 จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Squared Euclidean
@@ -472,6 +706,54 @@ $$D_{41}=2\ \le\ D_{43}=2\ <\ D_{42}=6$$
   <tr><td align="center">3</td><td align="center">5</td><td align="center">1</td><td align="center">3</td><td align="center">N</td></tr>
   <tr><td align="center">4</td><td align="center">0</td><td align="center">6</td><td align="center">0</td><td align="center">?</td></tr>
 </table>
+
+##### Sol<sup>n</sup>
+
+ตาราง $D$ (Squared Euclidean) ทำเฉพาะแถวที่ 4 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+</table>
+
+จากสูตร Squared Euclidean
+
+$$\|\vec x_i-\vec x_j\|_2^2=\Delta A_1^2+\Delta A_2^2+\Delta A_3^2$$
+
+โดย $\vec x_4=[0,6,0]$
+
+$$D_{41}=\|\vec x_4-\vec x_1\|_2^2=(0-8)^2+(6-0)^2+(0-8)^2=64+36+64=164$$
+
+$$D_{42}=\|\vec x_4-\vec x_2\|_2^2=(0-(-3))^2+(6-7)^2+(0-7)^2=9+1+49=59$$
+
+$$D_{43}=\|\vec x_4-\vec x_3\|_2^2=(0-5)^2+(6-1)^2+(0-3)^2=25+25+9=59$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">164</td><td align="center">59</td><td align="center">59</td><td align="center">0</td></tr>
+</table>
+
+จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+
+$$D_{42}=59\ \le\ D_{43}=59\ <\ D_{41}=164$$
+
+ค่าเท่ากันเรียงตามลำดับในตาราง
+
+เลือก $k$ ตัวแรก แล้วดู Target
+
+- $k=1$: $59\to(\text{\textcircled{2}})\to(Y)$ ดังนั้น **Y**
+- $k=2$: $(59,59)\to(\text{\textcircled{2}},\text{\textcircled{3}})\to(Y,N)$ เสมอกัน เลือกตัวแรก ดังนั้น **Y**
+- $k=3$: $(59,59,164)\to(\text{\textcircled{2}},\text{\textcircled{3}},\text{\textcircled{1}})\to(Y,N,N)$ ดังนั้น **N**
+
+**Ans** $k=1$ ได้ **Y**, $k=2$ ได้ **Y**, $k=3$ ได้ **N**
 
 ---
 
@@ -609,6 +891,52 @@ $$D_{41}=2\ \le\ D_{43}=2\ <\ D_{42}=4$$
   <tr><td align="center">4</td><td align="center">-3</td><td align="center">7</td><td align="center">4</td><td align="center">?</td></tr>
 </table>
 
+##### Sol<sup>n</sup>
+
+ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 4 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+</table>
+
+จากสูตร Manhattan
+
+$$\|\vec x_i-\vec x_j\|_1=|\Delta A_1|+|\Delta A_2|+|\Delta A_3|$$
+
+โดย $\vec x_4=[-3,7,4]$
+
+$$D_{41}=\|\vec x_4-\vec x_1\|_1=|(-3)-4|+|7-8|+|4-3|=7+1+1=9$$
+
+$$D_{42}=\|\vec x_4-\vec x_2\|_1=|(-3)-3|+|7-5|+|4-8|=6+2+4=12$$
+
+$$D_{43}=\|\vec x_4-\vec x_3\|_1=|(-3)-1|+|7-5|+|4-(-3)|=4+2+7=13$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">9</td><td align="center">12</td><td align="center">13</td><td align="center">0</td></tr>
+</table>
+
+จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+
+$$D_{41}=9\ <\ D_{42}=12\ <\ D_{43}=13$$
+
+เลือก $k$ ตัวแรก แล้วดู Target
+
+- $k=1$: $9\to(\text{\textcircled{1}})\to(N)$ ดังนั้น **N**
+- $k=2$: $(9,12)\to(\text{\textcircled{1}},\text{\textcircled{2}})\to(N,Y)$ เสมอกัน เลือกตัวแรก ดังนั้น **N**
+- $k=3$: $(9,12,13)\to(\text{\textcircled{1}},\text{\textcircled{2}},\text{\textcircled{3}})\to(N,Y,Y)$ ดังนั้น **Y**
+
+**Ans** $k=1$ ได้ **N**, $k=2$ ได้ **N**, $k=3$ ได้ **Y**
+
 #### แบบฝึกหัด 2
 
 จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Manhattan
@@ -620,6 +948,54 @@ $$D_{41}=2\ \le\ D_{43}=2\ <\ D_{42}=4$$
   <tr><td align="center">3</td><td align="center">0</td><td align="center">7</td><td align="center">8</td><td align="center">N</td></tr>
   <tr><td align="center">4</td><td align="center">2</td><td align="center">0</td><td align="center">1</td><td align="center">?</td></tr>
 </table>
+
+##### Sol<sup>n</sup>
+
+ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 4 ที่สนใจ
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
+</table>
+
+จากสูตร Manhattan
+
+$$\|\vec x_i-\vec x_j\|_1=|\Delta A_1|+|\Delta A_2|+|\Delta A_3|$$
+
+โดย $\vec x_4=[2,0,1]$
+
+$$D_{41}=\|\vec x_4-\vec x_1\|_1=|2-7|+|0-6|+|1-6|=5+6+5=16$$
+
+$$D_{42}=\|\vec x_4-\vec x_2\|_1=|2-5|+|0-2|+|1-1|=3+2+0=5$$
+
+$$D_{43}=\|\vec x_4-\vec x_3\|_1=|2-0|+|0-7|+|1-8|=2+7+7=16$$
+
+ดังนั้น
+
+<table align="center">
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>2</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>3</th><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">16</td><td align="center">5</td><td align="center">16</td><td align="center">0</td></tr>
+</table>
+
+จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
+
+$$D_{42}=5\ <\ D_{41}=16\ \le\ D_{43}=16$$
+
+ค่าเท่ากันเรียงตามลำดับในตาราง
+
+เลือก $k$ ตัวแรก แล้วดู Target
+
+- $k=1$: $5\to(\text{\textcircled{2}})\to(Y)$ ดังนั้น **Y**
+- $k=2$: $(5,16)\to(\text{\textcircled{2}},\text{\textcircled{1}})\to(Y,N)$ เสมอกัน เลือกตัวแรก ดังนั้น **Y**
+- $k=3$: $(5,16,16)\to(\text{\textcircled{2}},\text{\textcircled{1}},\text{\textcircled{3}})\to(Y,N,N)$ ดังนั้น **N**
+
+**Ans** $k=1$ ได้ **Y**, $k=2$ ได้ **Y**, $k=3$ ได้ **N**
 
 ---
 
@@ -773,6 +1149,54 @@ $$x_5\cdot w_2=11.2+6.24+0.56+0.12=18.12\ \checkmark$$
   <tr><td align="center">4</td><td align="center">2</td><td align="center">-2</td><td align="center">-3</td><td align="center">-1</td></tr>
 </table>
 
+#### Sol<sup>n</sup>
+
+จากสูตร
+
+$$x_i\cdot w\le0\ \Rightarrow\ w\leftarrow w+x_i$$
+
+สร้าง $x_i$ (ต่อท้ายด้วย 1 และคูณ $y_i$)
+
+$$x_1=\begin{bmatrix}3&5&-2&1\end{bmatrix}_{1\times4},\qquad x_2=\begin{bmatrix}2&2&-3&1\end{bmatrix}_{1\times4}$$
+
+$$x_3=(-1)\begin{bmatrix}5&3&4&1\end{bmatrix}=\begin{bmatrix}-5&-3&-4&-1\end{bmatrix}_{1\times4},\qquad x_4=(-1)\begin{bmatrix}2&-2&-3&1\end{bmatrix}=\begin{bmatrix}-2&2&3&-1\end{bmatrix}_{1\times4}$$
+
+เริ่มที่ $w_0=\begin{bmatrix}0&0&0&0\end{bmatrix}$
+
+$$x_1\cdot w_0=(3)(0)+(5)(0)+(-2)(0)+(1)(0)=0\ \le0\ \times$$
+
+$$w_1=w_0+x_1=\begin{bmatrix}0&0&0&0\end{bmatrix}+\begin{bmatrix}3&5&-2&1\end{bmatrix}=\begin{bmatrix}3&5&-2&1\end{bmatrix}$$
+
+$$x_1\cdot w_1=(3)(3)+(5)(5)+(-2)(-2)+(1)(1)=39\ \checkmark$$
+
+$$x_2\cdot w_1=(2)(3)+(2)(5)+(-3)(-2)+(1)(1)=23\ \checkmark$$
+
+$$x_3\cdot w_1=(-5)(3)+(-3)(5)+(-4)(-2)+(-1)(1)=-23\ \le0\ \times$$
+
+$$w_2=w_1+x_3=\begin{bmatrix}3&5&-2&1\end{bmatrix}+\begin{bmatrix}-5&-3&-4&-1\end{bmatrix}=\begin{bmatrix}-2&2&-6&0\end{bmatrix}$$
+
+$$x_1\cdot w_2=(3)(-2)+(5)(2)+(-2)(-6)+(1)(0)=16\ \checkmark$$
+
+$$x_2\cdot w_2=(2)(-2)+(2)(2)+(-3)(-6)+(1)(0)=18\ \checkmark$$
+
+$$x_3\cdot w_2=(-5)(-2)+(-3)(2)+(-4)(-6)+(-1)(0)=28\ \checkmark$$
+
+$$x_4\cdot w_2=(-2)(-2)+(2)(2)+(3)(-6)+(-1)(0)=-10\ \le0\ \times$$
+
+$$w_3=w_2+x_4=\begin{bmatrix}-2&2&-6&0\end{bmatrix}+\begin{bmatrix}-2&2&3&-1\end{bmatrix}=\begin{bmatrix}-4&4&-3&-1\end{bmatrix}$$
+
+$$x_1\cdot w_3=(3)(-4)+(5)(4)+(-2)(-3)+(1)(-1)=13\ \checkmark$$
+
+$$x_2\cdot w_3=(2)(-4)+(2)(4)+(-3)(-3)+(1)(-1)=8\ \checkmark$$
+
+$$x_3\cdot w_3=(-5)(-4)+(-3)(4)+(-4)(-3)+(-1)(-1)=21\ \checkmark$$
+
+$$x_4\cdot w_3=(-2)(-4)+(2)(4)+(3)(-3)+(-1)(-1)=8\ \checkmark$$
+
+ทุกจุดถูก ($x_i\cdot w>0$ ทุกจุด) จึงหยุด ได้ $w=\begin{bmatrix}-4&4&-3\end{bmatrix}$, $b=-1$
+
+**Ans** $w=\begin{bmatrix}-4&4&-3\end{bmatrix}$, $b=-1$ และสมการแบ่งกลุ่ม $-4A_1+4A_2-3A_3-1=0$
+
 ### แบบฝึกหัด 2
 
 จากข้อมูลในตารางต่อไปนี้ จงหา $w$ และ $b$ ของ Perceptron เมื่อเริ่มจาก $w_0=\begin{bmatrix}1&-1&0\end{bmatrix}$ และ learning rate $\eta=0.5$ (ใช้ $w\leftarrow\eta\,(w+x_i)$) และเขียนสมการแบ่งกลุ่ม
@@ -786,6 +1210,64 @@ $$x_5\cdot w_2=11.2+6.24+0.56+0.12=18.12\ \checkmark$$
   <tr><td align="center">5</td><td align="center">0</td><td align="center">1</td><td align="center">-1</td></tr>
 </table>
 
+#### Sol<sup>n</sup>
+
+จากสูตร
+
+$$x_i\cdot w\le0\ \Rightarrow\ w\leftarrow\eta\,(w+x_i)$$
+
+สร้าง $x_i$ (ต่อท้ายด้วย 1 และคูณ $y_i$)
+
+$$x_1=(-1)\begin{bmatrix}-4&4&1\end{bmatrix}=\begin{bmatrix}4&-4&-1\end{bmatrix}_{1\times3},\qquad x_2=\begin{bmatrix}1&3&1\end{bmatrix}_{1\times3}$$
+
+$$x_3=(-1)\begin{bmatrix}0&-1&1\end{bmatrix}=\begin{bmatrix}0&1&-1\end{bmatrix}_{1\times3},\qquad x_4=\begin{bmatrix}5&6&1\end{bmatrix}_{1\times3}$$
+
+$$x_5=(-1)\begin{bmatrix}0&1&1\end{bmatrix}=\begin{bmatrix}0&-1&-1\end{bmatrix}_{1\times3}$$
+
+เริ่มที่ $w_0=\begin{bmatrix}1&-1&0\end{bmatrix}$
+
+$$x_1\cdot w_0=(4)(1)+(-4)(-1)+(-1)(0)=8\ \checkmark$$
+
+$$x_2\cdot w_0=(1)(1)+(3)(-1)+(1)(0)=-2\ \le0\ \times$$
+
+$$w_1=\eta(w_0+x_2)=0.5\left(\begin{bmatrix}1&-1&0\end{bmatrix}+\begin{bmatrix}1&3&1\end{bmatrix}\right)=0.5\begin{bmatrix}2&2&1\end{bmatrix}=\begin{bmatrix}1&1&0.5\end{bmatrix}$$
+
+$$x_1\cdot w_1=(4)(1)+(-4)(1)+(-1)(0.5)=-0.5\ \le0\ \times$$
+
+$$w_2=\eta(w_1+x_1)=0.5\left(\begin{bmatrix}1&1&0.5\end{bmatrix}+\begin{bmatrix}4&-4&-1\end{bmatrix}\right)=0.5\begin{bmatrix}5&-3&-0.5\end{bmatrix}=\begin{bmatrix}2.5&-1.5&-0.25\end{bmatrix}$$
+
+$$x_1\cdot w_2=(4)(2.5)+(-4)(-1.5)+(-1)(-0.25)=16.25\ \checkmark$$
+
+$$x_2\cdot w_2=(1)(2.5)+(3)(-1.5)+(1)(-0.25)=-2.25\ \le0\ \times$$
+
+$$w_3=\eta(w_2+x_2)=0.5\left(\begin{bmatrix}2.5&-1.5&-0.25\end{bmatrix}+\begin{bmatrix}1&3&1\end{bmatrix}\right)=0.5\begin{bmatrix}3.5&1.5&0.75\end{bmatrix}=\begin{bmatrix}1.75&0.75&0.375\end{bmatrix}$$
+
+$$x_1\cdot w_3=(4)(1.75)+(-4)(0.75)+(-1)(0.375)=3.625\ \checkmark$$
+
+$$x_2\cdot w_3=(1)(1.75)+(3)(0.75)+(1)(0.375)=4.375\ \checkmark$$
+
+$$x_3\cdot w_3=(0)(1.75)+(1)(0.75)+(-1)(0.375)=0.375\ \checkmark$$
+
+$$x_4\cdot w_3=(5)(1.75)+(6)(0.75)+(1)(0.375)=13.625\ \checkmark$$
+
+$$x_5\cdot w_3=(0)(1.75)+(-1)(0.75)+(-1)(0.375)=-1.125\ \le0\ \times$$
+
+$$w_4=\eta(w_3+x_5)=0.5\left(\begin{bmatrix}1.75&0.75&0.375\end{bmatrix}+\begin{bmatrix}0&-1&-1\end{bmatrix}\right)=0.5\begin{bmatrix}1.75&-0.25&-0.625\end{bmatrix}=\begin{bmatrix}0.875&-0.125&-0.3125\end{bmatrix}$$
+
+$$x_1\cdot w_4=(4)(0.875)+(-4)(-0.125)+(-1)(-0.3125)=4.3125\ \checkmark$$
+
+$$x_2\cdot w_4=(1)(0.875)+(3)(-0.125)+(1)(-0.3125)=0.1875\ \checkmark$$
+
+$$x_3\cdot w_4=(0)(0.875)+(1)(-0.125)+(-1)(-0.3125)=0.1875\ \checkmark$$
+
+$$x_4\cdot w_4=(5)(0.875)+(6)(-0.125)+(1)(-0.3125)=3.3125\ \checkmark$$
+
+$$x_5\cdot w_4=(0)(0.875)+(-1)(-0.125)+(-1)(-0.3125)=0.4375\ \checkmark$$
+
+ทุกจุดถูก ($x_i\cdot w>0$ ทุกจุด) จึงหยุด ได้ $w=\begin{bmatrix}0.875&-0.125\end{bmatrix}$, $b=-0.3125$
+
+**Ans** $w=\begin{bmatrix}0.875&-0.125\end{bmatrix}$, $b=-0.3125$ และสมการแบ่งกลุ่ม $0.875A_1-0.125A_2-0.3125=0$
+
 ### แบบฝึกหัด 3
 
 จากข้อมูลในตารางต่อไปนี้ จงหา $w$ และ $b$ ของ Perceptron เมื่อเริ่มจาก $w_0=\begin{bmatrix}0&0&0&0\end{bmatrix}$ และเขียนสมการแบ่งกลุ่ม
@@ -798,6 +1280,54 @@ $$x_5\cdot w_2=11.2+6.24+0.56+0.12=18.12\ \checkmark$$
   <tr><td align="center">4</td><td align="center">-3</td><td align="center">-3</td><td align="center">1</td><td align="center">+1</td></tr>
   <tr><td align="center">5</td><td align="center">-3</td><td align="center">-2</td><td align="center">0</td><td align="center">+1</td></tr>
 </table>
+
+#### Sol<sup>n</sup>
+
+จากสูตร
+
+$$x_i\cdot w\le0\ \Rightarrow\ w\leftarrow w+x_i$$
+
+สร้าง $x_i$ (ต่อท้ายด้วย 1 และคูณ $y_i$)
+
+$$x_1=(-1)\begin{bmatrix}-5&6&5&1\end{bmatrix}=\begin{bmatrix}5&-6&-5&-1\end{bmatrix}_{1\times4},\qquad x_2=(-1)\begin{bmatrix}6&-4&2&1\end{bmatrix}=\begin{bmatrix}-6&4&-2&-1\end{bmatrix}_{1\times4}$$
+
+$$x_3=\begin{bmatrix}-4&-1&2&1\end{bmatrix}_{1\times4},\qquad x_4=\begin{bmatrix}-3&-3&1&1\end{bmatrix}_{1\times4}$$
+
+$$x_5=\begin{bmatrix}-3&-2&0&1\end{bmatrix}_{1\times4}$$
+
+เริ่มที่ $w_0=\begin{bmatrix}0&0&0&0\end{bmatrix}$
+
+$$x_1\cdot w_0=(5)(0)+(-6)(0)+(-5)(0)+(-1)(0)=0\ \le0\ \times$$
+
+$$w_1=w_0+x_1=\begin{bmatrix}0&0&0&0\end{bmatrix}+\begin{bmatrix}5&-6&-5&-1\end{bmatrix}=\begin{bmatrix}5&-6&-5&-1\end{bmatrix}$$
+
+$$x_1\cdot w_1=(5)(5)+(-6)(-6)+(-5)(-5)+(-1)(-1)=87\ \checkmark$$
+
+$$x_2\cdot w_1=(-6)(5)+(4)(-6)+(-2)(-5)+(-1)(-1)=-43\ \le0\ \times$$
+
+$$w_2=w_1+x_2=\begin{bmatrix}5&-6&-5&-1\end{bmatrix}+\begin{bmatrix}-6&4&-2&-1\end{bmatrix}=\begin{bmatrix}-1&-2&-7&-2\end{bmatrix}$$
+
+$$x_1\cdot w_2=(5)(-1)+(-6)(-2)+(-5)(-7)+(-1)(-2)=44\ \checkmark$$
+
+$$x_2\cdot w_2=(-6)(-1)+(4)(-2)+(-2)(-7)+(-1)(-2)=14\ \checkmark$$
+
+$$x_3\cdot w_2=(-4)(-1)+(-1)(-2)+(2)(-7)+(1)(-2)=-10\ \le0\ \times$$
+
+$$w_3=w_2+x_3=\begin{bmatrix}-1&-2&-7&-2\end{bmatrix}+\begin{bmatrix}-4&-1&2&1\end{bmatrix}=\begin{bmatrix}-5&-3&-5&-1\end{bmatrix}$$
+
+$$x_1\cdot w_3=(5)(-5)+(-6)(-3)+(-5)(-5)+(-1)(-1)=19\ \checkmark$$
+
+$$x_2\cdot w_3=(-6)(-5)+(4)(-3)+(-2)(-5)+(-1)(-1)=29\ \checkmark$$
+
+$$x_3\cdot w_3=(-4)(-5)+(-1)(-3)+(2)(-5)+(1)(-1)=12\ \checkmark$$
+
+$$x_4\cdot w_3=(-3)(-5)+(-3)(-3)+(1)(-5)+(1)(-1)=18\ \checkmark$$
+
+$$x_5\cdot w_3=(-3)(-5)+(-2)(-3)+(0)(-5)+(1)(-1)=20\ \checkmark$$
+
+ทุกจุดถูก ($x_i\cdot w>0$ ทุกจุด) จึงหยุด ได้ $w=\begin{bmatrix}-5&-3&-5\end{bmatrix}$, $b=-1$
+
+**Ans** $w=\begin{bmatrix}-5&-3&-5\end{bmatrix}$, $b=-1$ และสมการแบ่งกลุ่ม $-5A_1-3A_2-5A_3-1=0$
 
 ---
 
@@ -1076,6 +1606,52 @@ $$W_h'=\begin{bmatrix}0&0\\0&0\end{bmatrix}+0.1\begin{bmatrix}0&0\\0&0\end{bmatr
   <tr><td align="center">2</td><td align="center">0</td><td align="center">1</td><td align="center">0</td></tr>
 </table>
 
+#### Sol<sup>n</sup>
+
+**1. Forward** จากสูตร
+
+$$o=\sigma(XW^T),\qquad \sigma(x)=\frac{1}{1+e^{-x}}$$
+
+เขียนเป็นเมทริกซ์ (1 ตัวอย่าง = 1 แถว)
+
+$$X=\begin{bmatrix}1&0\\0&1\end{bmatrix}_{2\times2},\quad T=\begin{bmatrix}1\\0\end{bmatrix}_{2\times1},\quad W_h=\begin{bmatrix}w_3&w_4\\w_5&w_6\end{bmatrix}=\begin{bmatrix}0.3&-0.2\\0.4&0.1\end{bmatrix}_{2\times2},\quad W_o=\begin{bmatrix}w_1&w_2\end{bmatrix}=\begin{bmatrix}0.5&-0.3\end{bmatrix}_{1\times2}$$
+
+Hidden
+
+$$O_h=\sigma(XW_h^T)=\sigma\left(\begin{bmatrix}0.3&0.4\\-0.2&0.1\end{bmatrix}_{2\times2}\right)=\begin{bmatrix}0.5744&0.5987\\0.4502&0.525\end{bmatrix}_{2\times2}$$
+
+Output
+
+$$o=\sigma(O_hW_o^T)=\sigma\left(\begin{bmatrix}0.1076\\0.0676\end{bmatrix}_{2\times1}\right)=\begin{bmatrix}0.5269\\0.5169\end{bmatrix}_{2\times1}$$
+
+$$T-o=\begin{bmatrix}1\\0\end{bmatrix}_{2\times1}-\begin{bmatrix}0.5269\\0.5169\end{bmatrix}_{2\times1}=\begin{bmatrix}0.4731\\-0.5169\end{bmatrix}_{2\times1}$$
+
+**2. Backward** จากสูตร
+
+$$\delta_o=o\odot(1-o)\odot(T-o),\qquad \delta_h=O_h\odot(1-O_h)\odot(\delta_oW_o)$$
+
+Output
+
+$$\delta_o=\begin{bmatrix}0.1179\\-0.1291\end{bmatrix}_{2\times1}$$
+
+Hidden (ใช้ $W_o$ ก่อนปรับ)
+
+$$\delta_oW_o=\begin{bmatrix}0.059&-0.0354\\-0.0645&0.0387\end{bmatrix}_{2\times2}\ \Rightarrow\ \delta_h=\begin{bmatrix}0.0144&-0.0085\\-0.016&0.0097\end{bmatrix}_{2\times2}$$
+
+**3. Update** จากสูตร
+
+$$W_o'=W_o+\eta\,\delta_o^T\,O_h,\qquad W_h'=W_h+\eta\,\delta_h^T\,X$$
+
+Output
+
+$$W_o'=\begin{bmatrix}0.5&-0.3\end{bmatrix}_{1\times2}+0.2\begin{bmatrix}0.1179&-0.1291\end{bmatrix}_{1\times2}\begin{bmatrix}0.5744&0.5987\\0.4502&0.525\end{bmatrix}_{2\times2}=\begin{bmatrix}0.5&-0.3\end{bmatrix}_{1\times2}+\begin{bmatrix}0.00192&0.00056\end{bmatrix}_{1\times2}=\begin{bmatrix}0.5019&-0.2994\end{bmatrix}_{1\times2}$$
+
+Hidden
+
+$$W_h'=\begin{bmatrix}0.3&-0.2\\0.4&0.1\end{bmatrix}_{2\times2}+0.2\begin{bmatrix}0.0144&-0.016\\-0.0085&0.0097\end{bmatrix}_{2\times2}\begin{bmatrix}1&0\\0&1\end{bmatrix}_{2\times2}=\begin{bmatrix}0.3&-0.2\\0.4&0.1\end{bmatrix}_{2\times2}+\begin{bmatrix}0.00288&-0.0032\\-0.0017&0.00194\end{bmatrix}_{2\times2}=\begin{bmatrix}0.3029&-0.2032\\0.3983&0.1019\end{bmatrix}_{2\times2}$$
+
+**Ans** $w_1=0.5019$, $w_2=-0.2994$, $w_3=0.3029$, $w_4=-0.2032$, $w_5=0.3983$, $w_6=0.1019$
+
 ### แบบฝึกหัด 2
 
 จงหาจำนวนพารามิเตอร์ (weight และ bias) ของโครงข่ายต่อไปนี้ (เขียนเป็น $n_0$-$n_1$-$\dots$-$n_L$)
@@ -1083,6 +1659,26 @@ $$W_h'=\begin{bmatrix}0&0\\0&0\end{bmatrix}+0.1\begin{bmatrix}0&0\\0&0\end{bmatr
 1. 3-4-2
 2. 5-6-4-1
 3. 6-8-5-3-2
+
+#### Sol<sup>n</sup>
+
+จากสูตร
+
+$$\#P=\underbrace{\sum_{l=1}^{L}n_{l-1}n_l}_{\text{weight}}+\underbrace{\sum_{l=1}^{L}n_l}_{\text{bias}}$$
+
+3-4-2
+
+$$\text{weight}=3(4)+4(2)=12+8=20,\qquad \text{bias}=4+2=6,\qquad \#P=20+6=26$$
+
+5-6-4-1
+
+$$\text{weight}=5(6)+6(4)+4(1)=30+24+4=58,\qquad \text{bias}=6+4+1=11,\qquad \#P=58+11=69$$
+
+6-8-5-3-2
+
+$$\text{weight}=6(8)+8(5)+5(3)+3(2)=48+40+15+6=109,\qquad \text{bias}=8+5+3+2=18,\qquad \#P=109+18=127$$
+
+**Ans** 3-4-2 ได้ 26, 5-6-4-1 ได้ 69, 6-8-5-3-2 ได้ 127
 
 ### แบบฝึกหัด 3
 
@@ -1095,6 +1691,26 @@ $$W_h'=\begin{bmatrix}0&0\\0&0\end{bmatrix}+0.1\begin{bmatrix}0&0\\0&0\end{bmatr
   <tr><td align="center">3</td><td align="center">22</td><td align="center">F</td><td align="center">Blue</td><td align="center">55</td><td align="center">C</td></tr>
   <tr><td align="center">4</td><td align="center">41</td><td align="center">M</td><td align="center">Red</td><td align="center">72</td><td align="center">B</td></tr>
 </table>
+
+#### Sol<sup>n</sup>
+
+ตามกฎ: attribute ตัวเลขใช้ 1 ตัว, attribute หมวดหมู่ที่มี $N$ ค่าใช้ $N-1$ ตัว, output = จำนวน class (2 class ใช้ 1 ตัว)
+
+<table align="center">
+  <tr><th>attribute</th><th>ชนิด</th><th>จำนวน input</th></tr>
+  <tr><td align="center">Age</td><td align="center">ตัวเลข</td><td align="center">1</td></tr>
+  <tr><td align="center">Gender</td><td align="center">หมวดหมู่ 2 ค่า</td><td align="center">1</td></tr>
+  <tr><td align="center">Color</td><td align="center">หมวดหมู่ 3 ค่า</td><td align="center">2</td></tr>
+  <tr><td align="center">Weight</td><td align="center">ตัวเลข</td><td align="center">1</td></tr>
+</table>
+
+$$\text{input}=1+1+2+1=5,\qquad \text{output}=3\ (\text{Class มี }3\text{ ค่า})$$
+
+โครงข่าย 5-4-3
+
+$$\text{weight}=5(4)+4(3)=20+12=32,\qquad \text{bias}=4+3=7,\qquad \#P=32+7=39$$
+
+**Ans** input = 5, output = 3, จำนวนพารามิเตอร์ = 39
 
 ---
 
@@ -2167,6 +2783,26 @@ D มี Gain มากที่สุด จึงเป็น node ของ�
 </svg>
 </div>
 
+#### Sol<sup>n</sup>
+
+เรียง id ตามชั้นของต้นไม้ จากบนลงล่าง และซ้ายไปขวา (Parent คือ id ของ node แม่ ราก = 0, Branch คือค่าบนกิ่งที่ลงมาถึง node นั้น)
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">A</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">B</td><td align="center">1</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">C</td><td align="center">2</td></tr>
+  <tr><td align="center">4</td><td align="center">1</td><td align="center">D</td><td align="center">3</td></tr>
+  <tr><td align="center">5</td><td align="center">2</td><td align="center">E</td><td align="center">4</td></tr>
+  <tr><td align="center">6</td><td align="center">2</td><td align="center">F</td><td align="center">5</td></tr>
+  <tr><td align="center">7</td><td align="center">3</td><td align="center">G</td><td align="center">6</td></tr>
+  <tr><td align="center">8</td><td align="center">4</td><td align="center">H</td><td align="center">7</td></tr>
+  <tr><td align="center">9</td><td align="center">4</td><td align="center">I</td><td align="center">8</td></tr>
+  <tr><td align="center">10</td><td align="center">7</td><td align="center">J</td><td align="center">9</td></tr>
+</table>
+
+**Ans** ตารางข้างบน
+
 ### แบบฝึกหัด 2
 
 จากตารางโครงสร้างข้อมูลของต้นไม้ต่อไปนี้ จงวาดต้นไม้
@@ -2184,6 +2820,56 @@ D มี Gain มากที่สุด จึงเป็น node ของ�
   <tr><td align="center">9</td><td align="center">6</td><td align="center">Y</td><td align="center">8</td></tr>
 </table>
 
+#### Sol<sup>n</sup>
+
+id 1 ไม่มี Parent (Parent = 0) จึงเป็น node ราก แล้วต่อ node ลูกตามคอลัมน์ Parent
+
+- ลูกของ A (id 1): B (id 2) และ C (id 3)
+- ลูกของ B (id 2): Y (id 4) และ N (id 5)
+- ลูกของ C (id 3): D (id 6) และ Y (id 7)
+- ลูกของ D (id 6): N (id 8) และ Y (id 9)
+
+<div align="center">
+<svg viewBox="0 0 650 368" width="560" role="img" aria-label="ต้นไม้จากตารางโครงสร้างข้อมูล" xmlns="http://www.w3.org/2000/svg">
+<line x1="309" y1="58" x2="130" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="154" x2="65" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="154" x2="195" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="309" y1="58" x2="488" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<line x1="488" y1="154" x2="390" y2="214" stroke="currentColor" stroke-width="1.5"/>
+<line x1="390" y1="250" x2="325" y2="314" stroke="currentColor" stroke-width="1.5"/>
+<line x1="390" y1="250" x2="455" y2="314" stroke="currentColor" stroke-width="1.5"/>
+<line x1="488" y1="154" x2="585" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="130" cy="136" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="301" y="314" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="431" y="314" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="390" cy="232" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="561" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="488" cy="136" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="309" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="213" y="86" text-anchor="end" font-size="13" fill="currentColor">1</text>
+<text x="92" y="184" text-anchor="end" font-size="13" fill="currentColor">3</text>
+<text x="65" y="237" text-anchor="middle" font-size="15" fill="currentColor">Y</text>
+<text x="170" y="184" text-anchor="start" font-size="13" fill="currentColor">4</text>
+<text x="195" y="237" text-anchor="middle" font-size="15" fill="currentColor">N</text>
+<text x="130" y="141" text-anchor="middle" font-size="15" fill="currentColor">B</text>
+<text x="406" y="86" text-anchor="start" font-size="13" fill="currentColor">2</text>
+<text x="433" y="182" text-anchor="end" font-size="13" fill="currentColor">5</text>
+<text x="352" y="280" text-anchor="end" font-size="13" fill="currentColor">7</text>
+<text x="325" y="333" text-anchor="middle" font-size="15" fill="currentColor">N</text>
+<text x="430" y="280" text-anchor="start" font-size="13" fill="currentColor">8</text>
+<text x="455" y="333" text-anchor="middle" font-size="15" fill="currentColor">Y</text>
+<text x="390" y="237" text-anchor="middle" font-size="15" fill="currentColor">D</text>
+<text x="544" y="184" text-anchor="start" font-size="13" fill="currentColor">6</text>
+<text x="585" y="237" text-anchor="middle" font-size="15" fill="currentColor">Y</text>
+<text x="488" y="141" text-anchor="middle" font-size="15" fill="currentColor">C</text>
+<text x="309" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+</svg>
+</div>
+
+**Ans** ต้นไม้ข้างบน
+
 ### แบบฝึกหัด 3
 
 จากข้อมูลในตารางต่อไปนี้ จงหา Entropy ของข้อมูลทั้งหมด และ Information Gain ของแต่ละ attribute (log ฐาน 10) แล้วเลือก attribute สำหรับ node ราก
@@ -2199,6 +2885,46 @@ D มี Gain มากที่สุด จึงเป็น node ของ�
   <tr><td align="center">7</td><td align="center">Middle</td><td align="center">High</td><td align="center">No</td><td align="center">Yes</td></tr>
   <tr><td align="center">8</td><td align="center">Old</td><td align="center">High</td><td align="center">Yes</td><td align="center">No</td></tr>
 </table>
+
+#### Sol<sup>n</sup>
+
+**1. หา node ราก**
+
+จากสูตร
+
+$$\text{Entropy}(S)=-\sum_{c}p_c\log_{10}p_c,\qquad \text{Gain}(S,A)=\text{Entropy}(S)-\sum_{v\in A}\frac{|S_v|}{|S|}\,\text{Entropy}(S_v)$$
+
+$S$ มี $4+,4-$ (รวม 8)
+
+$$\text{Entropy}(S)=-\frac{4}{8}\log_{10}\frac{4}{8}-\frac{4}{8}\log_{10}\frac{4}{8}=0.3010$$
+
+**Age** (Old $1+,3-$, Middle $3+,0-$, Young $0+,1-$)
+
+$$\text{Entropy}(S_{Age=Old})=0.2442,\qquad \text{Entropy}(S_{Age=Middle})=0,\qquad \text{Entropy}(S_{Age=Young})=0$$
+
+$$\text{Gain}(S,Age)=0.3010-\frac{4}{8}(0.2442)-\frac{3}{8}(0)-\frac{1}{8}(0)=0.1789$$
+
+**Income** (Low $2+,3-$, High $2+,1-$)
+
+$$\text{Entropy}(S_{Income=Low})=0.2923,\qquad \text{Entropy}(S_{Income=High})=0.2764$$
+
+$$\text{Gain}(S,Income)=0.3010-\frac{5}{8}(0.2923)-\frac{3}{8}(0.2764)=0.0147$$
+
+**Student** (No $2+,1-$, Yes $2+,3-$)
+
+$$\text{Entropy}(S_{Student=No})=0.2764,\qquad \text{Entropy}(S_{Student=Yes})=0.2923$$
+
+$$\text{Gain}(S,Student)=0.3010-\frac{3}{8}(0.2764)-\frac{5}{8}(0.2923)=0.0147$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S,Age)=0.1789\ >\ \text{Gain}(S,Income)=0.0147\ =\ \text{Gain}(S,Student)=0.0147$$
+
+Age มี Gain มากที่สุด จึงเป็น node ราก
+
+กิ่งที่ Entropy = 0 เป็น leaf: Middle $\to$ **Yes**, Young $\to$ **No**
+
+**Ans** Entropy(S)=0.3010, Gain(Age)=0.1789, Gain(Income)=0.0147, Gain(Student)=0.0147 จึงเลือก Age เป็น node ราก
 
 ### แบบฝึกหัด 4
 
@@ -2217,3 +2943,153 @@ D มี Gain มากที่สุด จึงเป็น node ของ�
   <tr><td align="center">9</td><td align="center">Rainy</td><td align="center">Hot</td><td align="center">Weak</td><td align="center">No</td></tr>
   <tr><td align="center">10</td><td align="center">Cloudy</td><td align="center">Cool</td><td align="center">Strong</td><td align="center">Yes</td></tr>
 </table>
+
+#### Sol<sup>n</sup>
+
+**1. หา node ราก**
+
+จากสูตร
+
+$$\text{Entropy}(S)=-\sum_{c}p_c\log_{10}p_c,\qquad \text{Gain}(S,A)=\text{Entropy}(S)-\sum_{v\in A}\frac{|S_v|}{|S|}\,\text{Entropy}(S_v)$$
+
+$S$ มี $4+,6-$ (รวม 10)
+
+$$\text{Entropy}(S)=-\frac{4}{10}\log_{10}\frac{4}{10}-\frac{6}{10}\log_{10}\frac{6}{10}=0.2923$$
+
+**Weather** (Rainy $2+,1-$, Sunny $1+,3-$, Cloudy $1+,2-$)
+
+$$\text{Entropy}(S_{Weather=Rainy})=0.2764,\qquad \text{Entropy}(S_{Weather=Sunny})=0.2442,\qquad \text{Entropy}(S_{Weather=Cloudy})=0.2764$$
+
+$$\text{Gain}(S,Weather)=0.2923-\frac{3}{10}(0.2764)-\frac{4}{10}(0.2442)-\frac{3}{10}(0.2764)=0.0288$$
+
+**Temp** (Cool $4+,2-$, Hot $0+,4-$)
+
+$$\text{Entropy}(S_{Temp=Cool})=0.2764,\qquad \text{Entropy}(S_{Temp=Hot})=0$$
+
+$$\text{Gain}(S,Temp)=0.2923-\frac{6}{10}(0.2764)-\frac{4}{10}(0)=0.1265$$
+
+**Wind** (Weak $1+,5-$, Strong $3+,1-$)
+
+$$\text{Entropy}(S_{Wind=Weak})=0.1957,\qquad \text{Entropy}(S_{Wind=Strong})=0.2442$$
+
+$$\text{Gain}(S,Wind)=0.2923-\frac{6}{10}(0.1957)-\frac{4}{10}(0.2442)=0.0772$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S,Temp)=0.1265\ >\ \text{Gain}(S,Wind)=0.0772\ >\ \text{Gain}(S,Weather)=0.0288$$
+
+Temp มี Gain มากที่สุด จึงเป็น node ราก
+
+กิ่งที่ Entropy = 0 เป็น leaf: Hot $\to$ **No**
+
+**2. กิ่ง Cool** พิจารณาเฉพาะตารางที่เหลือ
+
+<table align="center">
+  <tr><th>Day</th><th>Weather</th><th>Wind</th><th>Play</th></tr>
+  <tr><td align="center">1</td><td align="center">Rainy</td><td align="center">Weak</td><td align="center">Yes</td></tr>
+  <tr><td align="center">2</td><td align="center">Sunny</td><td align="center">Strong</td><td align="center">Yes</td></tr>
+  <tr><td align="center">4</td><td align="center">Cloudy</td><td align="center">Weak</td><td align="center">No</td></tr>
+  <tr><td align="center">7</td><td align="center">Rainy</td><td align="center">Strong</td><td align="center">Yes</td></tr>
+  <tr><td align="center">8</td><td align="center">Sunny</td><td align="center">Weak</td><td align="center">No</td></tr>
+  <tr><td align="center">10</td><td align="center">Cloudy</td><td align="center">Strong</td><td align="center">Yes</td></tr>
+</table>
+
+$$\text{Entropy}(S_{Temp=Cool})=-\frac{4}{6}\log_{10}\frac{4}{6}-\frac{2}{6}\log_{10}\frac{2}{6}=0.2764$$
+
+**Weather** (Rainy $2+,0-$, Sunny $1+,1-$, Cloudy $1+,1-$)
+
+$$\text{Entropy}(S_{Weather=Rainy})=0,\qquad \text{Entropy}(S_{Weather=Sunny})=0.3010,\qquad \text{Entropy}(S_{Weather=Cloudy})=0.3010$$
+
+$$\text{Gain}(S_{Temp=Cool},Weather)=0.2764-\frac{2}{6}(0)-\frac{2}{6}(0.3010)-\frac{2}{6}(0.3010)=0.0757$$
+
+**Wind** (Weak $1+,2-$, Strong $3+,0-$)
+
+$$\text{Entropy}(S_{Wind=Weak})=0.2764,\qquad \text{Entropy}(S_{Wind=Strong})=0$$
+
+$$\text{Gain}(S_{Temp=Cool},Wind)=0.2764-\frac{3}{6}(0.2764)-\frac{3}{6}(0)=0.1382$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S_{Temp=Cool},Wind)=0.1382\ >\ \text{Gain}(S_{Temp=Cool},Weather)=0.0757$$
+
+Wind มี Gain มากที่สุด จึงเป็น node ของกิ่ง Cool
+
+กิ่งที่ Entropy = 0 เป็น leaf: Strong $\to$ **Yes**
+
+**3. กิ่ง Weak** พิจารณาเฉพาะตารางที่เหลือ
+
+<table align="center">
+  <tr><th>Day</th><th>Weather</th><th>Play</th></tr>
+  <tr><td align="center">1</td><td align="center">Rainy</td><td align="center">Yes</td></tr>
+  <tr><td align="center">4</td><td align="center">Cloudy</td><td align="center">No</td></tr>
+  <tr><td align="center">8</td><td align="center">Sunny</td><td align="center">No</td></tr>
+</table>
+
+$$\text{Entropy}(S_{Wind=Weak})=-\frac{1}{3}\log_{10}\frac{1}{3}-\frac{2}{3}\log_{10}\frac{2}{3}=0.2764$$
+
+**Weather** (Rainy $1+,0-$, Cloudy $0+,1-$, Sunny $0+,1-$)
+
+$$\text{Entropy}(S_{Weather=Rainy})=0,\qquad \text{Entropy}(S_{Weather=Cloudy})=0,\qquad \text{Entropy}(S_{Weather=Sunny})=0$$
+
+$$\text{Gain}(S_{Wind=Weak},Weather)=0.2764-\frac{1}{3}(0)-\frac{1}{3}(0)-\frac{1}{3}(0)=0.2764$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S_{Wind=Weak},Weather)=0.2764$$
+
+Weather มี Gain มากที่สุด จึงเป็น node ของกิ่ง Weak
+
+กิ่งที่ Entropy = 0 เป็น leaf: Rainy $\to$ **Yes**, Cloudy $\to$ **No**, Sunny $\to$ **No**
+
+**ต้นไม้ที่ได้**
+
+<div align="center">
+<svg viewBox="0 0 650 368" width="560" role="img" aria-label="ต้นไม้ ID3 ของข้อมูลการเล่น" xmlns="http://www.w3.org/2000/svg">
+<line x1="455" y1="58" x2="325" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<line x1="325" y1="154" x2="195" y2="214" stroke="currentColor" stroke-width="1.5"/>
+<line x1="195" y1="250" x2="65" y2="314" stroke="currentColor" stroke-width="1.5"/>
+<line x1="195" y1="250" x2="195" y2="314" stroke="currentColor" stroke-width="1.5"/>
+<line x1="195" y1="250" x2="325" y2="314" stroke="currentColor" stroke-width="1.5"/>
+<line x1="325" y1="154" x2="455" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="455" y1="58" x2="585" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="314" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="314" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="301" y="314" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="195" cy="232" rx="53" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="431" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="325" cy="136" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="561" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="455" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="384" y="86" text-anchor="end" font-size="13" fill="currentColor">Cool</text>
+<text x="254" y="182" text-anchor="end" font-size="13" fill="currentColor">Weak</text>
+<text x="124" y="280" text-anchor="end" font-size="13" fill="currentColor">Rainy</text>
+<text x="65" y="333" text-anchor="middle" font-size="15" fill="currentColor">Yes</text>
+<text x="203" y="280" text-anchor="start" font-size="13" fill="currentColor">Cloudy</text>
+<text x="195" y="333" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="268" y="280" text-anchor="start" font-size="13" fill="currentColor">Sunny</text>
+<text x="325" y="333" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="195" y="237" text-anchor="middle" font-size="15" fill="currentColor">Weather</text>
+<text x="398" y="184" text-anchor="start" font-size="13" fill="currentColor">Strong</text>
+<text x="455" y="237" text-anchor="middle" font-size="15" fill="currentColor">Yes</text>
+<text x="325" y="141" text-anchor="middle" font-size="15" fill="currentColor">Wind</text>
+<text x="528" y="88" text-anchor="start" font-size="13" fill="currentColor">Hot</text>
+<text x="585" y="141" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="455" y="45" text-anchor="middle" font-size="15" fill="currentColor">Temp</text>
+</svg>
+</div>
+
+เขียนเป็นตารางโครงสร้างข้อมูล (id ตามชั้น จากบนลงล่าง ซ้ายไปขวา)
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">Temp</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">Wind</td><td align="center">Cool</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">No</td><td align="center">Hot</td></tr>
+  <tr><td align="center">4</td><td align="center">2</td><td align="center">Weather</td><td align="center">Weak</td></tr>
+  <tr><td align="center">5</td><td align="center">2</td><td align="center">Yes</td><td align="center">Strong</td></tr>
+  <tr><td align="center">6</td><td align="center">4</td><td align="center">Yes</td><td align="center">Rainy</td></tr>
+  <tr><td align="center">7</td><td align="center">4</td><td align="center">No</td><td align="center">Cloudy</td></tr>
+  <tr><td align="center">8</td><td align="center">4</td><td align="center">No</td><td align="center">Sunny</td></tr>
+</table>
+
+**Ans** ต้นไม้และตารางข้างบน

@@ -94,7 +94,7 @@ Checked by Claude in the desktop preview pane in Phase 8: registration, the offl
 | Metric | Budget |
 |---|---|
 | App shell JS + CSS, gzip | under 150 KB |
-| Each page chunk (generated JSON), gzip | under 150 KB |
+| Each page chunk (generated JSON), gzip | under 200 KB |
 | `home.json` + `meta.json`, gzip | under 10 KB |
 | LCP (mobile, 4G profile) | under 2.5 s |
 | Cumulative Layout Shift | under 0.1 |

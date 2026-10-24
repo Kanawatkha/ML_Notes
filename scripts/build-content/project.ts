@@ -85,6 +85,7 @@ function blk(blocks: Block[], p: Projection): string {
         case 'note':
           return blk(b.c, p);
         case 'example':
+        case 'exercise':
           return [
             inl(b.title, p),
             blk(b.problem, p),
@@ -92,8 +93,6 @@ function blk(blocks: Block[], p: Projection): string {
             blk(b.sol, p),
             blk(b.ans, p),
           ].join(' ');
-        case 'exercise':
-          return [inl(b.title, p), blk(b.problem, p)].join(' ');
       }
     })
     .join(' ');

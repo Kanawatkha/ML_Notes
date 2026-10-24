@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { PAGES, UI_TEXT } from '@/config/site';
 import type { Block, Inline } from '@/content/types';
@@ -13,6 +13,13 @@ function countMath(blocks: Block[]): number {
       0,
     );
   return blocks.reduce((n, b) => n + (b.t === 'p' ? inline(b.c) : 0), 0);
+}
+
+function openAllSolutions(container: HTMLElement): void {
+  for (const b of container.querySelectorAll(
+    'button[aria-expanded="false"][aria-controls$="/sol"]',
+  ))
+    fireEvent.click(b);
 }
 
 describe('buildUnits', () => {
@@ -97,6 +104,7 @@ describe.each(PAGES.map((p) => p.id))('the %s page, everything mounted', (id) =>
 
   it('renders every table, figure and formula of the content', () => {
     const { container } = render(<TopicOutline file={file} />);
+    openAllSolutions(container);
     expect(container.querySelectorAll('table').length).toBe(c.tables);
     expect(container.querySelectorAll('figure').length).toBe(c.figures);
     // the lead paragraph belongs to the hero, which is not part of the outline
@@ -116,10 +124,10 @@ describe.each(PAGES.map((p) => p.id))('the %s page, everything mounted', (id) =>
     expect(levels[0]).toBe(2);
   });
 
-  it('gives every example card an Ans strip and every exercise card a problem only', () => {
+  it('gives every example card an Ans strip and keeps each exercise solution closed until its own button opens it', () => {
     const { container } = render(<TopicOutline file={file} />);
     const examples = container.querySelectorAll('article[id*="/ex"]');
-    const exercises = container.querySelectorAll('article[id*="/pr"]');
+    const exercises = [...container.querySelectorAll('article[id*="/pr"]')];
     expect(examples.length).toBe(c.examples);
     expect(exercises.length).toBe(c.exercises);
     for (const article of examples) {
@@ -127,9 +135,22 @@ describe.each(PAGES.map((p) => p.id))('the %s page, everything mounted', (id) =>
     }
     for (const article of exercises) {
       expect(article.querySelector('.bg-pale-green'), article.id).toBeNull();
-      expect(article.textContent, article.id).not.toMatch(/Soln|\bAns\b/);
+      expect(article.textContent, article.id).not.toMatch(/Soln|Ans/);
       expect(article.className, article.id).toContain('border-dashed');
+      expect(article.querySelector('button')?.getAttribute('aria-expanded'), article.id).toBe(
+        'false',
+      );
     }
+    const first = exercises[0];
+    fireEvent.click(first.querySelector('button')!);
+    expect(first.querySelector('button')?.getAttribute('aria-expanded')).toBe('true');
+    expect(first.querySelector('.bg-pale-green')).not.toBeNull();
+    expect(first.textContent).toContain(UI_TEXT.solutionHide);
+    for (const other of exercises.slice(1))
+      expect(other.querySelector('.bg-pale-green')).toBeNull();
+    fireEvent.click(first.querySelector('button')!);
+    expect(first.querySelector('.bg-pale-green')).toBeNull();
+    expect(first.textContent).toContain(UI_TEXT.solutionShow);
   });
 
   it('labels the first exercise of each topic with the group name, and only that one', () => {

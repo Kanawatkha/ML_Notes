@@ -171,9 +171,21 @@ First problem $x^2$
   <tr><td align="center">1</td><td align="center">2</td></tr>
 </table>
 
+#### Sol<sup>n</sup>
+
+steps one
+
+**Ans** one
+
 ### แบบฝึกหัด 2
 
 Second problem
+
+#### Sol<sup>n</sup>
+
+steps two
+
+**Ans** two
 
 ## 2. Beta
 
@@ -182,10 +194,14 @@ Second problem
 #### แบบฝึกหัด 1
 
 Problem under a sub-topic
+
+##### Sol<sup>n</sup>
+
+steps three
 `;
   const { file } = convert(md);
 
-  it('keeps an exercise as a heading and a problem, with the ids pr1, pr2 and a running index', () => {
+  it('keeps an exercise as a heading, a problem and its solution, with the ids pr1, pr2 and a running index', () => {
     const alpha = find(file.root, 't/1')!;
     const gamma = find(file.root, 't/2.1')!;
     const ex = alpha.exercises as Extract<Block, { t: 'exercise' }>[];
@@ -195,6 +211,8 @@ Problem under a sub-topic
     ]);
     expect(text(ex[0].title)).toBe('แบบฝึกหัด 1');
     expect(ex[0].problem.map((b) => b.t)).toEqual(['p', 'table']);
+    expect(ex[0].sol.map((b) => b.t)).toEqual(['p']);
+    expect(ex[0].ans.map((b) => b.t)).toEqual(['p']);
     expect((gamma.exercises[0] as Extract<Block, { t: 'exercise' }>).id).toBe('t/2.1/pr1');
     expect((gamma.exercises[0] as Extract<Block, { t: 'exercise' }>).index).toBe(3);
   });
@@ -315,14 +333,18 @@ describe('errors', () => {
 
   it.each([
     [
-      'a Sol heading below an exercise',
-      `${base}\n### แบบฝึกหัด 1\n\nproblem\n\n#### Sol<sup>n</sup>\n\na\n`,
-      /no solution/,
+      'an exercise without a Sol heading',
+      `${base}\n### แบบฝึกหัด 1\n\nproblem\n`,
+      /exactly one "Sol" heading/,
     ],
-    ['an exercise without a problem', `${base}\n### แบบฝึกหัด 1\n`, /needs a problem/],
+    [
+      'an exercise without a problem',
+      `${base}\n### แบบฝึกหัด 1\n\n#### Sol<sup>n</sup>\n\na\n`,
+      /needs a problem/,
+    ],
     [
       'an example after an exercise',
-      `${base}\n### แบบฝึกหัด 1\n\nproblem\n\n### ตัวอย่างโจทย์\n\np\n\n#### Sol<sup>n</sup>\n\na\n`,
+      `${base}\n### แบบฝึกหัด 1\n\nproblem\n\n#### Sol<sup>n</sup>\n\nb\n\n### ตัวอย่างโจทย์\n\np\n\n#### Sol<sup>n</sup>\n\na\n`,
       /before the exercises/,
     ],
     [

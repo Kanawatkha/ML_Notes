@@ -40,7 +40,7 @@ export type Block =
       /** The paragraph that starts with a bold "Ans" and anything after it. May be empty. */
       ans: Block[];
     }
-  /** A problem to solve on your own: a heading and the problem, with no solution. */
+  /** A problem to solve on your own: like an example, but its solution is hidden until asked for. */
   | {
       t: 'exercise';
       /** "<node id>/pr<K>". */
@@ -49,6 +49,9 @@ export type Block =
       index: number;
       title: Inline[];
       problem: Block[];
+      solLabel: Inline[];
+      sol: Block[];
+      ans: Block[];
     };
 
 /**
