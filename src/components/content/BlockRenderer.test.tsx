@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { BlockRenderer } from '@/components/content/BlockRenderer';
+import { BlockList, BlockRenderer } from '@/components/content/BlockRenderer';
 import { ExampleCard } from '@/components/content/ExampleCard';
 import { InlineContent } from '@/components/content/InlineContent';
 import type { Block, Cell, Inline } from '@/content/types';
@@ -159,5 +159,23 @@ describe('ExampleCard', () => {
     const { container } = render(<ExampleCard block={{ ...block, ans: [] }} level={4} />);
     expect(screen.getByRole('heading', { level: 4 })).toBeInTheDocument();
     expect(container.querySelector('.bg-pale-green')).toBeNull();
+  });
+});
+
+describe('BlockList reveal', () => {
+  const blocks: Block[] = [
+    { t: 'p', c: [t('one')] },
+    { t: 'math', tex: 'x', html: '<span class="katex">x</span>' },
+    { t: 'p', c: [t('two')] },
+  ];
+
+  it('wraps every block in its own entrance when asked, and nothing otherwise', () => {
+    const { container, rerender } = render(<BlockList blocks={blocks} />);
+    expect(container.querySelectorAll('[data-reveal]')).toHaveLength(0);
+    rerender(<BlockList blocks={blocks} reveal />);
+    const items = container.querySelectorAll('[data-reveal="block"]');
+    expect(items).toHaveLength(3);
+    expect(items[0]).toHaveTextContent('one');
+    expect(items[2]).toHaveTextContent('two');
   });
 });

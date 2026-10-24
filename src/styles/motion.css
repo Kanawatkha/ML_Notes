@@ -60,6 +60,18 @@
   transform: none;
 }
 
+/* one block of a part (paragraph, formula, table, list): rises 14 px and fades, no standing layer */
+[data-reveal='block']:not([data-shown]) {
+  transform: translateY(14px);
+  will-change: auto;
+}
+
+[data-reveal='block'] {
+  transition:
+    opacity 420ms var(--ease-out),
+    transform 420ms var(--ease-out);
+}
+
 /* the host stays put; only its marked parts animate (section headers, A8) */
 [data-reveal='parts']:not([data-shown]) {
   opacity: 1;

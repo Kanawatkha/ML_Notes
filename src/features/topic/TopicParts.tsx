@@ -19,7 +19,7 @@ export function Overview({ id, blocks }: { id: string; blocks: Block[] }) {
       <p id={`${id}-label`} className="type-caption font-medium text-body-muted">
         {UI_TEXT.overview}
       </p>
-      <BlockList blocks={blocks} />
+      <BlockList blocks={blocks} reveal />
     </section>
   );
 }
@@ -55,7 +55,7 @@ export function SectionPart({ node, blocks }: { node: ContentNode; blocks: Block
           </h3>
         </header>
       )}
-      <BlockList blocks={blocks} />
+      <BlockList blocks={blocks} reveal />
     </section>
   );
 }

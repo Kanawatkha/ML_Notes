@@ -50,7 +50,7 @@ export function ExerciseCard({ block, level, first = false }: ExerciseCardProps)
             <InlineContent nodes={block.title} />
           </Heading>
         </header>
-        <BlockList blocks={block.problem} />
+        <BlockList blocks={block.problem} reveal />
         <Button
           variant="outline"
           className="w-fit"
@@ -66,10 +66,10 @@ export function ExerciseCard({ block, level, first = false }: ExerciseCardProps)
             <p className="type-caption w-fit rounded-full bg-canvas px-3 py-1 font-medium">
               <InlineContent nodes={block.solLabel} />
             </p>
-            <BlockList blocks={block.sol} />
+            <BlockList blocks={block.sol} reveal />
             {block.ans.length > 0 ? (
               <div className="rounded-xs border-l-[3px] border-deep-green bg-pale-green px-5 py-4">
-                <BlockList blocks={block.ans} />
+                <BlockList blocks={block.ans} reveal />
               </div>
             ) : null}
           </div>

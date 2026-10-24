@@ -1,7 +1,7 @@
 import { useCallback, type RefCallback } from 'react';
 import { observeReveal } from '@/lib/reveal';
 
-export type RevealVariant = 'rise' | 'fade' | 'parts';
+export type RevealVariant = 'rise' | 'fade' | 'parts' | 'block';
 
 /**
  * Gives an element a one-time entrance when it comes into view: spread the result on the element

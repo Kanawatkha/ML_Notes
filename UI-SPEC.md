@@ -373,6 +373,7 @@ Rules: no horizontal page scroll anywhere except inside the diagram canvas, tabl
 | A7 | Diagram root | press | The plus turns into a minus (`base`); the hint is removed at once (it sits in the flex row, so a fade would keep it in the layout) |
 | A8 | Section header | in view, once | Top rule grows from the left (`scaleX`, 480 ms), then number and title fade up 12 px |
 | A9 | Example card, topic card, overview panel | in view, once | Rise 20 px and fade (`slow`), staggered 40 ms for blocks that arrive together (max 4) |
+| A20 | Blocks of a part (paragraph, formula, table, list, figure) in sections, sub-topics, the overview and inside example and exercise cards | each block in view, once | Rises 14 px and fades (420 ms, ease-out), one block at a time, staggered 40 ms for blocks that arrive together (max 4); blocks already above the window after a jump appear at once; no `will-change`, so hundreds of waiting blocks cost no layers |
 | A10 | Rail highlight and tree | scroll | Highlight slides to the active entry (300 ms); the active section expands (`base`); ring sweeps |
 | A11 | Rail fold (desktop) | toggle | Grid columns animate (380 ms); rail slides out with a fade |
 | A12 | Rail toggle icon | toggle | List morphs into a cross (240 ms) |
