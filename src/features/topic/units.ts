@@ -38,7 +38,7 @@ export function buildUnits(file: PageFile): Unit[] {
       units.push({
         id: block.id,
         estimate: estimateBlock(block),
-        render: () => createElement(ExampleCard, { block, level, reveal: true }),
+        render: () => createElement(ExampleCard, { block, level }),
       });
     }
     node.children.forEach(visit);

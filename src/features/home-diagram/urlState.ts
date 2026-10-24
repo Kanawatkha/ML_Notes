@@ -2,9 +2,9 @@ import { INITIAL_STATE, type DiagramState } from './model';
 
 /**
  * The open path of the diagram lives in the hash query, so a diagram state can be shared and
- * survives a reload (PLAN.md D16): `?p=classification:1,1.2/ex1` and `&x=1` when the example
- * column is open. After the topic id come the node ids with the topic prefix removed, separated
- * by commas. No `p` means the diagram is closed.
+ * survives a reload (PLAN.md D16): `?p=classification:1` is Classification with K-NN open. After
+ * the topic id come the node ids with the topic prefix removed, separated by commas. No `p` means
+ * the diagram is closed.
  */
 export function stateToParams(state: DiagramState): URLSearchParams {
   const params = new URLSearchParams();
@@ -17,7 +17,6 @@ export function stateToParams(state: DiagramState): URLSearchParams {
   } else {
     params.set('p', '');
   }
-  if (state.examplesFor) params.set('x', '1');
   return params;
 }
 
@@ -25,13 +24,7 @@ export function paramsToState(params: URLSearchParams, topics: readonly string[]
   const p = params.get('p');
   if (p === null) return INITIAL_STATE;
   const [topic, rest = ''] = p.split(':');
-  if (!topic || !topics.includes(topic)) return { rootOpen: true, path: [], examplesFor: null };
+  if (!topic || !topics.includes(topic)) return { rootOpen: true, path: [] };
   const segments = rest ? rest.split(',').filter(Boolean) : [];
-  const path = [topic, ...segments.map((s) => `${topic}/${s}`)];
-  return {
-    rootOpen: true,
-    path,
-    // the example column belongs to the deepest node of the path
-    examplesFor: params.get('x') === '1' && segments.length > 0 ? path[path.length - 1] : null,
-  };
+  return { rootOpen: true, path: [topic, ...segments.map((s) => `${topic}/${s}`)] };
 }

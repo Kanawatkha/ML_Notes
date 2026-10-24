@@ -49,9 +49,9 @@ describe('axe: no serious or critical violations', () => {
     expect(await violations()).toEqual([]);
   });
 
-  it('Home with the diagram open down to the examples of a leaf', async () => {
-    renderAt('/?p=classification:1,1.2&x=1');
-    await screen.findByRole('region', { name: /ตัวอย่าง Cosine/ }, { timeout: 10000 });
+  it('Home with the diagram open down to the K-NN distances', async () => {
+    renderAt('/?p=classification:1');
+    await screen.findByRole('link', { name: /Cosine/ }, { timeout: 10000 });
     expect(await violations()).toEqual([]);
   }, 20000);
 

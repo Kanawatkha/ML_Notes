@@ -2,8 +2,8 @@ import { useCallback, useLayoutEffect, useRef, type RefObject } from 'react';
 import { leaveDelay } from './useLeavingColumns';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
-/** Distance from the top of a block to the point its connector lands on. */
-const BLOCK_ANCHOR = 28;
+/** Distance from the top of a status card (loading, error) to the point its connector lands on. */
+const STATUS_ANCHOR = 28;
 const REVEAL_INSET = 16;
 const LEAVE_PATH_MS = 220;
 
@@ -54,24 +54,15 @@ function layout(
 
   const wanted: { key: string; d: string; active: boolean; index: number }[] = [];
   rects.clear();
-  let previousOffset = 0;
   for (const col of columns) {
     const parent = col.dataset.parent ? nodes.get(col.dataset.parent) : undefined;
-    if (!parent) {
-      previousOffset = 0;
-      continue;
-    }
+    if (!parent) continue;
     const p = boxIn(parent, canvas);
     const px = p.x + p.w;
     const py = p.y + p.h / 2;
     const kind = col.dataset.kind;
 
-    let offset: number;
-    if (kind === 'examples') offset = previousOffset;
-    else if (kind === 'block') offset = Math.max(0, py - BLOCK_ANCHOR);
-    else offset = Math.max(0, py - col.offsetHeight / 2);
-    col.style.marginTop = `${offset}px`;
-    previousOffset = offset;
+    col.style.marginTop = `${Math.max(0, py - col.offsetHeight / 2)}px`;
     if (col.dataset.colKey) {
       rects.set(col.dataset.colKey, {
         left: col.offsetLeft,
@@ -95,7 +86,7 @@ function layout(
       const c = boxIn(col, canvas);
       wanted.push({
         key: `${col.dataset.parent}>${col.dataset.colKey}`,
-        d: curve(px, py, c.x, c.y + BLOCK_ANCHOR),
+        d: curve(px, py, c.x, c.y + STATUS_ANCHOR),
         active: true,
         index,
       });

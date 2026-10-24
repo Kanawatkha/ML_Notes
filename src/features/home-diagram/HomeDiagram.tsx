@@ -17,14 +17,12 @@ import type { HomeFile } from '@/content/types';
 import { cn } from '@/lib/cn';
 import { plainText } from '@/lib/text';
 import './diagram.css';
-import { ExamplesBlock, TopicBlock } from './DiagramBlocks';
 import { DiagramNode } from './DiagramNode';
 import {
   ROOT_ID,
   buildColumns,
   closeDeepest,
   columnKey,
-  toggleExamples,
   toggleNode,
   toggleRoot,
   topicItems,
@@ -42,11 +40,9 @@ const WIDTH = {
   root: 'w-[140px] md:w-[160px] lg:w-[168px]',
   topic: 'w-[min(76vw,260px)] md:w-[248px] lg:w-[260px]',
   item: 'w-[min(78vw,280px)] md:w-[264px] lg:w-[280px]',
-  block: 'w-[min(90vw,640px)] md:w-[min(72vw,640px)] lg:w-[640px]',
 } as const;
 
 function widthOf(column: Column): string {
-  if (column.kind === 'block' || column.kind === 'examples') return WIDTH.block;
   return column.kind === 'nodes' && column.index === 1 ? WIDTH.topic : WIDTH.item;
 }
 
@@ -130,9 +126,10 @@ function ColumnShell({
 }
 
 /**
- * The home diagram: Midterm, topics, sections, sub-topics, then the explanation block and its
- * examples. It always grows to the right and nothing overlays anything. The open path is kept in
- * the hash query, so a state can be shared.
+ * The home diagram: Midterm, topics, sections and sub-topics, nothing more. A node with children
+ * opens the next column; a leaf is a link to its part of the topic page. It always grows to the
+ * right and nothing overlays anything. The open path is kept in the hash query, so a state can be
+ * shared.
  */
 export function HomeDiagram() {
   const [params, setParams] = useSearchParams();
@@ -224,14 +221,6 @@ export function HomeDiagram() {
     );
   };
 
-  const onExamples = (leafId: string) => {
-    const opening = state.examplesFor !== leafId;
-    apply(
-      toggleExamples(state, leafId),
-      `${opening ? UI_TEXT.opened : UI_TEXT.closed} ${UI_TEXT.examples}`,
-    );
-  };
-
   const focusIn = (selector: string, last = false) => {
     const found = canvasRef.current?.querySelectorAll<HTMLElement>(selector);
     if (!found || found.length === 0) return false;
@@ -249,9 +238,7 @@ export function HomeDiagram() {
       return;
     }
     const target = event.target;
-    if (!(target instanceof HTMLElement) || !target.dataset.nodeId || target.closest('article')) {
-      return;
-    }
+    if (!(target instanceof HTMLElement) || !target.dataset.nodeId) return;
     const col = target.closest<HTMLElement>('[data-col]');
     const index = Number(col?.dataset.col ?? -1);
     if (index < 0) return;
@@ -307,17 +294,6 @@ export function HomeDiagram() {
           </Button>
         </StatusCard>
       ) : null}
-      {column.kind === 'block' ? (
-        <TopicBlock
-          page={column.page}
-          node={column.node}
-          crumb={column.crumb}
-          examplesOpen={state.examplesFor === column.node.id}
-          examplesColumnId={columnId(column.index + 1)}
-          onToggleExamples={() => onExamples(column.node.id)}
-        />
-      ) : null}
-      {column.kind === 'examples' ? <ExamplesBlock node={column.node} /> : null}
     </>
   );
 

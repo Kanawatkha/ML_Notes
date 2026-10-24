@@ -10,8 +10,6 @@ type ExampleCardProps = {
   block: ExampleBlock;
   /** Heading level of the title: 3 under a section, 4 under a sub-topic. */
   level: 3 | 4;
-  /** One-time entrance when it scrolls into view (topic pages); off inside the Home diagram. */
-  reveal?: boolean;
 };
 
 /**
@@ -19,12 +17,12 @@ type ExampleCardProps = {
  * strip (UI-SPEC.md section 5.4). The title and the Sol label are the headings of the Markdown,
  * unchanged; only the "EX 03" chip is generated. Shared by the topic pages and the Home diagram.
  */
-export function ExampleCard({ block, level, reveal = false }: ExampleCardProps) {
+export function ExampleCard({ block, level }: ExampleCardProps) {
   const Heading = level === 3 ? 'h3' : 'h4';
   const entrance = useReveal();
   return (
     <article
-      {...(reveal ? entrance : {})}
+      {...entrance}
       id={block.id}
       tabIndex={-1}
       className="flex scroll-mt-24 flex-col gap-4 rounded-md border border-hairline bg-canvas p-5 outline-none md:p-8"

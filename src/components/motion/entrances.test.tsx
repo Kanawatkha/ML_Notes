@@ -38,14 +38,12 @@ describe('entrances (A1, A8, A9)', () => {
     expect(container.querySelector('section')).toHaveAttribute('data-reveal', 'rise');
   });
 
-  it('an example card rises on a topic page, and not inside the Home diagram', () => {
+  it('an example card rises when it comes into view', () => {
     expect(example).toBeDefined();
-    const { container, rerender } = render(
-      <ExampleCard block={example as NonNullable<typeof example>} level={3} reveal />,
+    const { container } = render(
+      <ExampleCard block={example as NonNullable<typeof example>} level={3} />,
     );
     expect(container.querySelector('article')).toHaveAttribute('data-reveal', 'rise');
-    rerender(<ExampleCard block={example as NonNullable<typeof example>} level={3} />);
-    expect(container.querySelector('article')).not.toHaveAttribute('data-reveal');
   });
 
   it('the Home title and lead have their entrance classes, the counts are plain numbers', () => {

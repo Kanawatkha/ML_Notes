@@ -8,7 +8,6 @@ import {
   leavesOf,
   pageNodes,
   readHref,
-  toggleExamples,
   toggleNode,
   toggleRoot,
   topicItems,
@@ -24,163 +23,140 @@ const files: Record<string, FileStatus> = {
 };
 const kinds = (s: DiagramState, f: Record<string, FileStatus> = files) =>
   buildColumns(topics, f, s).map((c) => c.kind);
-const open = (...path: string[]): DiagramState => ({ rootOpen: true, path, examplesFor: null });
+const open = (...path: string[]): DiagramState => ({ rootOpen: true, path });
 
 describe('topics and nodes', () => {
   it('has one topic per page, in order, with the count of the nodes of its column', () => {
     expect(topics.map((t) => `${t.id}:${t.count}`)).toEqual([
-      'regression:4',
+      'regression:3',
       'classification:4',
       'clustering:1',
     ]);
     expect(topics.map((t) => t.id)).toEqual(PAGES.map((p) => p.id));
   });
 
-  it('puts an overview entry first when the page has one, then the sections', () => {
-    const regression = pageNodes(fileOf('regression'));
-    expect(regression.map((n) => `${n.id}:${n.overview ? 'overview' : 'section'}`)).toEqual([
-      'regression/overview:overview',
-      'regression/1:section',
-      'regression/2:section',
-      'regression/3:section',
+  it('lists only the sections of a page, with no overview entry', () => {
+    expect(pageNodes(fileOf('regression')).map((n) => n.id)).toEqual([
+      'regression/1',
+      'regression/2',
+      'regression/3',
     ]);
-    expect(pageNodes(fileOf('classification'))[0].overview).toBeUndefined();
+    expect(pageNodes(fileOf('classification')).map((n) => n.id)).toEqual([
+      'classification/1',
+      'classification/2',
+      'classification/3',
+      'classification/4',
+    ]);
   });
 
-  it('gives a group section an overview entry for its own explanation, then its sub-topics', () => {
+  it('gives K-NN its four distances as sub-topics and nothing else', () => {
     const knn = pageNodes(fileOf('classification'))[0];
     expect(knn.children.map((n) => n.id)).toEqual([
-      'classification/1/overview',
       'classification/1.1',
       'classification/1.2',
       'classification/1.3',
       'classification/1.4',
     ]);
-    expect(knn.children[0]).toMatchObject({ overview: true, read: '1' });
-    expect(knn.children[0].explain.length).toBeGreaterThan(0);
-    expect(knn.explain).toEqual([]);
+    expect(knn.children.map((n) => n.read)).toEqual(['1.1', '1.2', '1.3', '1.4']);
   });
 
-  it('finds every leaf: 11 topics of the exam plus the 2 overview entries of Regression and K-NN', () => {
-    const leaves = PAGES.flatMap((p) => leavesOf(pageNodes(fileOf(p.id))));
-    expect(leaves).toHaveLength(11 + 2);
-    expect(leaves.filter((l) => l.overview)).toHaveLength(2);
-    expect(leaves.reduce((n, l) => n + l.examples.length, 0)).toBe(18);
+  it('has the exam-scope leaves: 3 regression, 4 distances, Perceptron, FFBP, ID3, K-Means', () => {
+    const leaves = (id: 'regression' | 'classification' | 'clustering') =>
+      leavesOf(pageNodes(fileOf(id))).map((n) => n.id);
+    expect(leaves('regression')).toHaveLength(3);
+    expect(leaves('classification')).toEqual([
+      'classification/1.1',
+      'classification/1.2',
+      'classification/1.3',
+      'classification/1.4',
+      'classification/2',
+      'classification/3',
+      'classification/4',
+    ]);
+    expect(leaves('clustering')).toEqual(['clustering/1']);
   });
 
-  it('links to the matching part of the topic page', () => {
+  it('links to the same part of the topic page', () => {
     expect(readHref('classification', '1.2')).toBe('/classification?s=1.2');
-    expect(readHref('regression', 'overview')).toBe('/regression?s=overview');
+    expect(readHref('regression', '2')).toBe('/regression?s=2');
+    expect(readHref('clustering', '')).toBe('/clustering');
   });
 });
 
-describe('diagram state', () => {
-  it('toggles the root and clears everything when it closes', () => {
-    const opened = toggleRoot(INITIAL_STATE);
-    expect(opened.rootOpen).toBe(true);
-    expect(toggleRoot({ ...opened, path: ['classification'], examplesFor: 'x' })).toEqual(
-      INITIAL_STATE,
-    );
+describe('opening and closing', () => {
+  it('opens and closes the root; closing it forgets the path', () => {
+    expect(toggleRoot(INITIAL_STATE)).toEqual({ rootOpen: true, path: [] });
+    expect(toggleRoot(open('classification', 'classification/1'))).toEqual(INITIAL_STATE);
   });
 
-  it('keeps one open node per column and closes everything to the right of a closed node', () => {
+  it('keeps one open node per column and closes the columns to the right of a closed node', () => {
     let s = toggleNode(open(), 1, 'classification');
     s = toggleNode(s, 2, 'classification/1');
-    s = toggleNode(s, 3, 'classification/1.2');
-    expect(s.path).toEqual(['classification', 'classification/1', 'classification/1.2']);
-    // another node in column 2 replaces it and everything after it
-    expect(toggleNode(s, 2, 'classification/2').path).toEqual([
-      'classification',
-      'classification/2',
-    ]);
-    // pressing the open node closes it and the columns after it
+    expect(s.path).toEqual(['classification', 'classification/1']);
     expect(toggleNode(s, 2, 'classification/1').path).toEqual(['classification']);
+    expect(toggleNode(s, 1, 'regression').path).toEqual(['regression']);
     expect(toggleNode(s, 1, 'classification').path).toEqual([]);
   });
 
-  it('closes the example column when the path changes', () => {
-    const s = toggleExamples(open('classification', 'classification/2'), 'classification/2');
-    expect(s.examplesFor).toBe('classification/2');
-    expect(toggleNode(s, 2, 'classification/3').examplesFor).toBeNull();
-    expect(toggleExamples(s, 'classification/2').examplesFor).toBeNull();
-  });
-
   it('closes the deepest open thing on Esc and says where focus goes', () => {
-    const withExamples = {
-      ...open('classification', 'classification/2'),
-      examplesFor: 'classification/2',
-    };
-    expect(closeDeepest(withExamples)).toEqual({
-      state: open('classification', 'classification/2'),
-      focusId: 'ex:classification/2',
-    });
-    expect(closeDeepest(open('classification', 'classification/2'))).toEqual({
-      state: open('classification'),
-      focusId: 'classification/2',
-    });
-    expect(closeDeepest(open())).toEqual({ state: INITIAL_STATE, focusId: 'root' });
-    expect(closeDeepest(INITIAL_STATE)).toEqual({ state: INITIAL_STATE, focusId: null });
+    const s = open('classification', 'classification/1');
+    const a = closeDeepest(s);
+    expect(a.state.path).toEqual(['classification']);
+    expect(a.focusId).toBe('classification/1');
+    const b = closeDeepest(a.state);
+    expect(b.state.path).toEqual([]);
+    expect(b.focusId).toBe('classification');
+    const c = closeDeepest(b.state);
+    expect(c.state).toEqual(INITIAL_STATE);
+    expect(c.focusId).toBe('root');
+    expect(closeDeepest(INITIAL_STATE).focusId).toBeNull();
   });
 });
 
-describe('buildColumns', () => {
-  it('shows nothing while the root is closed and the topics once it is open', () => {
-    expect(kinds(INITIAL_STATE)).toEqual([]);
+describe('columns', () => {
+  it('has no columns while the root is closed', () => {
+    expect(buildColumns(topics, files, INITIAL_STATE)).toEqual([]);
+  });
+
+  it('shows the topics when the root opens, then the sections of the open topic', () => {
     expect(kinds(open())).toEqual(['nodes']);
-  });
-
-  it('shows a loading column while the page of a topic is on its way, and an error column on failure', () => {
-    expect(kinds(open('classification'), {})).toEqual(['nodes', 'loading']);
-    expect(kinds(open('classification'), { classification: 'loading' })).toEqual([
-      'nodes',
-      'loading',
-    ]);
-    expect(kinds(open('classification'), { classification: 'error' })).toEqual(['nodes', 'error']);
-  });
-
-  it('opens the sections of a topic, then the sub-topics of a group, then the block of a leaf', () => {
     expect(kinds(open('classification'))).toEqual(['nodes', 'nodes']);
+  });
+
+  it('opens a third column only for a group (K-NN), never for a leaf', () => {
     expect(kinds(open('classification', 'classification/1'))).toEqual(['nodes', 'nodes', 'nodes']);
-    expect(kinds(open('classification', 'classification/1', 'classification/1.2'))).toEqual([
-      'nodes',
-      'nodes',
-      'nodes',
-      'block',
-    ]);
-    // a leaf section has no third node column
-    expect(kinds(open('classification', 'classification/2'))).toEqual(['nodes', 'nodes', 'block']);
+    // a leaf in the path (an old shared link) opens nothing
+    expect(kinds(open('classification', 'classification/2'))).toEqual(['nodes', 'nodes']);
+    expect(kinds(open('regression', 'regression/1'))).toEqual(['nodes', 'nodes']);
   });
 
-  it('adds the example column only for a leaf with examples whose button is open', () => {
-    const leaf = open('classification', 'classification/2');
-    expect(kinds({ ...leaf, examplesFor: 'classification/2' })).toEqual([
-      'nodes',
-      'nodes',
-      'block',
-      'examples',
+  it('turns every leaf into a link and leaves groups as buttons', () => {
+    const columns = buildColumns(topics, files, open('classification', 'classification/1'));
+    const second = columns[1];
+    const third = columns[2];
+    if (second.kind !== 'nodes' || third.kind !== 'nodes') throw new Error('expected nodes');
+    expect(second.items.map((i) => i.href ?? null)).toEqual([
+      null,
+      '/classification?s=2',
+      '/classification?s=3',
+      '/classification?s=4',
     ]);
-    // an overview entry has no examples, so the flag changes nothing
-    const overview = open('regression', 'regression/overview');
-    expect(kinds({ ...overview, examplesFor: 'regression/overview' })).toEqual([
-      'nodes',
-      'nodes',
-      'block',
+    expect(third.items.map((i) => i.href)).toEqual([
+      '/classification?s=1.1',
+      '/classification?s=1.2',
+      '/classification?s=1.3',
+      '/classification?s=1.4',
     ]);
+    expect(second.openId).toBe('classification/1');
   });
 
-  it('builds the breadcrumb of a block from the topic and the nodes of the path', () => {
-    const columns = buildColumns(
-      topics,
-      files,
-      open('classification', 'classification/1', 'classification/1.2'),
-    );
-    const block = columns[columns.length - 1];
-    expect(block.kind).toBe('block');
-    if (block.kind === 'block') expect(block.crumb).toBe('Classification / 1 K-NN / 1.2 Cosine');
+  it('shows a loading or an error column while the topic file is not there', () => {
+    expect(kinds(open('clustering'), {})).toEqual(['nodes', 'loading']);
+    expect(kinds(open('clustering'), { clustering: 'loading' })).toEqual(['nodes', 'loading']);
+    expect(kinds(open('clustering'), { clustering: 'error' })).toEqual(['nodes', 'error']);
   });
 
-  it('stops at an id that does not exist instead of failing', () => {
-    expect(kinds(open('classification', 'classification/9'))).toEqual(['nodes', 'nodes']);
+  it('shows only the topics for an unknown topic id', () => {
     expect(kinds(open('nope'))).toEqual(['nodes']);
   });
 });

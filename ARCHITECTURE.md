@@ -57,7 +57,7 @@ ML_Notes/
 │  ├─ components/
 │  │  ├─ ui/                 Button, PillLink, Chip, Icon, Skeleton, Prose, Toast, StatRow
 │  │  ├─ content/            BlockRenderer, InlineContent, TableBlock, FigureBlock, ScrollArea, SolLabel, AnsStrip,
-│  │  │                      ExampleCard (shared by the diagram's example column and the topic pages)
+│  │  │                      ExampleCard (topic pages)
 │  │  ├─ layout/             Navbar, MobileMenu, MenuToggleIcon, Logo, ShareButton, ShareDialog, QrCode,
 │  │  │                      PageContainer, ReadingProgress, BackToTop
 │  │  └─ motion/             CountUp, DrawPath
@@ -110,7 +110,7 @@ pages  ->  features  ->  components  ->  hooks / lib / content(types, stats) / c
 app    ->  pages, components, config
 ```
 
-- `features/*` MUST NOT import from other `features/*`. Shared pieces move to `components/` or `lib/`. (The diagram's example column and the topic page both use `components/content/ExampleCard`, not each other's code.)
+- `features/*` MUST NOT import from other `features/*`. Shared pieces move to `components/` or `lib/`.
 - `components/ui/*` and `components/motion/*` MUST NOT import from `features/` or `pages/`.
 - `scripts/*` MAY import `src/content/types.ts` and `src/content/stats.ts` only. No React code.
 - `src/content/generated/*` is imported only by `src/content/loaders.ts`.

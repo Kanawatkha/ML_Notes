@@ -78,7 +78,6 @@ Not used: announcement bar, trust-logo strip, blog filter chips at hero size, co
 | topic tags (mono, Latin) | SUPERVISED / UNSUPERVISED |
 | page stat labels | หัวข้อ / ตัวอย่างโจทย์ |
 | overview panel label | ภาพรวม |
-| show / hide examples | ดูตัวอย่าง (N) / ซ่อนตัวอย่าง |
 | open in page | อ่านในหน้าเนื้อหา |
 | example index chip (mono, Latin) | EX 01, EX 02, ... |
 | root node | Midterm |
@@ -155,7 +154,7 @@ There are no topic cards on Home: it is the hero and the diagram only (changed a
 
 ## 4. Home diagram (core feature)
 
-Carried over from the 1322201 `features/home-diagram` (model, layout hook, connectors, leaving columns), restyled with Cohere tokens and adapted to the ML tree.
+Carried over from the 1322201 `features/home-diagram` (model, layout hook, connectors, leaving columns), restyled with Cohere tokens and adapted to the ML tree. Since v1.2 it shows the scope only: the topics and their sub-topics. It never shows explanation, formulas or examples; a leaf is a link to its part of the topic page.
 
 ### 4.1 Tree
 
@@ -163,12 +162,10 @@ Carried over from the 1322201 `features/home-diagram` (model, layout hook, conne
 |---|---|---|
 | 0 | Root "Midterm" | always |
 | 1 | Topics: Regression, Classification, Clustering | root is open |
-| 2 | Sections of the open topic (`##`), plus an "ภาพรวม" entry first when the topic has an overview | a topic is open |
-| 3 | Sub-topics of the open section (`###` numbered), plus "ภาพรวม" first when the section has its own explanation | the open section is a group (only K-NN today) |
-| next | Expanded block (explanation and formulas) | a leaf is open |
-| next + 1 | Example column | "ดูตัวอย่าง (N)" is pressed |
+| 2 | Sections of the open topic (`##`): a button for a group, a link for a leaf | a topic is open |
+| 3 | Sub-topics of the open section (`###` numbered), all links | the open section is a group (only K-NN today) |
 
-Leaf and group rules come from `CONTENT-SCHEMA.md` section 5. Today: Regression 3 leaves plus its overview, Classification K-NN (group with overview and 4 sub-topics), Perceptron, FFBP, ID3 (leaves), Clustering K-Means (leaf).
+Leaf and group rules come from `CONTENT-SCHEMA.md` section 5. Today: Regression Linear, Polynomial, K-NN Regression (3 links); Classification K-NN (a group with Euclidean, Cosine, Squared Euclidean, Manhattan), Perceptron, FFBP, ID3 (links); Clustering K-Means (a link).
 
 ### 4.2 Behavior
 
@@ -176,25 +173,22 @@ Leaf and group rules come from `CONTENT-SCHEMA.md` section 5. Today: Regression 
 2. Pressing the root toggles it. Closing the root collapses everything.
 3. **One open node per column.** Opening another node in a column closes the previous one and its descendants.
 4. Nothing overlays anything. Columns sit in normal flow side by side; the canvas widens as columns open.
-5. The expanded block shows a breadcrumb (`type-mono`, for example `CLASSIFICATION / 1. K-NN`), the title, the `explain` blocks, then a row with `button-primary` "ดูตัวอย่าง (N)" (only when N > 0) and `button-secondary` "อ่านในหน้าเนื้อหา" (links to `#/<topic>?s=<node>`). It never shows examples inline.
-6. The example column lists the leaf's examples in order, each as an example card (section 6.4) with problem, Sol and Ans. "ซ่อนตัวอย่าง" or closing the leaf closes it.
-7. When a column opens, the canvas scrolls horizontally (smooth) so the new column's left edge sits 16 px inside the canvas, unless it is already fully visible.
-8. State in the URL: the open path is mirrored in the hash query (`#/?p=classification.1.1-2&x=1`), so a diagram state can be shared and survives a reload. Decided D16 (cheap, the model already holds the path).
+5. A leaf is a link to `#/<topic>?s=<node>` (the section or sub-topic on the topic page). It never opens a column.
+6. When a column opens, the canvas scrolls horizontally (smooth) so the new column's left edge sits 16 px inside the canvas, unless it is already fully visible.
+7. State in the URL: the open path is mirrored in the hash query (`#/?p=classification:1`), so a diagram state can be shared and survives a reload. An old address with `&x=1` (the former example column) still opens the same path and the flag is ignored. Decided D16.
 
 ### 4.3 Visuals
 
 | Element | Style |
 |---|---|
-| Canvas | `soft-stone` panel, radius `lg` 22, padding 32 (16 phone), full container width, horizontal scroll inside it, min height 360 px |
+| Canvas | No frame: full viewport width, the first column starts at the left edge of the 1200 px content column, horizontal scroll, min height 320 px |
 | Root | `button-primary` pill, 56 px high, "Midterm", a plus icon that rotates into a minus when open |
 | Topic node | White card, 1 px `hairline`, radius `md` 16, padding 20; top row: mono tag and topic colour swatch; title `type-feature-heading` (Latin); caption `body-muted` "3 หัวข้อ" (count from the data) |
 | Section / sub-topic node | White, 1 px `hairline`, radius `sm` 8, padding 16; mono number (`01`, `1.1`) in `body-muted`, title `type-body` weight 500 |
-| Overview entry | Same as a section node with a `card-border` fill; its label "ภาพรวม" is Thai, so it is set in `type-caption` 500 (not mono) |
-| Open node | 1 px `ink` border, a 3 px `ink` bar on the left, the chevron turned; the coral dot sits at the connector's end beside it; fill stays white |
-| Expanded block | `contact-form-card`: white, radius `lg` 22, padding 32 (20 phone), 1 px `hairline` |
-| Example column | Example cards stacked with 16 px gaps, no outer frame (the stone canvas is the frame) |
+| Leaf (link) | Same as a section node; the border turns `ink` on hover |
+| Open node | 1 px `ink` border, the chevron turned; the coral dot sits at the connector's end beside it; fill stays white |
 
-Connectors: cubic Bezier from the parent's right-middle to each child's left-middle, `hairline` 1.5 px. The open path is `ink` 2 px with a 6 px `coral` dot where it meets the open child. Lines never cross blocks (columns never overlap).
+Connectors: cubic Bezier from the parent's right-middle to each child's left-middle, `hairline` 1.5 px. The open path is `ink` 2 px with a 6 px `coral` dot where it meets the open child.
 
 ### 4.4 Layout engine
 
@@ -208,13 +202,11 @@ Connectors: cubic Bezier from the parent's right-middle to each child's left-mid
 | Root | 168 px | 160 px | 140 px |
 | Topic | 260 px | 248 px | min(76vw, 260 px) |
 | Section / sub-topic | 280 px | 264 px | min(78vw, 280 px) |
-| Expanded block | 640 px | min(72vw, 640 px) | min(90vw, 640 px) |
-| Example column | 640 px | min(72vw, 640 px) | min(90vw, 640 px) |
 
 ### 4.5 Keyboard and screen reader
 
-- Every node is a `<button>` with `aria-expanded` and `aria-controls` pointing at its child column.
-- Tab order follows visual order. `Enter` or `Space` toggles. `Esc` closes the deepest open node and returns focus to its parent. `ArrowUp`/`ArrowDown` move within a column, `ArrowRight` to the first child, `ArrowLeft` to the parent.
+- A node with children is a `<button>` with `aria-expanded` and `aria-controls` pointing at its child column; a leaf is a link.
+- Tab order follows visual order. `Enter` or `Space` toggles a button, `Enter` follows a link. `Esc` closes the deepest open node and returns focus to its parent. `ArrowUp`/`ArrowDown` move within a column, `ArrowRight` to the first child, `ArrowLeft` to the parent.
 - The canvas is a `region` labelled "แผนผังแนวข้อสอบ". A polite live region announces "เปิด <title>" and "ปิด <title>".
 - The connector layer is `aria-hidden`.
 

@@ -58,7 +58,7 @@ Navigation: a top navbar only (logo left, three page tabs centered, share button
 ## 6. Features
 
 ### F1 Home: exam-scope diagram (core feature)
-An interactive, animated diagram that grows to the right, carried over from the 1322201 site and restyled. Root node "Midterm" toggles open. Open: the three topics slide out, connected by curves, each tagged Supervised or Unsupervised. Open a topic: its sections appear in the next column (Regression: 3, Classification: 4, Clustering: 1). Open a section that has sub-topics (K-NN): its sub-topics appear in the next column. Open a leaf: an expanded block shows the explanation and the formulas, a "ดูตัวอย่าง (N)" button opens the worked examples in the next column, and an "อ่านในหน้าเนื้อหา" link opens the topic page at that section. Nothing overlays anything. Detailed behavior: `UI-SPEC.md` section 4.
+An interactive, animated diagram that grows to the right, carried over from the 1322201 site and restyled. Root node "Midterm" toggles open. Open: the three topics slide out, connected by curves, each tagged Supervised or Unsupervised. Open a topic: its sections appear in the next column (Regression: 3, Classification: 4, Clustering: 1). Open a section that has sub-topics (K-NN): its sub-topics appear in the next column. A leaf (a section or sub-topic without children) is a link that opens the topic page at that part. The diagram shows the scope only: no explanation, formulas or examples. Nothing overlays anything. Detailed behavior: `UI-SPEC.md` section 4.
 
 ### F2 Home: hero and diagram
 Above the diagram a compact editorial hero (course label, title, one Thai lead line, three numbers counted from the content, an animated thin-line illustration). The diagram is full width with no frame, as on the 1322201 site. There is nothing below it (the topic cards were removed after launch).
@@ -101,7 +101,7 @@ Name "ML Notes". Original logo (`UI-SPEC.md` section 11): three data points on a
 ## 9. Acceptance criteria
 
 1. The three Markdown files convert without error or warning and the round-trip test passes.
-2. Home: the root opens to three topics, every section and sub-topic opens to its block, every leaf with examples opens its example column, and every "อ่านในหน้าเนื้อหา" link lands on the right section.
+2. Home: the root opens to three topics, every section with sub-topics (K-NN) opens its sub-topics, and every leaf is a link that lands on the right section of its topic page.
 3. Each topic page renders all of its Markdown: 3 + 4 + 1 sections, 4 K-NN sub-topics, 18 examples (4 + 12 + 2), every table, formula and figure. Counts are snapshot-tested.
 4. The rail (desktop) and drawer (phone) reach every section, sub-topic and example; the highlight follows scrolling.
 5. Share opens the native sheet where supported, otherwise the QR dialog; the QR code scans to the current address; copy works.

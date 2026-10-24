@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { InlineContent } from '@/components/content/InlineContent';
 import { Chip } from '@/components/ui/Chip';
 import { Icon } from '@/components/ui/Icon';
@@ -18,28 +19,22 @@ type DiagramNodeProps = {
 };
 
 /**
- * One node of the diagram: a disclosure button (UI-SPEC.md section 4.3). A topic is a card with its
- * mono tag, colour swatch, Latin title and a count; a section or sub-topic is a smaller card with
- * its number; the overview entry has a tinted fill. The open node gets an ink border and bar.
+ * One node of the diagram (UI-SPEC.md section 4.3). A topic is a card with its mono tag, colour
+ * swatch, Latin title and a count; a section or sub-topic is a smaller card with its number. A node
+ * with children is a disclosure button; the open node gets an ink border. A leaf is a link to its
+ * part of the topic page.
  */
 export function DiagramNode({ item, open, controls, order, onToggle }: DiagramNodeProps) {
   const topic = item.topic;
-  return (
-    <button
-      type="button"
-      data-node-id={item.id}
-      data-open={open}
-      aria-expanded={open}
-      aria-controls={controls}
-      onClick={onToggle}
-      style={{ animationDelay: `${order * 40}ms` }}
-      className={cn(
-        'diagram-enter relative z-10 flex w-full items-center gap-3 border border-l-[3px] text-left',
-        topic ? 'rounded-md p-5' : 'rounded-sm px-4 py-3.5',
-        item.tone === 'overview' ? 'bg-card-border' : 'bg-canvas',
-        open ? 'border-ink' : 'border-hairline border-l-hairline',
-      )}
-    >
+  const className = cn(
+    'diagram-enter relative z-10 flex w-full items-center gap-3 border border-l-[3px] bg-canvas text-left',
+    topic ? 'rounded-md p-5' : 'rounded-sm px-4 py-3.5',
+    open ? 'border-ink' : 'border-hairline border-l-hairline',
+    item.href && 'transition-colors duration-[160ms] hover:border-ink',
+  );
+  const style = { animationDelay: `${order * 40}ms` };
+  const content = (
+    <>
       <span className="flex min-w-0 flex-1 flex-col gap-1.5">
         {topic ? (
           <span className="flex items-center gap-2">
@@ -70,6 +65,27 @@ export function DiagramNode({ item, open, controls, order, onToggle }: DiagramNo
           open && 'rotate-90 text-ink',
         )}
       />
+    </>
+  );
+  if (item.href) {
+    return (
+      <Link to={item.href} data-node-id={item.id} style={style} className={className}>
+        {content}
+      </Link>
+    );
+  }
+  return (
+    <button
+      type="button"
+      data-node-id={item.id}
+      data-open={open}
+      aria-expanded={open}
+      aria-controls={controls}
+      onClick={onToggle}
+      style={style}
+      className={className}
+    >
+      {content}
     </button>
   );
 }

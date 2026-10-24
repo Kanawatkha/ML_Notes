@@ -58,8 +58,8 @@ Before any number, matrix, distance, weight, entropy or centroid is written into
 - `ExampleCard`: problem, Sol label and Ans in order; EX number; works inside the diagram and on a page.
 - Topic page: hero from meta; overview only when present; every section, sub-topic and example of the real content in the DOM once mounted; `?s=` lands on the node.
 - Rail: levels match the data; only the active section (and sub-topic) expanded; `aria-current="location"` follows the active anchor; selecting calls `jumpTo`; toggle is icon-only with a changing accessible name; drawer traps focus, closes on `Esc` and scrim, locks scroll.
-- Diagram model: one open node per column, closing a parent closes descendants, overview entries, example column toggling, URL state round trip.
-- Diagram component: every leaf of all three topics opens its block; "ดูตัวอย่าง (N)" shows N cards; "อ่านในหน้าเนื้อหา" points at `#/<page>?s=<id>`; `Esc` returns focus to the parent; live region messages.
+- Diagram model: one open node per column, closing a parent closes descendants, leaves are links, K-NN is the only group, URL state round trip.
+- Diagram component: every leaf of all three topics is a link to `#/<page>?s=<id>`; nothing but nodes is rendered (no formulas, no cards); `Esc` returns focus to the parent; live region messages.
 - Navbar and mobile menu: tabs from `PAGES`, `aria-current="page"`, menu focus trap, `Esc`, closes on navigation.
 - Share: Web Share path used when available and the pointer is coarse; dialog otherwise; copy success and failure; QR matrix decodes back to the URL (unit test on `lib/qr.ts`).
 - Motion helpers: reveals render final state under reduced motion; `CountUp` puts the final number in the DOM from the start; the shared observer reveals once and disconnects; illustrations render their final frame under reduced motion.
@@ -70,7 +70,7 @@ Run at 360x640, 390x844, 768x1024, 1024x768, 1440x900 and phone landscape 844x39
 
 1. All four routes load without console errors.
 2. No horizontal page scroll (`document.scrollingElement.scrollWidth <= innerWidth`); diagram, tables, math and figures scroll inside their own wrapper.
-3. Home: open Midterm, each topic, each section and sub-topic, one leaf per topic, press "ดูตัวอย่าง"; no two blocks overlap (bounding boxes disjoint) and the newest column is visible after the auto-scroll.
+3. Home: open Midterm, each topic, each section and sub-topic, press one leaf per topic and land on its part of the page; the newest column is visible after the auto-scroll.
 4. Keyboard: the diagram, tabs, menu, share dialog, rail and drawer can be used with Tab, Enter, Space, arrows and Esc only; the focus ring is always visible.
 5. axe: zero serious or critical violations on every route, with the diagram open, the drawer open, the menu open and the share dialog open.
 6. `prefers-reduced-motion` emulation: every item behaves as in `UI-SPEC.md` section 9 rules.
