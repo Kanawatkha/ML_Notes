@@ -161,7 +161,7 @@ Leaves: 3 + 7 + 1 = 11. Examples: 4 + 12 + 2 = 18.
 
 - Inline and display math are extracted before Markdown inline parsing so `_`, `*`, `|` inside formulas are not misread.
 - Thai text inside math must be inside `\text{...}` (Regression uses `\text{โดย }`). KaTeX strict mode has no exceptions.
-- Circled digits (the sample numbers in K-NN votes) are written `\text{\textcircled{3}}`, never the Unicode characters (①, ②, ...), which strict mode rejects.
+- Circled digits (the sample numbers in K-NN votes) are written `\text{\textcircled{3}}`, never the Unicode characters (①, ②, ...), which strict mode rejects. The build draws them as a round ring (a `ring` span styled in `content.css`) instead of KaTeX's lopsided oval; that macro is the only use of the html extension.
 - Absolute values in table-adjacent text use `\lvert ... \rvert`; `|` is fine in display math.
 - A lone `$` is never used outside math.
 

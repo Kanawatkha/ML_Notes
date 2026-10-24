@@ -52,3 +52,26 @@ figure svg text {
   border-radius: 9999px;
   background: var(--color-muted);
 }
+
+/*
+ * A circled sample number (the K-NN votes): built by scripts/build-content/math.ts as a span with
+ * the class `ring` around the digit, drawn as a true circle that sits on the formula's math axis.
+ */
+.katex .ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 1.2em;
+  height: 1.2em;
+  margin: 0 0.12em;
+  border: 0.08em solid currentColor;
+  border-radius: 50%;
+  vertical-align: -0.2em;
+  line-height: 1;
+}
+
+.katex .ring > .mord {
+  font-size: 0.78em;
+  line-height: 1;
+}
