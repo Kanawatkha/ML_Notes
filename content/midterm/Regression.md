@@ -78,15 +78,14 @@ $y=ax+b$
 
 ### ตัวอย่างโจทย์
 
-จากข้อมูลในตารางต่อไปนี้ จงหาเส้นตรง $y=ax+b$ ด้วยวิธีเมทริกซ์ ทำนายค่า $y$ เมื่อ $x=6$ และหา MAE และ MSE
+จากข้อมูลในตารางต่อไปนี้ จงหาเส้นตรง $y=ax+b$ ด้วยวิธีเมทริกซ์ ทำนายค่า $y$ เมื่อ $x=5$ และหา MAE และ MSE
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
   <tr><td align="center">1</td><td align="center">1</td><td align="center">2</td></tr>
   <tr><td align="center">2</td><td align="center">2</td><td align="center">3</td></tr>
-  <tr><td align="center">3</td><td align="center">3</td><td align="center">5</td></tr>
-  <tr><td align="center">4</td><td align="center">4</td><td align="center">4</td></tr>
-  <tr><td align="center">5</td><td align="center">5</td><td align="center">6</td></tr>
+  <tr><td align="center">3</td><td align="center">3</td><td align="center">6</td></tr>
+  <tr><td align="center">4</td><td align="center">4</td><td align="center">5</td></tr>
 </table>
 
 #### Sol<sup>n</sup>
@@ -97,57 +96,56 @@ $$R=Y\,X^T(XX^T)^{-1}$$
 
 สร้าง $X$ และ $Y$
 
-$$X=\begin{bmatrix}1&2&3&4&5\\1&1&1&1&1\end{bmatrix}_{2\times5},\qquad Y=\begin{bmatrix}2&3&5&4&6\end{bmatrix}_{1\times5}$$
+$$X=\begin{bmatrix}1&2&3&4\\1&1&1&1\end{bmatrix}_{2\times4},\qquad Y=\begin{bmatrix}2&3&6&5\end{bmatrix}_{1\times4}$$
 
 หา $XX^T$
 
-$$XX^T=\begin{bmatrix}1&2&3&4&5\\1&1&1&1&1\end{bmatrix}_{2\times5}\begin{bmatrix}1&1\\2&1\\3&1\\4&1\\5&1\end{bmatrix}_{5\times2}=\begin{bmatrix}55&15\\15&5\end{bmatrix}_{2\times2}$$
+$$XX^T=\begin{bmatrix}1&2&3&4\\1&1&1&1\end{bmatrix}_{2\times4}\begin{bmatrix}1&1\\2&1\\3&1\\4&1\end{bmatrix}_{4\times2}=\begin{bmatrix}30&10\\10&4\end{bmatrix}_{2\times2}$$
 
 หา $YX^T$
 
-$$YX^T=\begin{bmatrix}2&3&5&4&6\end{bmatrix}_{1\times5}\begin{bmatrix}1&1\\2&1\\3&1\\4&1\\5&1\end{bmatrix}_{5\times2}=\begin{bmatrix}69&20\end{bmatrix}_{1\times2}$$
+$$YX^T=\begin{bmatrix}2&3&6&5\end{bmatrix}_{1\times4}\begin{bmatrix}1&1\\2&1\\3&1\\4&1\end{bmatrix}_{4\times2}=\begin{bmatrix}46&16\end{bmatrix}_{1\times2}$$
 
 หา $(XX^T)^{-1}$ จากสูตร $A^{-1}=\dfrac{\text{adj}A}{\det A}$ เมื่อ $A=\begin{bmatrix}p&q\\r&s\end{bmatrix}_{2\times2}$
 
-$$\det(XX^T)=ps-qr=(55)(5)-(15)(15)=275-225=50$$
+$$\det(XX^T)=ps-qr=(30)(4)-(10)(10)=120-100=20$$
 
-$$\text{adj}(XX^T)=\begin{bmatrix}s&-q\\-r&p\end{bmatrix}_{2\times2}=\begin{bmatrix}5&-15\\-15&55\end{bmatrix}_{2\times2}$$
+$$\text{adj}(XX^T)=\begin{bmatrix}s&-q\\-r&p\end{bmatrix}_{2\times2}=\begin{bmatrix}4&-10\\-10&30\end{bmatrix}_{2\times2}$$
 
-$$(XX^T)^{-1}=\frac{\text{adj}(XX^T)}{\det(XX^T)}=\frac1{50}\begin{bmatrix}5&-15\\-15&55\end{bmatrix}_{2\times2}$$
+$$(XX^T)^{-1}=\frac{\text{adj}(XX^T)}{\det(XX^T)}=\frac1{20}\begin{bmatrix}4&-10\\-10&30\end{bmatrix}_{2\times2}$$
 
 แทนค่าในสูตร
 
-$$R=\begin{bmatrix}69&20\end{bmatrix}_{1\times2}\cdot\frac1{50}\begin{bmatrix}5&-15\\-15&55\end{bmatrix}_{2\times2}=\frac1{50}\begin{bmatrix}69(5)+20(-15)&69(-15)+20(55)\end{bmatrix}_{1\times2}$$
+$$R=\begin{bmatrix}46&16\end{bmatrix}_{1\times2}\cdot\frac1{20}\begin{bmatrix}4&-10\\-10&30\end{bmatrix}_{2\times2}=\frac1{20}\begin{bmatrix}46(4)+16(-10)&46(-10)+16(30)\end{bmatrix}_{1\times2}$$
 
-$$=\frac1{50}\begin{bmatrix}45&65\end{bmatrix}_{1\times2}=\begin{bmatrix}0.9&1.3\end{bmatrix}_{1\times2}$$
+$$=\frac1{20}\begin{bmatrix}24&20\end{bmatrix}_{1\times2}=\begin{bmatrix}1.2&1\end{bmatrix}_{1\times2}$$
 
-ดังนั้น $a=0.9$, $b=1.3$
+ดังนั้น $a=1.2$, $b=1$
 
-$$y=0.9x+1.3$$
+$$y=1.2x+1$$
 
-ทำนายที่ $x=6$
+ทำนายที่ $x=5$
 
-$$\begin{array}{c|c}\textbf{แบบสมการ}&\textbf{แบบ Matrix Form}\\\hline\\[-6pt]\qquad\hat y=0.9(6)+1.3=6.7\qquad&\qquad\hat y=RX=\begin{bmatrix}0.9&1.3\end{bmatrix}_{1\times2}\begin{bmatrix}6\\1\end{bmatrix}_{2\times1}=\begin{bmatrix}0.9(6)+1.3(1)\end{bmatrix}_{1\times1}=\begin{bmatrix}6.7\end{bmatrix}_{1\times1}\qquad\end{array}$$
+$$\begin{array}{c|c}\textbf{แบบสมการ}&\textbf{แบบ Matrix Form}\\\hline\\[-6pt]\qquad\hat y=1.2(5)+1=7\qquad&\qquad\hat y=RX=\begin{bmatrix}1.2&1\end{bmatrix}_{1\times2}\begin{bmatrix}5\\1\end{bmatrix}_{2\times1}=\begin{bmatrix}1.2(5)+1(1)\end{bmatrix}_{1\times1}=\begin{bmatrix}7\end{bmatrix}_{1\times1}\qquad\end{array}$$
 
-หา Error จาก $\hat y=0.9x+1.3$
+หา Error จาก $\hat y=1.2x+1$
 
 <table align="center">
   <tr><th>x</th><th>y</th><th>ŷ</th><th>|y − ŷ|</th><th>(y − ŷ)²</th></tr>
   <tr><td align="center">1</td><td align="center">2</td><td align="center">2.2</td><td align="center">0.2</td><td align="center">0.04</td></tr>
-  <tr><td align="center">2</td><td align="center">3</td><td align="center">3.1</td><td align="center">0.1</td><td align="center">0.01</td></tr>
-  <tr><td align="center">3</td><td align="center">5</td><td align="center">4.0</td><td align="center">1.0</td><td align="center">1.00</td></tr>
-  <tr><td align="center">4</td><td align="center">4</td><td align="center">4.9</td><td align="center">0.9</td><td align="center">0.81</td></tr>
-  <tr><td align="center">5</td><td align="center">6</td><td align="center">5.8</td><td align="center">0.2</td><td align="center">0.04</td></tr>
-  <tr><th>sum</th><td></td><td></td><td align="center"><b>2.4</b></td><td align="center"><b>1.90</b></td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">3.4</td><td align="center">0.4</td><td align="center">0.16</td></tr>
+  <tr><td align="center">3</td><td align="center">6</td><td align="center">4.6</td><td align="center">1.4</td><td align="center">1.96</td></tr>
+  <tr><td align="center">4</td><td align="center">5</td><td align="center">5.8</td><td align="center">0.8</td><td align="center">0.64</td></tr>
+  <tr><th>sum</th><td></td><td></td><td align="center"><b>2.8</b></td><td align="center"><b>2.8</b></td></tr>
 </table>
 
 แทนค่าในสูตร
 
-$$\text{MAE}=\frac1N\sum_{i=1}^{N}|y_i-\hat y_i|=\frac{2.4}{5}=0.48$$
+$$\text{MAE}=\frac1N\sum_{i=1}^{N}|y_i-\hat y_i|=\frac{2.8}{4}=0.7$$
 
-$$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{1.90}{5}=0.38$$
+$$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{2.8}{4}=0.7$$
 
-**Ans** $y=0.9x+1.3$, $\hat y(6)=6.7$, $\text{MAE}=0.48$, $\text{MSE}=0.38$
+**Ans** $y=1.2x+1$, $\hat y(5)=7$, $\text{MAE}=0.7$, $\text{MSE}=0.7$
 
 ---
 
@@ -234,29 +232,26 @@ $$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{2.046875}{3}\approx0.68
 
 ### แบบฝึกหัด 1
 
-จากข้อมูลในตารางต่อไปนี้ จงหา $R$ ของ Linear Regression $y=ax+b$ ด้วยรูปแบบเมทริกซ์ แล้วทำนายค่า $y$ เมื่อ $x=6$ และหา MAE
+จากข้อมูลในตารางต่อไปนี้ จงหา $R$ ของ Linear Regression $y=ax+b$ ด้วยรูปแบบเมทริกซ์ แล้วทำนายค่า $y$ เมื่อ $x=4$ และหา MAE
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
   <tr><td align="center">1</td><td align="center">0</td><td align="center">2</td></tr>
-  <tr><td align="center">2</td><td align="center">1</td><td align="center">5</td></tr>
-  <tr><td align="center">3</td><td align="center">2</td><td align="center">9</td></tr>
-  <tr><td align="center">4</td><td align="center">3</td><td align="center">6</td></tr>
-  <tr><td align="center">5</td><td align="center">4</td><td align="center">8</td></tr>
-  <tr><td align="center">6</td><td align="center">5</td><td align="center">12</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">3</td></tr>
+  <tr><td align="center">3</td><td align="center">2</td><td align="center">8</td></tr>
+  <tr><td align="center">4</td><td align="center">3</td><td align="center">9</td></tr>
 </table>
 
 ### แบบฝึกหัด 2
 
-จากข้อมูลในตารางต่อไปนี้ จงหา $R$ ของ Linear Regression $y=ax+b$ ด้วยรูปแบบเมทริกซ์ แล้วทำนายค่า $y$ เมื่อ $x=8$ และหา MAE
+จากข้อมูลในตารางต่อไปนี้ จงหา $R$ ของ Linear Regression $y=ax+b$ ด้วยรูปแบบเมทริกซ์ แล้วทำนายค่า $y$ เมื่อ $x=6$ และหา MAE
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
-  <tr><td align="center">1</td><td align="center">1</td><td align="center">11</td></tr>
-  <tr><td align="center">2</td><td align="center">2</td><td align="center">11</td></tr>
-  <tr><td align="center">3</td><td align="center">4</td><td align="center">1</td></tr>
-  <tr><td align="center">4</td><td align="center">5</td><td align="center">4</td></tr>
-  <tr><td align="center">5</td><td align="center">7</td><td align="center">0</td></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">1</td></tr>
+  <tr><td align="center">2</td><td align="center">2</td><td align="center">5</td></tr>
+  <tr><td align="center">3</td><td align="center">4</td><td align="center">8</td></tr>
+  <tr><td align="center">4</td><td align="center">5</td><td align="center">11</td></tr>
 </table>
 
 ---
@@ -271,11 +266,10 @@ $y=ax^2+bx+c$ (Degree 2)
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
-  <tr><td align="center">1</td><td align="center">-2</td><td align="center">1</td></tr>
-  <tr><td align="center">2</td><td align="center">-1</td><td align="center">2</td></tr>
-  <tr><td align="center">3</td><td align="center">0</td><td align="center">0</td></tr>
-  <tr><td align="center">4</td><td align="center">1</td><td align="center">0</td></tr>
-  <tr><td align="center">5</td><td align="center">2</td><td align="center">7</td></tr>
+  <tr><td align="center">1</td><td align="center">-1</td><td align="center">-1</td></tr>
+  <tr><td align="center">2</td><td align="center">0</td><td align="center">0</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">-2</td></tr>
+  <tr><td align="center">4</td><td align="center">2</td><td align="center">3</td></tr>
 </table>
 
 #### Sol<sup>n</sup>
@@ -286,69 +280,68 @@ $$R=Y\,X^T(XX^T)^{-1}$$
 
 สร้าง $X$ และ $Y$
 
-$$X=\begin{bmatrix}4&1&0&1&4\\-2&-1&0&1&2\\1&1&1&1&1\end{bmatrix}_{3\times5},\qquad Y=\begin{bmatrix}1&2&0&0&7\end{bmatrix}_{1\times5}$$
+$$X=\begin{bmatrix}1&0&1&4\\-1&0&1&2\\1&1&1&1\end{bmatrix}_{3\times4},\qquad Y=\begin{bmatrix}-1&0&-2&3\end{bmatrix}_{1\times4}$$
 
 หา $XX^T$
 
-$$XX^T=\begin{bmatrix}4&1&0&1&4\\-2&-1&0&1&2\\1&1&1&1&1\end{bmatrix}_{3\times5}\begin{bmatrix}4&-2&1\\1&-1&1\\0&0&1\\1&1&1\\4&2&1\end{bmatrix}_{5\times3}$$
+$$XX^T=\begin{bmatrix}1&0&1&4\\-1&0&1&2\\1&1&1&1\end{bmatrix}_{3\times4}\begin{bmatrix}1&-1&1\\0&0&1\\1&1&1\\4&2&1\end{bmatrix}_{4\times3}$$
 
-$$=\begin{bmatrix}16+1+0+1+16&-8-1+0+1+8&4+1+0+1+4\\-8-1+0+1+8&4+1+0+1+4&-2-1+0+1+2\\4+1+0+1+4&-2-1+0+1+2&5\end{bmatrix}_{3\times3}=\begin{bmatrix}34&0&10\\0&10&0\\10&0&5\end{bmatrix}_{3\times3}$$
+$$=\begin{bmatrix}1+0+1+16&-1+0+1+8&1+0+1+4\\-1+0+1+8&1+0+1+4&-1+0+1+2\\1+0+1+4&-1+0+1+2&4\end{bmatrix}_{3\times3}=\begin{bmatrix}18&8&6\\8&6&2\\6&2&4\end{bmatrix}_{3\times3}$$
 
 หา $YX^T$
 
-$$YX^T=\begin{bmatrix}1&2&0&0&7\end{bmatrix}_{1\times5}\begin{bmatrix}4&-2&1\\1&-1&1\\0&0&1\\1&1&1\\4&2&1\end{bmatrix}_{5\times3}$$
+$$YX^T=\begin{bmatrix}-1&0&-2&3\end{bmatrix}_{1\times4}\begin{bmatrix}1&-1&1\\0&0&1\\1&1&1\\4&2&1\end{bmatrix}_{4\times3}$$
 
-$$=\begin{bmatrix}1(4)+2(1)+0(0)+0(1)+7(4)&1(-2)+2(-1)+0(0)+0(1)+7(2)&1+2+0+0+7\end{bmatrix}_{1\times3}=\begin{bmatrix}34&10&10\end{bmatrix}_{1\times3}$$
+$$=\begin{bmatrix}-1+0-2+12&1+0-2+6&-1+0-2+3\end{bmatrix}_{1\times3}=\begin{bmatrix}9&5&0\end{bmatrix}_{1\times3}$$
 
 หา $(XX^T)^{-1}$ จากสูตร $A^{-1}=\dfrac{\text{adj}A}{\det A}$ เมื่อ $C_{ij}=(-1)^{i+j}M_{ij}$, $\text{adj}A=C^T$ และ $\det A=a_{11}C_{11}+a_{12}C_{12}+a_{13}C_{13}$
 
-$$C_{11}=(10)(5)-(0)(0)=50,\quad C_{12}=-[(0)(5)-(0)(10)]=0,\quad C_{13}=(0)(0)-(10)(10)=-100$$
+$$C_{11}=(6)(4)-(2)(2)=20,\quad C_{12}=-[(8)(4)-(2)(6)]=-20,\quad C_{13}=(8)(2)-(6)(6)=-20$$
 
-$$C_{21}=-[(0)(5)-(10)(0)]=0,\quad C_{22}=(34)(5)-(10)(10)=70,\quad C_{23}=-[(34)(0)-(0)(10)]=0$$
+$$C_{21}=-[(8)(4)-(6)(2)]=-20,\quad C_{22}=(18)(4)-(6)(6)=36,\quad C_{23}=-[(18)(2)-(8)(6)]=12$$
 
-$$C_{31}=(0)(0)-(10)(10)=-100,\quad C_{32}=-[(34)(0)-(10)(0)]=0,\quad C_{33}=(34)(10)-(0)(0)=340$$
+$$C_{31}=(8)(2)-(6)(6)=-20,\quad C_{32}=-[(18)(2)-(6)(8)]=12,\quad C_{33}=(18)(6)-(8)(8)=44$$
 
-$$\det(XX^T)=a_{11}C_{11}+a_{12}C_{12}+a_{13}C_{13}=(34)(50)+(0)(0)+(10)(-100)=1700-1000=700$$
+$$\det(XX^T)=a_{11}C_{11}+a_{12}C_{12}+a_{13}C_{13}=(18)(20)+(8)(-20)+(6)(-20)=80$$
 
-$$\text{adj}(XX^T)=C^T=\begin{bmatrix}50&0&-100\\0&70&0\\-100&0&340\end{bmatrix}_{3\times3}$$
+$$\text{adj}(XX^T)=C^T=\begin{bmatrix}20&-20&-20\\-20&36&12\\-20&12&44\end{bmatrix}_{3\times3}$$
 
-$$(XX^T)^{-1}=\frac{\text{adj}(XX^T)}{\det(XX^T)}=\frac1{700}\begin{bmatrix}50&0&-100\\0&70&0\\-100&0&340\end{bmatrix}_{3\times3}$$
+$$(XX^T)^{-1}=\frac{\text{adj}(XX^T)}{\det(XX^T)}=\frac1{80}\begin{bmatrix}20&-20&-20\\-20&36&12\\-20&12&44\end{bmatrix}_{3\times3}$$
 
 แทนค่าในสูตร
 
-$$R=\begin{bmatrix}34&10&10\end{bmatrix}_{1\times3}\cdot\frac1{700}\begin{bmatrix}50&0&-100\\0&70&0\\-100&0&340\end{bmatrix}_{3\times3}$$
+$$R=\begin{bmatrix}9&5&0\end{bmatrix}_{1\times3}\cdot\frac1{80}\begin{bmatrix}20&-20&-20\\-20&36&12\\-20&12&44\end{bmatrix}_{3\times3}$$
 
-$$=\frac1{700}\begin{bmatrix}34(50)+10(0)+10(-100)&34(0)+10(70)+10(0)&34(-100)+10(0)+10(340)\end{bmatrix}_{1\times3}$$
+$$=\frac1{80}\begin{bmatrix}9(20)+5(-20)+0(-20)&9(-20)+5(36)+0(12)&9(-20)+5(12)+0(44)\end{bmatrix}_{1\times3}$$
 
-$$=\frac1{700}\begin{bmatrix}700&700&0\end{bmatrix}_{1\times3}=\begin{bmatrix}1&1&0\end{bmatrix}_{1\times3}$$
+$$=\frac1{80}\begin{bmatrix}80&0&-120\end{bmatrix}_{1\times3}=\begin{bmatrix}1&0&-1.5\end{bmatrix}_{1\times3}$$
 
-ดังนั้น $a=1$, $b=1$, $c=0$
+ดังนั้น $a=1$, $b=0$, $c=-1.5$
 
-$$y=x^2+x$$
+$$y=x^2-1.5$$
 
 ทำนายที่ $x=3$
 
-$$\begin{array}{c|c}\textbf{แบบสมการ}&\textbf{แบบ Matrix Form}\\\hline\\[-6pt]\qquad\hat y=(1)(3)^2+(1)(3)+0=12\qquad&\qquad\hat y=RX=\begin{bmatrix}1&1&0\end{bmatrix}_{1\times3}\begin{bmatrix}9\\3\\1\end{bmatrix}_{3\times1}=\begin{bmatrix}1(9)+1(3)+0(1)\end{bmatrix}_{1\times1}=\begin{bmatrix}12\end{bmatrix}_{1\times1}\qquad\end{array}$$
+$$\begin{array}{c|c}\textbf{แบบสมการ}&\textbf{แบบ Matrix Form}\\\hline\\[-6pt]\qquad\hat y=(1)(3)^2+(0)(3)+-1.5=7.5\qquad&\qquad\hat y=RX=\begin{bmatrix}1&0&-1.5\end{bmatrix}_{1\times3}\begin{bmatrix}9\\3\\1\end{bmatrix}_{3\times1}=\begin{bmatrix}1(9)+0(3)+-1.5(1)\end{bmatrix}_{1\times1}=\begin{bmatrix}7.5\end{bmatrix}_{1\times1}\qquad\end{array}$$
 
-หา Error จาก $\hat y=x^2+x$
+หา Error จาก $\hat y=x^2-1.5$
 
 <table align="center">
   <tr><th>x</th><th>y</th><th>ŷ</th><th>|y − ŷ|</th><th>(y − ŷ)²</th></tr>
-  <tr><td align="center">-2</td><td align="center">1</td><td align="center">2</td><td align="center">1</td><td align="center">1</td></tr>
-  <tr><td align="center">-1</td><td align="center">2</td><td align="center">0</td><td align="center">2</td><td align="center">4</td></tr>
-  <tr><td align="center">0</td><td align="center">0</td><td align="center">0</td><td align="center">0</td><td align="center">0</td></tr>
-  <tr><td align="center">1</td><td align="center">0</td><td align="center">2</td><td align="center">2</td><td align="center">4</td></tr>
-  <tr><td align="center">2</td><td align="center">7</td><td align="center">6</td><td align="center">1</td><td align="center">1</td></tr>
-  <tr><th>sum</th><td></td><td></td><td align="center"><b>6</b></td><td align="center"><b>10</b></td></tr>
+  <tr><td align="center">-1</td><td align="center">-1</td><td align="center">-0.5</td><td align="center">0.5</td><td align="center">0.25</td></tr>
+  <tr><td align="center">0</td><td align="center">0</td><td align="center">-1.5</td><td align="center">1.5</td><td align="center">2.25</td></tr>
+  <tr><td align="center">1</td><td align="center">-2</td><td align="center">-0.5</td><td align="center">1.5</td><td align="center">2.25</td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">2.5</td><td align="center">0.5</td><td align="center">0.25</td></tr>
+  <tr><th>sum</th><td></td><td></td><td align="center"><b>4</b></td><td align="center"><b>5</b></td></tr>
 </table>
 
 แทนค่าในสูตร
 
-$$\text{MAE}=\frac1N\sum_{i=1}^{N}|y_i-\hat y_i|=\frac65=1.2$$
+$$\text{MAE}=\frac1N\sum_{i=1}^{N}|y_i-\hat y_i|=\frac{4}{4}=1$$
 
-$$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{10}5=2$$
+$$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{5}{4}=1.25$$
 
-**Ans** $y=x^2+x$, $\hat y(3)=12$, $\text{MAE}=1.2$, $\text{MSE}=2$
+**Ans** $y=x^2-1.5$, $\hat y(3)=7.5$, $\text{MAE}=1$, $\text{MSE}=1.25$
 
 ### แบบฝึกหัด 1
 
@@ -356,11 +349,10 @@ $$\text{MSE}=\frac1N\sum_{i=1}^{N}(y_i-\hat y_i)^2=\frac{10}5=2$$
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
-  <tr><td align="center">1</td><td align="center">-1</td><td align="center">2</td></tr>
-  <tr><td align="center">2</td><td align="center">0</td><td align="center">5</td></tr>
-  <tr><td align="center">3</td><td align="center">1</td><td align="center">10</td></tr>
-  <tr><td align="center">4</td><td align="center">2</td><td align="center">5</td></tr>
-  <tr><td align="center">5</td><td align="center">3</td><td align="center">-1</td></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">6</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">1</td></tr>
+  <tr><td align="center">3</td><td align="center">2</td><td align="center">0</td></tr>
+  <tr><td align="center">4</td><td align="center">3</td><td align="center">5</td></tr>
 </table>
 
 ### แบบฝึกหัด 2
@@ -383,97 +375,80 @@ $\hat y=\dfrac1k\sum_{i=1}^{k}y_i$ เมื่อ $y_i$ คือค่า $y$ 
 
 ### ตัวอย่างโจทย์
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของข้อมูลลำดับที่ 6 ด้วย K-NN Regression เมื่อ $k=1,2,3$
+จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของข้อมูลลำดับที่ 4 ด้วย K-NN Regression เมื่อ $k=1,2,3$
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
-  <tr><td align="center">1</td><td align="center">1</td><td align="center">1</td></tr>
-  <tr><td align="center">2</td><td align="center">2</td><td align="center">2</td></tr>
-  <tr><td align="center">3</td><td align="center">4</td><td align="center">5</td></tr>
-  <tr><td align="center">4</td><td align="center">7</td><td align="center">8</td></tr>
-  <tr><td align="center">5</td><td align="center">10</td><td align="center">9</td></tr>
-  <tr><td align="center">6</td><td align="center">5</td><td align="center">?</td></tr>
+  <tr><td align="center">1</td><td align="center">1</td><td align="center">9</td></tr>
+  <tr><td align="center">2</td><td align="center">2</td><td align="center">7</td></tr>
+  <tr><td align="center">3</td><td align="center">8</td><td align="center">1</td></tr>
+  <tr><td align="center">4</td><td align="center">4</td><td align="center">?</td></tr>
 </table>
 
 #### Sol<sup>n</sup>
 
-ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 6 ที่สนใจ
+ตาราง $D$ (Manhattan) ทำเฉพาะแถวที่ 4 ที่สนใจ
 
 <table align="center">
-  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
-  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>4</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>5</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>6</th><td align="center">D₆₁</td><td align="center">D₆₂</td><td align="center">D₆₃</td><td align="center">D₆₄</td><td align="center">D₆₅</td><td align="center">0</td></tr>
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">D₄₁</td><td align="center">D₄₂</td><td align="center">D₄₃</td><td align="center">0</td></tr>
 </table>
 
 จากสูตร Manhattan
 
 $$d(x_i,x_j)=|x_i-x_j|$$
 
-โดย $x_6=5$
+โดย $x_4=4$
 
-$$D_{61}=|x_6-x_1|=|5-1|=4$$
+$$D_{41}=|x_4-x_1|=|4-1|=3$$
 
-$$D_{62}=|x_6-x_2|=|5-2|=3$$
+$$D_{42}=|x_4-x_2|=|4-2|=2$$
 
-$$D_{63}=|x_6-x_3|=|5-4|=1$$
-
-$$D_{64}=|x_6-x_4|=|5-7|=2$$
-
-$$D_{65}=|x_6-x_5|=|5-10|=5$$
+$$D_{43}=|x_4-x_3|=|4-8|=4$$
 
 ดังนั้น
 
 <table align="center">
-  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
-  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>4</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>5</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-  <tr><th>6</th><td align="center">4</td><td align="center">3</td><td align="center">1</td><td align="center">2</td><td align="center">5</td><td align="center">0</td></tr>
+  <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>1</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>2</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>3</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><th>4</th><td align="center">3</td><td align="center">2</td><td align="center">4</td><td align="center">0</td></tr>
 </table>
 
-จากตาราง $D$ แถวที่ 6 เรียงจากน้อยไปมาก
+จากตาราง $D$ แถวที่ 4 เรียงจากน้อยไปมาก
 
-$$D_{63}=1\ <\ D_{64}=2\ <\ D_{62}=3\ <\ D_{61}=4\ <\ D_{65}=5$$
+$$D_{42}=2\ <\ D_{41}=3\ <\ D_{43}=4$$
 
 เลือก $k$ ตัวแรก แล้วเฉลี่ยค่า $y$
 
-- $k=1$: $1\to(\text{\textcircled{3}})\to(y=5)$ ดังนั้น $\hat y=5$
-- $k=2$: $(1,2)\to(\text{\textcircled{3}},\text{\textcircled{4}})\to(y=5,8)$ ดังนั้น $\hat y=\dfrac{5+8}{2}=6.5$
-- $k=3$: $(1,2,3)\to(\text{\textcircled{3}},\text{\textcircled{4}},\text{\textcircled{2}})\to(y=5,8,2)$ ดังนั้น $\hat y=\dfrac{5+8+2}{3}=5$
+- $k=1$: $2\to(\text{\textcircled{2}})\to(y=7)$ ดังนั้น $\hat y=7$
+- $k=2$: $(2,3)\to(\text{\textcircled{2}},\text{\textcircled{1}})\to(y=7,9)$ ดังนั้น $\hat y=\dfrac{7+9}{2}=8$
+- $k=3$: $(2,3,4)\to(\text{\textcircled{2}},\text{\textcircled{1}},\text{\textcircled{3}})\to(y=7,9,1)$ ดังนั้น $\hat y=\dfrac{7+9+1}{3}=5.6666666667$
 
-**Ans** $k=1$ ได้ $\hat y=5$, $k=2$ ได้ $\hat y=6.5$, $k=3$ ได้ $\hat y=5$
+**Ans** $k=1$ ได้ $\hat y=7$, $k=2$ ได้ $\hat y=8$, $k=3$ ได้ $\hat y=5.6666666667$
 
 ### แบบฝึกหัด 1
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของ $x=3$ ด้วย K-NN Regression เมื่อ $k=1,2,3$ (ระยะ $|x_q-x_i|$ และใช้ค่าเฉลี่ยของ $y$)
+จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของ $x=4$ ด้วย K-NN Regression เมื่อ $k=1,2,3$ (ระยะ $|x_q-x_i|$ และใช้ค่าเฉลี่ยของ $y$)
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
-  <tr><td align="center">1</td><td align="center">0</td><td align="center">5</td></tr>
-  <tr><td align="center">2</td><td align="center">4</td><td align="center">10</td></tr>
-  <tr><td align="center">3</td><td align="center">5</td><td align="center">2</td></tr>
-  <tr><td align="center">4</td><td align="center">7</td><td align="center">10</td></tr>
-  <tr><td align="center">5</td><td align="center">11</td><td align="center">3</td></tr>
-  <tr><td align="center">6</td><td align="center">13</td><td align="center">11</td></tr>
+  <tr><td align="center">1</td><td align="center">5</td><td align="center">11</td></tr>
+  <tr><td align="center">2</td><td align="center">6</td><td align="center">3</td></tr>
+  <tr><td align="center">3</td><td align="center">10</td><td align="center">4</td></tr>
 </table>
 
 ### แบบฝึกหัด 2
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของ $x=11$ ด้วย K-NN Regression เมื่อ $k=1,2,3$ (ระยะ $|x_q-x_i|$ และใช้ค่าเฉลี่ยของ $y$)
+จากข้อมูลในตารางต่อไปนี้ จงทำนายค่า $y$ ของ $x=9$ ด้วย K-NN Regression เมื่อ $k=1,2,3$ (ระยะ $|x_q-x_i|$ และใช้ค่าเฉลี่ยของ $y$)
 
 <table align="center">
   <tr><th>#</th><th>x</th><th>y</th></tr>
-  <tr><td align="center">1</td><td align="center">0</td><td align="center">11</td></tr>
-  <tr><td align="center">2</td><td align="center">1</td><td align="center">4</td></tr>
-  <tr><td align="center">3</td><td align="center">8</td><td align="center">10</td></tr>
-  <tr><td align="center">4</td><td align="center">10</td><td align="center">3</td></tr>
-  <tr><td align="center">5</td><td align="center">12</td><td align="center">9</td></tr>
-  <tr><td align="center">6</td><td align="center">13</td><td align="center">1</td></tr>
+  <tr><td align="center">1</td><td align="center">2</td><td align="center">11</td></tr>
+  <tr><td align="center">2</td><td align="center">7</td><td align="center">11</td></tr>
+  <tr><td align="center">3</td><td align="center">11</td><td align="center">9</td></tr>
 </table>
-

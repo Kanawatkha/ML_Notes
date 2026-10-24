@@ -155,30 +155,26 @@ $$D_{41}=1.41\ \le\ D_{43}=1.41\ <\ D_{42}=2.45$$
 
 #### แบบฝึกหัด 1
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,3,5$ โดยใช้ระยะแบบ Euclidean
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Euclidean
 
 <table align="center">
   <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
-  <tr><td align="center">1</td><td align="center">4</td><td align="center">-3</td><td align="center">7</td><td align="center">Y</td></tr>
-  <tr><td align="center">2</td><td align="center">-2</td><td align="center">4</td><td align="center">7</td><td align="center">Y</td></tr>
-  <tr><td align="center">3</td><td align="center">1</td><td align="center">3</td><td align="center">5</td><td align="center">N</td></tr>
-  <tr><td align="center">4</td><td align="center">-2</td><td align="center">8</td><td align="center">1</td><td align="center">Y</td></tr>
-  <tr><td align="center">5</td><td align="center">2</td><td align="center">9</td><td align="center">0</td><td align="center">N</td></tr>
-  <tr><td align="center">6</td><td align="center">5</td><td align="center">1</td><td align="center">-3</td><td align="center">?</td></tr>
+  <tr><td align="center">1</td><td align="center">-3</td><td align="center">7</td><td align="center">-2</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">4</td><td align="center">7</td><td align="center">1</td><td align="center">N</td></tr>
+  <tr><td align="center">3</td><td align="center">3</td><td align="center">5</td><td align="center">-2</td><td align="center">Y</td></tr>
+  <tr><td align="center">4</td><td align="center">8</td><td align="center">1</td><td align="center">2</td><td align="center">?</td></tr>
 </table>
 
 #### แบบฝึกหัด 2
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Euclidean
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Euclidean
 
 <table align="center">
   <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
-  <tr><td align="center">1</td><td align="center">-1</td><td align="center">1</td><td align="center">3</td><td align="center">N</td></tr>
-  <tr><td align="center">2</td><td align="center">3</td><td align="center">-3</td><td align="center">-1</td><td align="center">N</td></tr>
-  <tr><td align="center">3</td><td align="center">-3</td><td align="center">4</td><td align="center">-2</td><td align="center">Y</td></tr>
-  <tr><td align="center">4</td><td align="center">5</td><td align="center">1</td><td align="center">0</td><td align="center">Y</td></tr>
-  <tr><td align="center">5</td><td align="center">-1</td><td align="center">0</td><td align="center">-2</td><td align="center">Y</td></tr>
-  <tr><td align="center">6</td><td align="center">9</td><td align="center">5</td><td align="center">3</td><td align="center">?</td></tr>
+  <tr><td align="center">1</td><td align="center">-3</td><td align="center">5</td><td align="center">7</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">1</td><td align="center">-3</td><td align="center">N</td></tr>
+  <tr><td align="center">3</td><td align="center">-2</td><td align="center">9</td><td align="center">1</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">4</td><td align="center">4</td><td align="center">4</td><td align="center">?</td></tr>
 </table>
 
 ---
@@ -307,30 +303,26 @@ $$D_{41}=0.98\ >\ D_{43}=0.83\ >\ D_{42}=0.76$$
 
 #### แบบฝึกหัด 1
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,3,5$ โดยใช้ระยะแบบ Cosine
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Cosine
 
 <table align="center">
   <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
-  <tr><td align="center">1</td><td align="center">-1</td><td align="center">3</td><td align="center">8</td><td align="center">Y</td></tr>
-  <tr><td align="center">2</td><td align="center">3</td><td align="center">7</td><td align="center">1</td><td align="center">N</td></tr>
-  <tr><td align="center">3</td><td align="center">4</td><td align="center">0</td><td align="center">9</td><td align="center">N</td></tr>
-  <tr><td align="center">4</td><td align="center">4</td><td align="center">9</td><td align="center">5</td><td align="center">Y</td></tr>
-  <tr><td align="center">5</td><td align="center">-1</td><td align="center">5</td><td align="center">5</td><td align="center">Y</td></tr>
-  <tr><td align="center">6</td><td align="center">0</td><td align="center">9</td><td align="center">-3</td><td align="center">?</td></tr>
+  <tr><td align="center">1</td><td align="center">8</td><td align="center">4</td><td align="center">0</td><td align="center">N</td></tr>
+  <tr><td align="center">2</td><td align="center">-3</td><td align="center">5</td><td align="center">-1</td><td align="center">Y</td></tr>
+  <tr><td align="center">3</td><td align="center">-2</td><td align="center">1</td><td align="center">0</td><td align="center">Y</td></tr>
+  <tr><td align="center">4</td><td align="center">4</td><td align="center">2</td><td align="center">-3</td><td align="center">?</td></tr>
 </table>
 
 #### แบบฝึกหัด 2
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Cosine
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Cosine
 
 <table align="center">
   <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
-  <tr><td align="center">1</td><td align="center">3</td><td align="center">-3</td><td align="center">9</td><td align="center">Y</td></tr>
-  <tr><td align="center">2</td><td align="center">-1</td><td align="center">-2</td><td align="center">-1</td><td align="center">Y</td></tr>
-  <tr><td align="center">3</td><td align="center">0</td><td align="center">4</td><td align="center">4</td><td align="center">N</td></tr>
-  <tr><td align="center">4</td><td align="center">3</td><td align="center">1</td><td align="center">9</td><td align="center">Y</td></tr>
-  <tr><td align="center">5</td><td align="center">-1</td><td align="center">4</td><td align="center">9</td><td align="center">N</td></tr>
-  <tr><td align="center">6</td><td align="center">2</td><td align="center">2</td><td align="center">4</td><td align="center">?</td></tr>
+  <tr><td align="center">1</td><td align="center">4</td><td align="center">0</td><td align="center">-3</td><td align="center">N</td></tr>
+  <tr><td align="center">2</td><td align="center">-3</td><td align="center">0</td><td align="center">4</td><td align="center">N</td></tr>
+  <tr><td align="center">3</td><td align="center">4</td><td align="center">-2</td><td align="center">0</td><td align="center">Y</td></tr>
+  <tr><td align="center">4</td><td align="center">1</td><td align="center">-2</td><td align="center">1</td><td align="center">?</td></tr>
 </table>
 
 ---
@@ -459,30 +451,26 @@ $$D_{41}=2\ \le\ D_{43}=2\ <\ D_{42}=6$$
 
 #### แบบฝึกหัด 1
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,3,5$ โดยใช้ระยะแบบ Squared Euclidean
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Squared Euclidean
 
 <table align="center">
   <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
-  <tr><td align="center">1</td><td align="center">-3</td><td align="center">4</td><td align="center">-2</td><td align="center">Y</td></tr>
-  <tr><td align="center">2</td><td align="center">9</td><td align="center">3</td><td align="center">-1</td><td align="center">Y</td></tr>
-  <tr><td align="center">3</td><td align="center">7</td><td align="center">-3</td><td align="center">-1</td><td align="center">Y</td></tr>
-  <tr><td align="center">4</td><td align="center">-2</td><td align="center">5</td><td align="center">0</td><td align="center">N</td></tr>
-  <tr><td align="center">5</td><td align="center">8</td><td align="center">9</td><td align="center">-1</td><td align="center">N</td></tr>
-  <tr><td align="center">6</td><td align="center">-1</td><td align="center">8</td><td align="center">-3</td><td align="center">?</td></tr>
+  <tr><td align="center">1</td><td align="center">7</td><td align="center">-3</td><td align="center">-1</td><td align="center">Y</td></tr>
+  <tr><td align="center">2</td><td align="center">0</td><td align="center">5</td><td align="center">8</td><td align="center">Y</td></tr>
+  <tr><td align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">3</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">0</td><td align="center">6</td><td align="center">-2</td><td align="center">?</td></tr>
 </table>
 
 #### แบบฝึกหัด 2
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Squared Euclidean
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Squared Euclidean
 
 <table align="center">
   <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
-  <tr><td align="center">1</td><td align="center">1</td><td align="center">7</td><td align="center">6</td><td align="center">Y</td></tr>
-  <tr><td align="center">2</td><td align="center">3</td><td align="center">9</td><td align="center">-3</td><td align="center">N</td></tr>
-  <tr><td align="center">3</td><td align="center">4</td><td align="center">2</td><td align="center">7</td><td align="center">N</td></tr>
-  <tr><td align="center">4</td><td align="center">-3</td><td align="center">2</td><td align="center">3</td><td align="center">Y</td></tr>
-  <tr><td align="center">5</td><td align="center">5</td><td align="center">5</td><td align="center">1</td><td align="center">N</td></tr>
-  <tr><td align="center">6</td><td align="center">1</td><td align="center">2</td><td align="center">6</td><td align="center">?</td></tr>
+  <tr><td align="center">1</td><td align="center">8</td><td align="center">0</td><td align="center">8</td><td align="center">N</td></tr>
+  <tr><td align="center">2</td><td align="center">-3</td><td align="center">7</td><td align="center">7</td><td align="center">Y</td></tr>
+  <tr><td align="center">3</td><td align="center">5</td><td align="center">1</td><td align="center">3</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">0</td><td align="center">6</td><td align="center">0</td><td align="center">?</td></tr>
 </table>
 
 ---
@@ -611,30 +599,26 @@ $$D_{41}=2\ \le\ D_{43}=2\ <\ D_{42}=4$$
 
 #### แบบฝึกหัด 1
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,3,5$ โดยใช้ระยะแบบ Manhattan
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Manhattan
 
 <table align="center">
   <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
-  <tr><td align="center">1</td><td align="center">-1</td><td align="center">8</td><td align="center">-1</td><td align="center">Y</td></tr>
-  <tr><td align="center">2</td><td align="center">-3</td><td align="center">1</td><td align="center">2</td><td align="center">Y</td></tr>
-  <tr><td align="center">3</td><td align="center">0</td><td align="center">6</td><td align="center">-3</td><td align="center">N</td></tr>
-  <tr><td align="center">4</td><td align="center">6</td><td align="center">6</td><td align="center">-1</td><td align="center">Y</td></tr>
-  <tr><td align="center">5</td><td align="center">3</td><td align="center">9</td><td align="center">-3</td><td align="center">N</td></tr>
-  <tr><td align="center">6</td><td align="center">1</td><td align="center">3</td><td align="center">-1</td><td align="center">?</td></tr>
+  <tr><td align="center">1</td><td align="center">4</td><td align="center">8</td><td align="center">3</td><td align="center">N</td></tr>
+  <tr><td align="center">2</td><td align="center">3</td><td align="center">5</td><td align="center">8</td><td align="center">Y</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">5</td><td align="center">-3</td><td align="center">Y</td></tr>
+  <tr><td align="center">4</td><td align="center">-3</td><td align="center">7</td><td align="center">4</td><td align="center">?</td></tr>
 </table>
 
 #### แบบฝึกหัด 2
 
-จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 6 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Manhattan
+จากข้อมูลในตารางต่อไปนี้ จงทำนาย Target ของข้อมูลลำดับที่ 4 ด้วย K-NN เมื่อ $k=1,2,3$ โดยใช้ระยะแบบ Manhattan
 
 <table align="center">
   <tr><th>#</th><th>A₁</th><th>A₂</th><th>A₃</th><th>Target</th></tr>
-  <tr><td align="center">1</td><td align="center">-1</td><td align="center">3</td><td align="center">-1</td><td align="center">Y</td></tr>
-  <tr><td align="center">2</td><td align="center">1</td><td align="center">4</td><td align="center">0</td><td align="center">N</td></tr>
-  <tr><td align="center">3</td><td align="center">-2</td><td align="center">4</td><td align="center">9</td><td align="center">N</td></tr>
-  <tr><td align="center">4</td><td align="center">5</td><td align="center">-2</td><td align="center">-3</td><td align="center">N</td></tr>
-  <tr><td align="center">5</td><td align="center">7</td><td align="center">5</td><td align="center">-3</td><td align="center">Y</td></tr>
-  <tr><td align="center">6</td><td align="center">-2</td><td align="center">9</td><td align="center">0</td><td align="center">?</td></tr>
+  <tr><td align="center">1</td><td align="center">7</td><td align="center">6</td><td align="center">6</td><td align="center">N</td></tr>
+  <tr><td align="center">2</td><td align="center">5</td><td align="center">2</td><td align="center">1</td><td align="center">Y</td></tr>
+  <tr><td align="center">3</td><td align="center">0</td><td align="center">7</td><td align="center">8</td><td align="center">N</td></tr>
+  <tr><td align="center">4</td><td align="center">2</td><td align="center">0</td><td align="center">1</td><td align="center">?</td></tr>
 </table>
 
 ---

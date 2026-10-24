@@ -35,7 +35,7 @@ describe('the real content', () => {
         tables: 15,
         figures: 0,
         lists: 1,
-        displayFormulas: 73,
+        displayFormulas: 71,
         inlineFormulas: 134,
       },
       classification: {
