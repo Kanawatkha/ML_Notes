@@ -45,7 +45,7 @@ describe('the real content', () => {
         examples: 22,
         exercises: 18,
         tables: 86,
-        figures: 18,
+        figures: 23,
         lists: 26,
         displayFormulas: 336,
         inlineFormulas: 494,

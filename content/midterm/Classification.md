@@ -2193,7 +2193,28 @@ $$\text{Gain}(S,B)=0.3010-\frac{53}{203}(0)-\frac{150}{203}(0.2764)=0.0968$$
 
 $$\text{Gain}(S,A)=0.2720\ >\ \text{Gain}(S,B)=0.0968$$
 
-A ได้กิ่ง $A=0$ ที่บริสุทธิ์ และกิ่ง $A=1$ ที่เหลือเพียง $100+,3-$ จึงเป็น node ราก ส่วนกิ่ง $A=1$ ยังมีทั้ง + และ - ต้องแบ่งต่อด้วย B (เหลือ attribute เดียว) ได้ $B=0\to$ **-** และ $B=1\to$ **+**
+A ได้กิ่ง $A=0$ ที่บริสุทธิ์ (Entropy = 0) และกิ่ง $A=1$ ที่เหลือเพียง $100+,3-$ จึงเลือก A เป็น node ราก
+
+ต้นไม้หลังเลือก node ราก (? คือกิ่งที่ต้องแบ่งต่อ)
+
+<div align="center">
+<svg viewBox="0 0 260 232" width="260" role="img" aria-label="ต้นไม้หลังเลือก node ราก" xmlns="http://www.w3.org/2000/svg">
+<line x1="130" y1="58" x2="65" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="58" x2="195" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="130" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="92" y="88" text-anchor="end" font-size="13" fill="currentColor">0</text>
+<text x="65" y="141" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="65" y="174" text-anchor="middle" font-size="13" fill="currentColor">0+, 100-</text>
+<text x="170" y="88" text-anchor="start" font-size="13" fill="currentColor">1</text>
+<text x="195" y="141" text-anchor="middle" font-size="15" fill="currentColor">?</text>
+<text x="195" y="174" text-anchor="middle" font-size="13" fill="currentColor">100+, 3-</text>
+<text x="130" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+</svg>
+</div>
+
+กิ่ง $A=1$ ยังมีทั้ง + และ - ต้องแบ่งต่อด้วย B (เหลือ attribute เดียว) ได้ $B=0\to$ **-** และ $B=1\to$ **+**
 
 <div align="center">
 <svg viewBox="0 0 390 272" width="390" role="img" aria-label="ต้นไม้ที่ใช้ A เป็น node ราก แล้วแบ่งต่อด้วย B" xmlns="http://www.w3.org/2000/svg">
@@ -2282,6 +2303,27 @@ $$\text{Gain}(S,Color)=0.0937\ =\ \text{Gain}(S,Shape)=0.0937\ >\ \text{Gain}(S,
 Color และ Shape มี Gain เท่ากันและมากที่สุด เลือกตัวแรกตามลำดับในตาราง จึงเลือก Color เป็น node ราก
 
 กิ่งที่ Entropy = 0 เป็น leaf: blue $\to$ **-**
+
+ต้นไม้หลังเลือก node ราก (? คือกิ่งที่ต้องแบ่งต่อ)
+
+<div align="center">
+<svg viewBox="0 0 260 232" width="260" role="img" aria-label="ต้นไม้หลังเลือก node ราก" xmlns="http://www.w3.org/2000/svg">
+<line x1="130" y1="58" x2="65" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="58" x2="195" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="130" cy="40" rx="43" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="92" y="88" text-anchor="end" font-size="13" fill="currentColor">red</text>
+<text x="65" y="141" text-anchor="middle" font-size="15" fill="currentColor">?</text>
+<text x="65" y="174" text-anchor="middle" font-size="13" fill="currentColor"># 1,2,3</text>
+<text x="65" y="192" text-anchor="middle" font-size="13" fill="currentColor">2+, 1-</text>
+<text x="170" y="88" text-anchor="start" font-size="13" fill="currentColor">blue</text>
+<text x="195" y="141" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="195" y="174" text-anchor="middle" font-size="13" fill="currentColor"># 4</text>
+<text x="195" y="192" text-anchor="middle" font-size="13" fill="currentColor">0+, 1-</text>
+<text x="130" y="45" text-anchor="middle" font-size="15" fill="currentColor">Color</text>
+</svg>
+</div>
 
 **2. กิ่ง red** พิจารณาเฉพาะตารางที่เหลือ
 
@@ -2653,6 +2695,33 @@ A มี Gain มากที่สุด จึงเป็น node ราก
 
 กิ่งที่ Entropy = 0 เป็น leaf: 2 $\to$ **-**, 3 $\to$ **-**
 
+ต้นไม้หลังเลือก node ราก (? คือกิ่งที่ต้องแบ่งต่อ)
+
+<div align="center">
+<svg viewBox="0 0 390 232" width="390" role="img" aria-label="ต้นไม้หลังเลือก node ราก" xmlns="http://www.w3.org/2000/svg">
+<line x1="195" y1="58" x2="65" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="195" y1="58" x2="195" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="195" y1="58" x2="325" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="301" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="195" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="124" y="88" text-anchor="end" font-size="13" fill="currentColor">1</text>
+<text x="65" y="141" text-anchor="middle" font-size="15" fill="currentColor">?</text>
+<text x="65" y="174" text-anchor="middle" font-size="13" fill="currentColor"># 1,3,5,7</text>
+<text x="65" y="192" text-anchor="middle" font-size="13" fill="currentColor">3+, 1-</text>
+<text x="203" y="88" text-anchor="start" font-size="13" fill="currentColor">2</text>
+<text x="195" y="141" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="195" y="174" text-anchor="middle" font-size="13" fill="currentColor"># 2,8</text>
+<text x="195" y="192" text-anchor="middle" font-size="13" fill="currentColor">0+, 2-</text>
+<text x="268" y="88" text-anchor="start" font-size="13" fill="currentColor">3</text>
+<text x="325" y="141" text-anchor="middle" font-size="15" fill="currentColor">-</text>
+<text x="325" y="174" text-anchor="middle" font-size="13" fill="currentColor"># 4,6</text>
+<text x="325" y="192" text-anchor="middle" font-size="13" fill="currentColor">0+, 2-</text>
+<text x="195" y="45" text-anchor="middle" font-size="15" fill="currentColor">A</text>
+</svg>
+</div>
+
 **2. กิ่ง A = 1** พิจารณาเฉพาะตารางที่เหลือ
 
 <table align="center">
@@ -2982,6 +3051,27 @@ Temp มี Gain มากที่สุด จึงเป็น node รา�
 
 กิ่งที่ Entropy = 0 เป็น leaf: Hot $\to$ **No**
 
+ต้นไม้หลังเลือก node ราก (? คือกิ่งที่ต้องแบ่งต่อ)
+
+<div align="center">
+<svg viewBox="0 0 260 232" width="260" role="img" aria-label="ต้นไม้หลังเลือก node ราก" xmlns="http://www.w3.org/2000/svg">
+<line x1="130" y1="58" x2="65" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="58" x2="195" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="130" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="92" y="88" text-anchor="end" font-size="13" fill="currentColor">Cool</text>
+<text x="65" y="141" text-anchor="middle" font-size="15" fill="currentColor">?</text>
+<text x="65" y="174" text-anchor="middle" font-size="13" fill="currentColor">Day 1,2,4,7,8,10</text>
+<text x="65" y="192" text-anchor="middle" font-size="13" fill="currentColor">4+, 2-</text>
+<text x="170" y="88" text-anchor="start" font-size="13" fill="currentColor">Hot</text>
+<text x="195" y="141" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="195" y="174" text-anchor="middle" font-size="13" fill="currentColor">Day 3,5,6,9</text>
+<text x="195" y="192" text-anchor="middle" font-size="13" fill="currentColor">0+, 4-</text>
+<text x="130" y="45" text-anchor="middle" font-size="15" fill="currentColor">Temp</text>
+</svg>
+</div>
+
 **2. กิ่ง Cool** พิจารณาเฉพาะตารางที่เหลือ
 
 <table align="center">
@@ -3015,6 +3105,37 @@ $$\text{Gain}(S_{Temp=Cool},Wind)=0.1382\ >\ \text{Gain}(S_{Temp=Cool},Weather)=
 Wind มี Gain มากที่สุด จึงเป็น node ของกิ่ง Cool
 
 กิ่งที่ Entropy = 0 เป็น leaf: Strong $\to$ **Yes**
+
+ต้นไม้หลังเลือก node ของกิ่ง Cool (? คือกิ่งที่ต้องแบ่งต่อ)
+
+<div align="center">
+<svg viewBox="0 0 390 328" width="390" role="img" aria-label="ต้นไม้หลังเลือก node ของกิ่ง Cool" xmlns="http://www.w3.org/2000/svg">
+<line x1="228" y1="58" x2="130" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="154" x2="65" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="130" y1="154" x2="195" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="228" y1="58" x2="325" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="130" cy="136" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="301" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="228" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="173" y="86" text-anchor="end" font-size="13" fill="currentColor">Cool</text>
+<text x="92" y="184" text-anchor="end" font-size="13" fill="currentColor">Weak</text>
+<text x="65" y="237" text-anchor="middle" font-size="15" fill="currentColor">?</text>
+<text x="65" y="270" text-anchor="middle" font-size="13" fill="currentColor">Day 1,4,8</text>
+<text x="65" y="288" text-anchor="middle" font-size="13" fill="currentColor">1+, 2-</text>
+<text x="170" y="184" text-anchor="start" font-size="13" fill="currentColor">Strong</text>
+<text x="195" y="237" text-anchor="middle" font-size="15" fill="currentColor">Yes</text>
+<text x="195" y="270" text-anchor="middle" font-size="13" fill="currentColor">Day 2,7,10</text>
+<text x="195" y="288" text-anchor="middle" font-size="13" fill="currentColor">3+, 0-</text>
+<text x="130" y="141" text-anchor="middle" font-size="15" fill="currentColor">Wind</text>
+<text x="284" y="88" text-anchor="start" font-size="13" fill="currentColor">Hot</text>
+<text x="325" y="141" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="325" y="174" text-anchor="middle" font-size="13" fill="currentColor">Day 3,5,6,9</text>
+<text x="325" y="192" text-anchor="middle" font-size="13" fill="currentColor">0+, 4-</text>
+<text x="228" y="45" text-anchor="middle" font-size="15" fill="currentColor">Temp</text>
+</svg>
+</div>
 
 **3. กิ่ง Weak** พิจารณาเฉพาะตารางที่เหลือ
 
