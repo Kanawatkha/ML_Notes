@@ -29,8 +29,6 @@ type RailLayoutProps = {
   file: PageFile;
   /** Runs right before a jump, for example to mount parts that are still placeholders. */
   beforeJump?: () => void;
-  /** The reader reached for the contents (pointer or focus on it, or opened the drawer). */
-  onWarm?: () => void;
   children: ReactNode;
 };
 
@@ -45,7 +43,7 @@ type RailLayoutProps = {
  * Below that: one column, a round floating button at the bottom left, and the same contents in a
  * drawer. Only one of the two layouts is rendered, so there is never a second, hidden tree.
  */
-export function RailLayout({ file, beforeJump, onWarm, children }: RailLayoutProps) {
+export function RailLayout({ file, beforeJump, children }: RailLayoutProps) {
   const desktop = useMediaQuery('(min-width: 1024px)');
   const entries = useMemo(() => buildRailTree(file, OVERVIEW_ID(file.id)), [file]);
   const reading = useActiveAnchor(entries, TOPIC_END_ID);
@@ -89,23 +87,18 @@ export function RailLayout({ file, beforeJump, onWarm, children }: RailLayoutPro
         </div>
         <div
           className={cn(
-            'grid overflow-x-clip',
+            'grid overflow-x-clip transition-[grid-template-columns] duration-[380ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
             railOpen ? 'grid-cols-[264px_minmax(0,1fr)]' : 'grid-cols-[0px_minmax(0,1fr)]',
           )}
         >
           <div aria-hidden={!railOpen} inert={!railOpen}>
             <div
               className={cn(
-                'sticky top-20 w-[248px] transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none',
-                railOpen ? 'translate-x-0 opacity-100' : '-translate-x-6 opacity-0',
+                'sticky top-20 w-[248px] transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none',
+                railOpen ? 'translate-x-0 opacity-100' : '-translate-x-[264px] opacity-0',
               )}
             >
-              <nav
-                id={RAIL_ID}
-                aria-label={UI_TEXT.railLabel}
-                onPointerEnter={onWarm}
-                onFocusCapture={onWarm}
-              >
+              <nav id={RAIL_ID} aria-label={UI_TEXT.railLabel}>
                 <RailTree
                   entries={entries}
                   position={reading.position}
@@ -128,10 +121,7 @@ export function RailLayout({ file, beforeJump, onWarm, children }: RailLayoutPro
       <RailToggle
         ref={fabRef}
         open={drawerOpen}
-        onClick={() => {
-          onWarm?.();
-          setDrawerOpen((open) => !open);
-        }}
+        onClick={() => setDrawerOpen((open) => !open)}
         controls={DRAWER_ID}
         className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-[max(1rem,env(safe-area-inset-left))] z-[60] size-12"
       />
