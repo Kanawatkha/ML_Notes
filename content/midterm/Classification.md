@@ -2941,18 +2941,18 @@ id 1 ไม่มี Parent (Parent = 0) จึงเป็น node ราก �
 
 ### แบบฝึกหัด 3
 
-จากข้อมูลในตารางต่อไปนี้ จงหา Entropy ของข้อมูลทั้งหมด และ Information Gain ของแต่ละ attribute (log ฐาน 10) แล้วเลือก attribute สำหรับ node ราก
+จากข้อมูลในตารางต่อไปนี้ จงสร้างต้นไม้ ID3 (เลือก attribute ด้วย Information Gain) ให้ครบทุกกิ่ง แล้วเขียนเป็นตารางโครงสร้างข้อมูล
 
 <table align="center">
   <tr><th>#</th><th>Age</th><th>Income</th><th>Student</th><th>Buy</th></tr>
-  <tr><td align="center">1</td><td align="center">Old</td><td align="center">Low</td><td align="center">No</td><td align="center">Yes</td></tr>
-  <tr><td align="center">2</td><td align="center">Old</td><td align="center">Low</td><td align="center">No</td><td align="center">No</td></tr>
-  <tr><td align="center">3</td><td align="center">Old</td><td align="center">Low</td><td align="center">Yes</td><td align="center">No</td></tr>
-  <tr><td align="center">4</td><td align="center">Middle</td><td align="center">High</td><td align="center">Yes</td><td align="center">Yes</td></tr>
-  <tr><td align="center">5</td><td align="center">Middle</td><td align="center">Low</td><td align="center">Yes</td><td align="center">Yes</td></tr>
-  <tr><td align="center">6</td><td align="center">Young</td><td align="center">Low</td><td align="center">Yes</td><td align="center">No</td></tr>
-  <tr><td align="center">7</td><td align="center">Middle</td><td align="center">High</td><td align="center">No</td><td align="center">Yes</td></tr>
-  <tr><td align="center">8</td><td align="center">Old</td><td align="center">High</td><td align="center">Yes</td><td align="center">No</td></tr>
+  <tr><td align="center">1</td><td align="center">Middle</td><td align="center">Low</td><td align="center">No</td><td align="center">No</td></tr>
+  <tr><td align="center">2</td><td align="center">Young</td><td align="center">Low</td><td align="center">Yes</td><td align="center">Yes</td></tr>
+  <tr><td align="center">3</td><td align="center">Young</td><td align="center">High</td><td align="center">No</td><td align="center">Yes</td></tr>
+  <tr><td align="center">4</td><td align="center">Old</td><td align="center">High</td><td align="center">No</td><td align="center">No</td></tr>
+  <tr><td align="center">5</td><td align="center">Young</td><td align="center">Low</td><td align="center">No</td><td align="center">No</td></tr>
+  <tr><td align="center">6</td><td align="center">Old</td><td align="center">Low</td><td align="center">Yes</td><td align="center">No</td></tr>
+  <tr><td align="center">7</td><td align="center">Young</td><td align="center">Low</td><td align="center">Yes</td><td align="center">Yes</td></tr>
+  <tr><td align="center">8</td><td align="center">Middle</td><td align="center">High</td><td align="center">Yes</td><td align="center">No</td></tr>
 </table>
 
 #### Sol<sup>n</sup>
@@ -2963,37 +2963,208 @@ id 1 ไม่มี Parent (Parent = 0) จึงเป็น node ราก �
 
 $$\text{Entropy}(S)=-\sum_{c}p_c\log_{10}p_c,\qquad \text{Gain}(S,A)=\text{Entropy}(S)-\sum_{v\in A}\frac{|S_v|}{|S|}\,\text{Entropy}(S_v)$$
 
-$S$ มี $4+,4-$ (รวม 8)
+$S$ มี $3+,5-$ (รวม 8)
 
-$$\text{Entropy}(S)=-\frac{4}{8}\log_{10}\frac{4}{8}-\frac{4}{8}\log_{10}\frac{4}{8}=0.3010$$
+$$\text{Entropy}(S)=-\frac{3}{8}\log_{10}\frac{3}{8}-\frac{5}{8}\log_{10}\frac{5}{8}=0.2873$$
 
-**Age** (Old $1+,3-$, Middle $3+,0-$, Young $0+,1-$)
+**Age** (Middle $0+,2-$, Young $3+,1-$, Old $0+,2-$)
 
-$$\text{Entropy}(S_{Age=Old})=0.2442,\qquad \text{Entropy}(S_{Age=Middle})=0,\qquad \text{Entropy}(S_{Age=Young})=0$$
+$$\text{Entropy}(S_{Age=Middle})=0,\qquad \text{Entropy}(S_{Age=Young})=0.2442,\qquad \text{Entropy}(S_{Age=Old})=0$$
 
-$$\text{Gain}(S,Age)=0.3010-\frac{4}{8}(0.2442)-\frac{3}{8}(0)-\frac{1}{8}(0)=0.1789$$
+$$\text{Gain}(S,Age)=0.2873-\frac{2}{8}(0)-\frac{4}{8}(0.2442)-\frac{2}{8}(0)=0.1652$$
 
-**Income** (Low $2+,3-$, High $2+,1-$)
+**Income** (Low $2+,3-$, High $1+,2-$)
 
 $$\text{Entropy}(S_{Income=Low})=0.2923,\qquad \text{Entropy}(S_{Income=High})=0.2764$$
 
-$$\text{Gain}(S,Income)=0.3010-\frac{5}{8}(0.2923)-\frac{3}{8}(0.2764)=0.0147$$
+$$\text{Gain}(S,Income)=0.2873-\frac{5}{8}(0.2923)-\frac{3}{8}(0.2764)=0.0010$$
 
-**Student** (No $2+,1-$, Yes $2+,3-$)
+**Student** (No $1+,3-$, Yes $2+,2-$)
 
-$$\text{Entropy}(S_{Student=No})=0.2764,\qquad \text{Entropy}(S_{Student=Yes})=0.2923$$
+$$\text{Entropy}(S_{Student=No})=0.2442,\qquad \text{Entropy}(S_{Student=Yes})=0.3010$$
 
-$$\text{Gain}(S,Student)=0.3010-\frac{3}{8}(0.2764)-\frac{5}{8}(0.2923)=0.0147$$
+$$\text{Gain}(S,Student)=0.2873-\frac{4}{8}(0.2442)-\frac{4}{8}(0.3010)=0.0147$$
 
 เปรียบเทียบ
 
-$$\text{Gain}(S,Age)=0.1789\ >\ \text{Gain}(S,Income)=0.0147\ =\ \text{Gain}(S,Student)=0.0147$$
+$$\text{Gain}(S,Age)=0.1652\ >\ \text{Gain}(S,Student)=0.0147\ >\ \text{Gain}(S,Income)=0.0010$$
 
 Age มี Gain มากที่สุด จึงเป็น node ราก
 
-กิ่งที่ Entropy = 0 เป็น leaf: Middle $\to$ **Yes**, Young $\to$ **No**
+กิ่งที่ Entropy = 0 เป็น leaf: Middle $\to$ **No**, Old $\to$ **No**
 
-**Ans** Entropy(S)=0.3010, Gain(Age)=0.1789, Gain(Income)=0.0147, Gain(Student)=0.0147 จึงเลือก Age เป็น node ราก
+ต้นไม้หลังเลือก node ราก (? คือกิ่งที่ต้องแบ่งต่อ)
+
+<div align="center">
+<svg viewBox="0 0 390 232" width="390" role="img" aria-label="ต้นไม้หลังเลือก node ราก" xmlns="http://www.w3.org/2000/svg">
+<line x1="195" y1="58" x2="65" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="195" y1="58" x2="195" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="195" y1="58" x2="325" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="301" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="195" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="124" y="88" text-anchor="end" font-size="13" fill="currentColor">Middle</text>
+<text x="65" y="141" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="65" y="174" text-anchor="middle" font-size="13" fill="currentColor"># 1,8</text>
+<text x="65" y="192" text-anchor="middle" font-size="13" fill="currentColor">0+, 2-</text>
+<text x="203" y="88" text-anchor="start" font-size="13" fill="currentColor">Young</text>
+<text x="195" y="141" text-anchor="middle" font-size="15" fill="currentColor">?</text>
+<text x="195" y="174" text-anchor="middle" font-size="13" fill="currentColor"># 2,3,5,7</text>
+<text x="195" y="192" text-anchor="middle" font-size="13" fill="currentColor">3+, 1-</text>
+<text x="268" y="88" text-anchor="start" font-size="13" fill="currentColor">Old</text>
+<text x="325" y="141" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="325" y="174" text-anchor="middle" font-size="13" fill="currentColor"># 4,6</text>
+<text x="325" y="192" text-anchor="middle" font-size="13" fill="currentColor">0+, 2-</text>
+<text x="195" y="45" text-anchor="middle" font-size="15" fill="currentColor">Age</text>
+</svg>
+</div>
+
+**2. กิ่ง Young** พิจารณาเฉพาะตารางที่เหลือ
+
+<table align="center">
+  <tr><th>#</th><th>Income</th><th>Student</th><th>Buy</th></tr>
+  <tr><td align="center">2</td><td align="center">Low</td><td align="center">Yes</td><td align="center">Yes</td></tr>
+  <tr><td align="center">3</td><td align="center">High</td><td align="center">No</td><td align="center">Yes</td></tr>
+  <tr><td align="center">5</td><td align="center">Low</td><td align="center">No</td><td align="center">No</td></tr>
+  <tr><td align="center">7</td><td align="center">Low</td><td align="center">Yes</td><td align="center">Yes</td></tr>
+</table>
+
+$$\text{Entropy}(S_{Age=Young})=-\frac{3}{4}\log_{10}\frac{3}{4}-\frac{1}{4}\log_{10}\frac{1}{4}=0.2442$$
+
+**Income** (Low $2+,1-$, High $1+,0-$)
+
+$$\text{Entropy}(S_{Income=Low})=0.2764,\qquad \text{Entropy}(S_{Income=High})=0$$
+
+$$\text{Gain}(S_{Age=Young},Income)=0.2442-\frac{3}{4}(0.2764)-\frac{1}{4}(0)=0.0369$$
+
+**Student** (Yes $2+,0-$, No $1+,1-$)
+
+$$\text{Entropy}(S_{Student=Yes})=0,\qquad \text{Entropy}(S_{Student=No})=0.3010$$
+
+$$\text{Gain}(S_{Age=Young},Student)=0.2442-\frac{2}{4}(0)-\frac{2}{4}(0.3010)=0.0937$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S_{Age=Young},Student)=0.0937\ >\ \text{Gain}(S_{Age=Young},Income)=0.0369$$
+
+Student มี Gain มากที่สุด จึงเป็น node ของกิ่ง Young
+
+กิ่งที่ Entropy = 0 เป็น leaf: Yes $\to$ **Yes**
+
+ต้นไม้หลังเลือก node ของกิ่ง Young (? คือกิ่งที่ต้องแบ่งต่อ)
+
+<div align="center">
+<svg viewBox="0 0 520 328" width="520" role="img" aria-label="ต้นไม้หลังเลือก node ของกิ่ง Young" xmlns="http://www.w3.org/2000/svg">
+<line x1="260" y1="58" x2="65" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="260" y1="58" x2="260" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<line x1="260" y1="154" x2="195" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="260" y1="154" x2="325" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="260" y1="58" x2="455" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="301" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="260" cy="136" rx="53" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="431" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="260" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="156" y="88" text-anchor="end" font-size="13" fill="currentColor">Middle</text>
+<text x="65" y="141" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="65" y="174" text-anchor="middle" font-size="13" fill="currentColor"># 1,8</text>
+<text x="65" y="192" text-anchor="middle" font-size="13" fill="currentColor">0+, 2-</text>
+<text x="268" y="86" text-anchor="start" font-size="13" fill="currentColor">Young</text>
+<text x="222" y="184" text-anchor="end" font-size="13" fill="currentColor">Yes</text>
+<text x="195" y="237" text-anchor="middle" font-size="15" fill="currentColor">Yes</text>
+<text x="195" y="270" text-anchor="middle" font-size="13" fill="currentColor"># 2,7</text>
+<text x="195" y="288" text-anchor="middle" font-size="13" fill="currentColor">2+, 0-</text>
+<text x="300" y="184" text-anchor="start" font-size="13" fill="currentColor">No</text>
+<text x="325" y="237" text-anchor="middle" font-size="15" fill="currentColor">?</text>
+<text x="325" y="270" text-anchor="middle" font-size="13" fill="currentColor"># 3,5</text>
+<text x="325" y="288" text-anchor="middle" font-size="13" fill="currentColor">1+, 1-</text>
+<text x="260" y="141" text-anchor="middle" font-size="15" fill="currentColor">Student</text>
+<text x="366" y="88" text-anchor="start" font-size="13" fill="currentColor">Old</text>
+<text x="455" y="141" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="455" y="174" text-anchor="middle" font-size="13" fill="currentColor"># 4,6</text>
+<text x="455" y="192" text-anchor="middle" font-size="13" fill="currentColor">0+, 2-</text>
+<text x="260" y="45" text-anchor="middle" font-size="15" fill="currentColor">Age</text>
+</svg>
+</div>
+
+**3. กิ่ง No** พิจารณาเฉพาะตารางที่เหลือ
+
+<table align="center">
+  <tr><th>#</th><th>Income</th><th>Buy</th></tr>
+  <tr><td align="center">3</td><td align="center">High</td><td align="center">Yes</td></tr>
+  <tr><td align="center">5</td><td align="center">Low</td><td align="center">No</td></tr>
+</table>
+
+$$\text{Entropy}(S_{Student=No})=-\frac{1}{2}\log_{10}\frac{1}{2}-\frac{1}{2}\log_{10}\frac{1}{2}=0.3010$$
+
+**Income** (High $1+,0-$, Low $0+,1-$)
+
+$$\text{Entropy}(S_{Income=High})=0,\qquad \text{Entropy}(S_{Income=Low})=0$$
+
+$$\text{Gain}(S_{Student=No},Income)=0.3010-\frac{1}{2}(0)-\frac{1}{2}(0)=0.3010$$
+
+เปรียบเทียบ
+
+$$\text{Gain}(S_{Student=No},Income)=0.3010$$
+
+Income มี Gain มากที่สุด จึงเป็น node ของกิ่ง No
+
+กิ่งที่ Entropy = 0 เป็น leaf: High $\to$ **Yes**, Low $\to$ **No**
+
+**ต้นไม้ที่ได้**
+
+<div align="center">
+<svg viewBox="0 0 650 368" width="560" role="img" aria-label="ต้นไม้ ID3 ของข้อมูลการซื้อ" xmlns="http://www.w3.org/2000/svg">
+<line x1="325" y1="58" x2="65" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<line x1="325" y1="58" x2="292" y2="118" stroke="currentColor" stroke-width="1.5"/>
+<line x1="292" y1="154" x2="195" y2="218" stroke="currentColor" stroke-width="1.5"/>
+<line x1="292" y1="154" x2="390" y2="214" stroke="currentColor" stroke-width="1.5"/>
+<line x1="390" y1="250" x2="325" y2="314" stroke="currentColor" stroke-width="1.5"/>
+<line x1="390" y1="250" x2="455" y2="314" stroke="currentColor" stroke-width="1.5"/>
+<line x1="325" y1="58" x2="585" y2="122" stroke="currentColor" stroke-width="1.5"/>
+<rect x="41" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="171" y="218" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="301" y="314" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="431" y="314" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="390" cy="232" rx="48" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="292" cy="136" rx="53" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="561" y="122" width="48" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+<ellipse cx="325" cy="40" rx="40" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="189" y="88" text-anchor="end" font-size="13" fill="currentColor">Middle</text>
+<text x="65" y="141" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="303" y="86" text-anchor="end" font-size="13" fill="currentColor">Young</text>
+<text x="238" y="184" text-anchor="end" font-size="13" fill="currentColor">Yes</text>
+<text x="195" y="237" text-anchor="middle" font-size="15" fill="currentColor">Yes</text>
+<text x="349" y="182" text-anchor="start" font-size="13" fill="currentColor">No</text>
+<text x="352" y="280" text-anchor="end" font-size="13" fill="currentColor">High</text>
+<text x="325" y="333" text-anchor="middle" font-size="15" fill="currentColor">Yes</text>
+<text x="430" y="280" text-anchor="start" font-size="13" fill="currentColor">Low</text>
+<text x="455" y="333" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="390" y="237" text-anchor="middle" font-size="15" fill="currentColor">Income</text>
+<text x="292" y="141" text-anchor="middle" font-size="15" fill="currentColor">Student</text>
+<text x="463" y="88" text-anchor="start" font-size="13" fill="currentColor">Old</text>
+<text x="585" y="141" text-anchor="middle" font-size="15" fill="currentColor">No</text>
+<text x="325" y="45" text-anchor="middle" font-size="15" fill="currentColor">Age</text>
+</svg>
+</div>
+
+เขียนเป็นตารางโครงสร้างข้อมูล (id ตามชั้น จากบนลงล่าง ซ้ายไปขวา)
+
+<table align="center">
+  <tr><th>id</th><th>Parent</th><th>Node</th><th>Branch</th></tr>
+  <tr><td align="center">1</td><td align="center">0</td><td align="center">Age</td><td align="center">—</td></tr>
+  <tr><td align="center">2</td><td align="center">1</td><td align="center">No</td><td align="center">Middle</td></tr>
+  <tr><td align="center">3</td><td align="center">1</td><td align="center">Student</td><td align="center">Young</td></tr>
+  <tr><td align="center">4</td><td align="center">1</td><td align="center">No</td><td align="center">Old</td></tr>
+  <tr><td align="center">5</td><td align="center">3</td><td align="center">Yes</td><td align="center">Yes</td></tr>
+  <tr><td align="center">6</td><td align="center">3</td><td align="center">Income</td><td align="center">No</td></tr>
+  <tr><td align="center">7</td><td align="center">6</td><td align="center">Yes</td><td align="center">High</td></tr>
+  <tr><td align="center">8</td><td align="center">6</td><td align="center">No</td><td align="center">Low</td></tr>
+</table>
+
+**Ans** ต้นไม้และตารางข้างบน
 
 ### แบบฝึกหัด 4
 
