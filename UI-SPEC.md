@@ -295,7 +295,7 @@ Carried over from the NLP Notes rail, restyled.
 ### 6.2 Desktop rail (>= 1024)
 
 - Grid `264 px | content`; the rail (248 px) is sticky at `top: 80px`, scrolls inside itself, open by default.
-- Folding animates `grid-template-columns` (380 ms, ease-out); the content grows into the room. The folded rail is `inert` and `aria-hidden`.
+- Folding changes `grid-template-columns` at once (no transition: animating it re-lays out the whole long page on every frame, about 50 000 nodes). The rail itself fades and slides 24 px (200 ms, transform and opacity only). The folded rail is `inert` and `aria-hidden`.
 
 ### 6.3 Tree
 
@@ -366,7 +366,7 @@ Rules: no horizontal page scroll anywhere except inside the diagram canvas, tabl
 | A8 | Section header | in view, once | Top rule grows from the left (`scaleX`, 480 ms), then number and title fade up 12 px |
 | A9 | Example card, topic card, overview panel | in view, once | Rise 20 px and fade (`slow`), staggered 40 ms for blocks that arrive together (max 4) |
 | A10 | Rail highlight and tree | scroll | Highlight slides to the active entry (300 ms); the active section expands (`base`); ring sweeps |
-| A11 | Rail fold (desktop) | toggle | Grid columns animate (380 ms); rail slides out with a fade |
+| A11 | Rail fold (desktop) | toggle | Content width changes at once; the rail fades out with a short slide (transform and opacity only) |
 | A12 | Rail toggle icon | toggle | List morphs into a cross (240 ms) |
 | A13 | Jump arrival | after `jumpTo` | A 3 px `coral` underline with a 1 px `ink` outline draws left to right under the target heading and fades out (1.8 s) |
 | A14 | Reading progress | scroll | 2 px `coral` line under the navbar, `scaleX` from the left |

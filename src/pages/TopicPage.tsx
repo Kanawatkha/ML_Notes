@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useSearchParams } from 'react-router-dom';
 import { BackToTop } from '@/components/layout/BackToTop';
@@ -39,6 +39,9 @@ export default function TopicPage({ pageId }: TopicPageProps) {
   // a jump from the contents may name a part that is still a placeholder: mount everything first
   const [mountAll, setMountAll] = useState(false);
   const beforeJump = () => flushSync(() => setMountAll(true));
+  // reaching for the contents starts mounting the rest early, so the jump finds it ready
+  const [warm, setWarm] = useState(false);
+  const onWarm = useCallback(() => setWarm(true), []);
 
   // a link with ?s= mounts every part of the page, then scrolls to the part it names, once
   const jumped = useRef('');
@@ -63,8 +66,8 @@ export default function TopicPage({ pageId }: TopicPageProps) {
       )}
       {/* nothing below the hero until it has arrived, so its arrival moves nothing */}
       {meta.status === 'loading' ? null : content.status === 'ready' ? (
-        <RailLayout file={content.data} beforeJump={beforeJump}>
-          <TopicOutline file={content.data} mountAll={target !== null || mountAll} />
+        <RailLayout file={content.data} beforeJump={beforeJump} onWarm={onWarm}>
+          <TopicOutline file={content.data} mountAll={target !== null || mountAll} warm={warm} />
           <div id={TOPIC_END_ID} aria-hidden="true" />
         </RailLayout>
       ) : (

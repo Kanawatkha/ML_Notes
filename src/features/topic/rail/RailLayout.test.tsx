@@ -19,9 +19,9 @@ function mockViewport(wide: boolean) {
   })) as unknown as typeof window.matchMedia;
 }
 
-function renderLayout(beforeJump?: () => void) {
+function renderLayout(beforeJump?: () => void, onWarm?: () => void) {
   return render(
-    <RailLayout file={file} beforeJump={beforeJump}>
+    <RailLayout file={file} beforeJump={beforeJump} onWarm={onWarm}>
       <TopicOutline file={file} mountAll />
     </RailLayout>,
   );
@@ -64,14 +64,20 @@ describe('contents on a wide screen', () => {
     expect(nav.closest('[inert]')).toBeNull();
   });
 
-  it('gives the room of the rail to the page body when it folds, with a transition on the columns', () => {
+  it('gives the room of the rail to the page body when it folds, at once and without animating the columns', () => {
     const { container } = renderLayout();
     const grid = container.querySelector('.grid') as HTMLElement;
     expect(grid.className).toContain('grid-cols-[264px_minmax(0,1fr)]');
-    expect(grid.className).toContain('transition-[grid-template-columns]');
-    expect(grid.className).toContain('motion-reduce:transition-none');
+    expect(grid.className).not.toContain('transition');
     fireEvent.click(screen.getByRole('button', { name: UI_TEXT.railClose }));
     expect(grid.className).toContain('grid-cols-[0px_minmax(0,1fr)]');
+  });
+
+  it('starts mounting the rest of the page when the pointer or focus reaches the contents', () => {
+    const onWarm = vi.fn();
+    renderLayout(undefined, onWarm);
+    fireEvent.pointerEnter(screen.getByRole('navigation', { name: UI_TEXT.railLabel }));
+    expect(onWarm).toHaveBeenCalled();
   });
 
   it('puts the toggle in the page margin, outside the grid, and keeps it when the rail folds', () => {

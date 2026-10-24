@@ -14,12 +14,14 @@ import { buildUnits, type Unit } from './units';
  */
 export const FIRST_UNITS = 2;
 export const UNITS_PER_STEP = 3;
+/** Once the reader reaches for the contents, the rest is mounted at once-ish: no wait, bigger steps. */
+export const WARM_UNITS_PER_STEP = 8;
 export const BACKGROUND_DELAY_MS = 3000;
 const NEAR_MARGIN = '1200px 0px';
 
 const staged = () => typeof IntersectionObserver === 'function';
 
-function useUnitLimit(total: number, mountAll: boolean) {
+function useUnitLimit(total: number, mountAll: boolean, warm: boolean) {
   const [limit, setLimit] = useState(() => (staged() ? FIRST_UNITS : total));
   const openedAt = useRef<number | null>(null);
 
@@ -30,8 +32,11 @@ function useUnitLimit(total: number, mountAll: boolean) {
   useEffect(() => {
     if (mountAll || limit >= total) return;
     openedAt.current ??= performance.now();
-    const wait = Math.max(0, BACKGROUND_DELAY_MS - (performance.now() - openedAt.current));
-    const next = () => setLimit((l) => l + UNITS_PER_STEP);
+    const wait = warm
+      ? 0
+      : Math.max(0, BACKGROUND_DELAY_MS - (performance.now() - openedAt.current));
+    const step = warm ? WARM_UNITS_PER_STEP : UNITS_PER_STEP;
+    const next = () => setLimit((l) => l + step);
     let idle = 0;
     const timer = window.setTimeout(() => {
       if (typeof requestIdleCallback === 'function')
@@ -42,7 +47,7 @@ function useUnitLimit(total: number, mountAll: boolean) {
       window.clearTimeout(timer);
       if (idle && typeof cancelIdleCallback === 'function') cancelIdleCallback(idle);
     };
-  }, [limit, total, mountAll]);
+  }, [limit, total, mountAll, warm]);
 
   return { limit: mountAll ? total : limit, demand };
 }
@@ -71,12 +76,14 @@ type TopicOutlineProps = {
   file: PageFile;
   /** Mount every unit now (set before a jump to an id that may still be a placeholder). */
   mountAll?: boolean;
+  /** The reader is reaching for the contents: finish mounting the rest now, in idle moments. */
+  warm?: boolean;
 };
 
 /** The body of a topic page: the overview, then every section, sub-topic and example in source order. */
-export function TopicOutline({ file, mountAll = false }: TopicOutlineProps) {
+export function TopicOutline({ file, mountAll = false, warm = false }: TopicOutlineProps) {
   const units = useMemo(() => buildUnits(file), [file]);
-  const { limit, demand } = useUnitLimit(units.length, mountAll);
+  const { limit, demand } = useUnitLimit(units.length, mountAll, warm);
   return (
     <div className="flex flex-col gap-6 [&>div:first-child>section]:pt-0">
       {units.map((unit, i) =>

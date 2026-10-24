@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { PAGES, UI_TEXT } from '@/config/site';
 import type { Block, Inline } from '@/content/types';
 import { counts, fileOf } from '@/test/content';
-import { FIRST_UNITS, TopicOutline } from './TopicOutline';
+import { FIRST_UNITS, TopicOutline, WARM_UNITS_PER_STEP } from './TopicOutline';
 import { buildUnits, OVERVIEW_ID } from './units';
 
 function countMath(blocks: Block[]): number {
@@ -218,5 +218,25 @@ describe('staged mounting', () => {
     vi.stubGlobal('IntersectionObserver', FakeObserver);
     const { container } = render(<TopicOutline file={file} mountAll />);
     expect(container.querySelectorAll('div[aria-hidden="true"][id]').length).toBe(0);
+  });
+
+  it('mounts the rest in bigger steps, with no wait, once warmed', () => {
+    vi.useFakeTimers();
+    try {
+      vi.stubGlobal('IntersectionObserver', FakeObserver);
+      vi.stubGlobal('requestIdleCallback', (cb: () => void) => window.setTimeout(cb, 0));
+      vi.stubGlobal('cancelIdleCallback', (id: number) => window.clearTimeout(id));
+      const { container, rerender } = render(<TopicOutline file={file} />);
+      const left = () => container.querySelectorAll('div[aria-hidden="true"][id]').length;
+      vi.advanceTimersByTime(500); // far inside the normal wait
+      expect(left()).toBe(total - FIRST_UNITS);
+      rerender(<TopicOutline file={file} warm />);
+      act(() => {
+        vi.advanceTimersByTime(10);
+      });
+      expect(left()).toBe(total - FIRST_UNITS - WARM_UNITS_PER_STEP);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });
