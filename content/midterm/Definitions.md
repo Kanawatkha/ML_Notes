@@ -85,54 +85,41 @@
 ### 2.1 Supervised และ Unsupervised
 
 <table align="center">
-  <tr><th></th><th>Supervised</th><th>Unsupervised</th></tr>
-  <tr><th>ข้อมูล</th><td align="center">$X$ และ $Y$</td><td align="center">$X$ อย่างเดียว</td></tr>
-  <tr><th>งาน</th><td align="center">Classification, Regression</td><td align="center">Clustering</td></tr>
-  <tr><th>ตัวอย่างวิธี</th><td align="center">K-NN, Perceptron, FFBP, ID3, Linear</td><td align="center">K-Means</td></tr>
+  <tr><th>Supervised</th><th>Unsupervised</th></tr>
+  <tr><td>ใช้ข้อมูล $X$ พร้อมคำตอบ $Y$ (label) จึงเทียบผลทำนายกับ $Y$ ได้ ทำงาน Classification และ Regression เช่น K-NN, Perceptron, FFBP, ID3, Linear</td><td>ใช้ข้อมูล $X$ อย่างเดียว ไม่มี $Y$ ให้เทียบ ทำงาน Clustering เช่น K-Means</td></tr>
 </table>
 
 ### 2.2 Classification, Regression และ Clustering
 
 <table align="center">
-  <tr><th></th><th>Classification</th><th>Regression</th><th>Clustering</th></tr>
-  <tr><th>ประเภท</th><td align="center">Supervised</td><td align="center">Supervised</td><td align="center">Unsupervised</td></tr>
-  <tr><th>ผลลัพธ์</th><td align="center">class (Discrete)</td><td align="center">ตัวเลข (Continuous)</td><td align="center">กลุ่มและ centroid</td></tr>
-  <tr><th>จำนวนกลุ่ม</th><td align="center">ตามจำนวน class ใน $Y$</td><td align="center">ไม่มี</td><td align="center">กำหนดเอง ($k$)</td></tr>
-  <tr><th>วิธีในวิชานี้</th><td align="center">K-NN, Perceptron, FFBP, ID3</td><td align="center">Linear, Polynomial, K-NN</td><td align="center">K-Means</td></tr>
+  <tr><th>Classification</th><th>Regression</th><th>Clustering</th></tr>
+  <tr><td>Supervised ทำนาย class (Discrete) ตามจำนวน class ใน $Y$ เช่น K-NN, Perceptron, FFBP, ID3</td><td>Supervised ทำนายค่าตัวเลข (Continuous) เช่น Linear, Polynomial, K-NN Regression</td><td>Unsupervised แบ่งกลุ่มจาก $X$ โดยไม่มี label ผู้ใช้กำหนดจำนวนกลุ่ม $k$ เอง ได้กลุ่มและ centroid เช่น K-Means</td></tr>
 </table>
 
 ### 2.3 ระยะของ K-NN
 
 <table align="center">
-  <tr><th></th><th>Euclidean</th><th>Squared Euclidean</th><th>Manhattan</th><th>Cosine</th></tr>
-  <tr><th>วัดอะไร</th><td align="center">ระยะเส้นตรง</td><td align="center">ระยะเส้นตรงกำลังสอง</td><td align="center">ผลรวมผลต่างสัมบูรณ์</td><td align="center">มุมระหว่างเวกเตอร์</td></tr>
-  <tr><th>ใกล้กันคือ</th><td align="center">ค่าน้อย</td><td align="center">ค่าน้อย</td><td align="center">ค่าน้อย</td><td align="center">ค่ามาก</td></tr>
+  <tr><th>Euclidean</th><th>Squared Euclidean</th><th>Manhattan</th><th>Cosine</th></tr>
+  <tr><td>วัดระยะเส้นตรง ค่าน้อยคือใกล้กัน เรียงจากน้อยไปมาก</td><td>คือ Euclidean ที่ไม่ถอดราก ค่าน้อยคือใกล้กัน ลำดับเหมือน Euclidean</td><td>วัดผลรวมผลต่างสัมบูรณ์ในแต่ละมิติ ค่าน้อยคือใกล้กัน เรียงจากน้อยไปมาก</td><td>วัดมุมระหว่างเวกเตอร์ ค่ามากคือใกล้กัน เรียงจากมากไปน้อย</td></tr>
 </table>
 
 ### 2.4 Perceptron และ FFBP
 
 <table align="center">
-  <tr><th></th><th>Perceptron</th><th>FFBP</th></tr>
-  <tr><th>โครงสร้าง</th><td align="center">neuron เดียว ไม่มี hidden layer</td><td align="center">มี hidden layer</td></tr>
-  <tr><th>activation</th><td align="center">hard-limit ($+1$ หรือ $-1$) หาอนุพันธ์ไม่ได้</td><td align="center">sigmoid (0 ถึง 1) หาอนุพันธ์ได้</td></tr>
-  <tr><th>เส้นแบ่งกลุ่ม</th><td align="center">เส้นตรงเท่านั้น แก้ XOR ไม่ได้</td><td align="center">ไม่ใช่เส้นตรงได้ แก้ XOR ได้</td></tr>
+  <tr><th>Perceptron</th><th>FFBP</th></tr>
+  <tr><td>neuron เดียว ไม่มี hidden layer ใช้ hard-limit ($+1$ หรือ $-1$) ที่หาอนุพันธ์ไม่ได้ แบ่งกลุ่มด้วยเส้นตรงเท่านั้น จึงแก้ XOR ไม่ได้</td><td>มี hidden layer ใช้ sigmoid (0 ถึง 1) ที่หาอนุพันธ์ได้ ส่ง error ย้อนกลับปรับ weight ทุกชั้น แบ่งกลุ่มไม่เป็นเส้นตรงได้ จึงแก้ XOR ได้</td></tr>
 </table>
 
 ### 2.5 K-NN (Classifier), K-NN (Regressor) และ K-Means
 
 <table align="center">
-  <tr><th></th><th>K-NN Classifier</th><th>K-NN Regressor</th><th>K-Means</th></tr>
-  <tr><th>ประเภท</th><td align="center">Supervised</td><td align="center">Supervised</td><td align="center">Unsupervised</td></tr>
-  <tr><th>ความหมายของ $k$</th><td align="center">จำนวนเพื่อนบ้านที่โหวต</td><td align="center">จำนวนเพื่อนบ้านที่เฉลี่ย</td><td align="center">จำนวนกลุ่ม</td></tr>
-  <tr><th>ผลลัพธ์</th><td align="center">class ที่ได้เสียงมากสุด</td><td align="center">ค่าเฉลี่ยของ $y$</td><td align="center">กลุ่มและ centroid</td></tr>
+  <tr><th>K-NN Classifier</th><th>K-NN Regressor</th><th>K-Means</th></tr>
+  <tr><td>Supervised โหวตเสียงข้างมากจาก label ของ $k$ เพื่อนบ้านที่ใกล้ที่สุด ได้ class</td><td>Supervised เฉลี่ยค่า $y$ ของ $k$ เพื่อนบ้านที่ใกล้ที่สุด ได้ค่าตัวเลข</td><td>Unsupervised $k$ คือจำนวนกลุ่มที่ผู้ใช้กำหนดเอง ได้กลุ่มและ centroid</td></tr>
 </table>
 
 ### 2.6 ID3 และ CART
 
 <table align="center">
-  <tr><th></th><th>ID3</th><th>CART</th></tr>
-  <tr><th>รูปร่างต้นไม้</th><td align="center">แตกหลายกิ่งตามค่า attribute</td><td align="center">แตก 2 กิ่งเสมอ</td></tr>
-  <tr><th>node</th><td align="center">ชื่อ attribute</td><td align="center">คำถามใช่/ไม่ใช่ เช่น $G>200$</td></tr>
-  <tr><th>เกณฑ์เลือก</th><td align="center">Information Gain</td><td align="center">Gini</td></tr>
-  <tr><th>ใช้ attribute ซ้ำ</th><td align="center">ไม่ได้ (ในเส้นทางเดียวกัน)</td><td align="center">ได้</td></tr>
+  <tr><th>ID3</th><th>CART</th></tr>
+  <tr><td>แตกหลายกิ่งตามค่าของ attribute node คือชื่อ attribute เลือกด้วย Information Gain และไม่ใช้ attribute ซ้ำในเส้นทางเดียวกัน</td><td>แตก 2 กิ่งเสมอ node คือคำถามใช่/ไม่ใช่ เช่น $G>200$ เลือกด้วย Gini และใช้ attribute ซ้ำได้</td></tr>
 </table>
