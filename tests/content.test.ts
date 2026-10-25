@@ -212,7 +212,7 @@ describe('the definitions page', () => {
   it('has the definitions section, then the comparisons section, with no examples or exercises', () => {
     expect(page.file.root.children.map((c) => [c.number, c.children.length])).toEqual([
       ['1', 7],
-      ['2', 13],
+      ['2', 6],
     ]);
     expect(page.counts).toMatchObject({ examples: 0, exercises: 0 });
   });

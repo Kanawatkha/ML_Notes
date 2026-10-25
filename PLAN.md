@@ -181,7 +181,7 @@ Goal: the three Markdown files to typed, tested data.
 
 - [x] Every exercise has its solution (Sol and Ans, same shape as an example), checked by independent programs; each exercise card has its own show/hide button (the solution is not in the page until opened)
 - [x] The page-chunk budget moved from 150 to 200 KB gzip because of the solutions (Classification 156 KB)
-- [x] New page **Definitions** (`#/definitions`, `content/midterm/Definitions.md`): part 1 the definitions of every topic in the lecturer's wording (overview of Supervised and Unsupervised, Regression, Classification and K-NN, Perceptron, FFBP, ID3, Clustering), part 2 thirteen comparison tables. Sources: the slides and the handwritten notes in `docs/`; the text was fact-checked by an independent reader against them
+- [x] New page **Definitions** (`#/definitions`, `content/midterm/Definitions.md`): part 1 the definitions of every topic in the lecturer's wording (overview of Supervised and Unsupervised, Regression, Classification and K-NN, Perceptron, FFBP, ID3, Clustering), part 2 six comparison tables (shorter: terse definitions without formulas, comparisons merged into tables of two to four columns). Sources: the slides and the handwritten notes in `docs/`; the text was fact-checked by an independent reader against them
 - [x] Wiring: `REFERENCE_PAGE` in `site.ts` (apart from `PAGES`, so the diagram, the Home counts and the topic colours are untouched), `buildContent(root, PAGES, [REFERENCE_PAGE])`, one shared `ContentPage` for the topic pages and the definitions page, a light `DefinitionsHero`, a fourth navbar tab and menu row, a link on Home
 
 ## Future (not planned)
