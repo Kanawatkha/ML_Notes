@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Icon } from '@/components/ui/Icon';
-import { HOME_ROUTE, PAGES, REFERENCE_PAGE, UI_TEXT } from '@/config/site';
+import { EXTRA_PAGES, HOME_ROUTE, PAGES, UI_TEXT } from '@/config/site';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
 import { BAND_CLASS } from '@/lib/bands';
@@ -82,15 +82,17 @@ export function MobileMenu({ id, open, onClose }: MobileMenuProps) {
               </MenuRow>
             </li>
           ))}
-          <li style={rowStyle(PAGES.length + 1)}>
-            <MenuRow to={REFERENCE_PAGE.route}>
-              <span className="type-mono w-8 text-body-muted" aria-hidden="true">
-                {String(PAGES.length + 1).padStart(2, '0')}
-              </span>
-              <span className="size-3 rounded-xs border border-ink" aria-hidden="true" />
-              <span className="type-feature-heading flex-1">{REFERENCE_PAGE.label}</span>
-            </MenuRow>
-          </li>
+          {EXTRA_PAGES.map((page, index) => (
+            <li key={page.id} style={rowStyle(PAGES.length + 1 + index)}>
+              <MenuRow to={page.route}>
+                <span className="type-mono w-8 text-body-muted" aria-hidden="true">
+                  {String(PAGES.length + 1 + index).padStart(2, '0')}
+                </span>
+                <span className="size-3 rounded-xs border border-ink" aria-hidden="true" />
+                <span className="type-feature-heading flex-1">{page.label}</span>
+              </MenuRow>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

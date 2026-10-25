@@ -26,6 +26,8 @@ The pipeline reads exactly these sources and the reference page declared next to
 export const REFERENCE_PAGE = { id: 'definitions', route: '/definitions', label: 'นิยาม', source: 'content/midterm/Definitions.md' } as const;
 ```
 
+`CheatSheet.md` (`CHEATSHEET_PAGE`, route `/cheatsheet`) is built the same way (in `result.extra`, not in `home.json`): section 1 holds the definitions and formulas of the topics and section 2 the comparisons (the headings follow `Definitions.md`), every `###` is one box (its blocks are the content), and which side of the sheet each box is on is in `src/features/cheatsheet/layout.ts`. Its formulas may colour themselves with `\htmlClass{pen-red}{...}`, `pen-blue` or `hl`: the KaTeX build trusts `\htmlClass` for exactly the classes `ring`, `pen-red`, `pen-blue` and `hl`.
+
 `Definitions.md` uses the same shapes as the topic files (title and lead, `## 1.` and `## 2.` sections, `### N.M` sub-topics, HTML tables) and has no examples or exercises. It is built apart from the topics: it is in `result.extra`, not in `result.pages`, and not in `home.json`.
 
 Current shape (use as the Phase 2 snapshot):

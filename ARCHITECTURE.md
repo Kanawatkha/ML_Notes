@@ -125,7 +125,7 @@ app    ->  pages, components, config
 
 ## 7. Routing
 
-- `HashRouter` (GitHub Pages cannot rewrite deep links). Routes: `/`, one route per `PAGES` entry, `/definitions` (`REFERENCE_PAGE`), `*`. Each route is code-split with `React.lazy`; `TopicPage` and `DefinitionsPage` are thin wrappers over one `ContentPage` (hero from the meta file, then the rail and outline); they differ only in the hero.
+- `HashRouter` (GitHub Pages cannot rewrite deep links). Routes: `/`, one route per `PAGES` entry, `/definitions` (`REFERENCE_PAGE`), `/cheatsheet` (`CHEATSHEET_PAGE`), `*`. Each route is code-split with `React.lazy`; `TopicPage` and `DefinitionsPage` are thin wrappers over one `ContentPage` (hero from the meta file, then the rail and outline); they differ only in the hero.
 - `?s=<node>` on a topic route: after the content mounts, `jumpTo(node)` runs once. In-page navigation (rail entries) does not change the URL.
 - `?p=...&x=1` on Home: the diagram's open path (UI-SPEC 4.2).
 

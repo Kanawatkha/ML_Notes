@@ -5,11 +5,11 @@ import { gzipSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
 import { buildContent } from '../scripts/build-content/index.ts';
 import { walkBlocks, walkNodes } from '../scripts/build-content/tree.ts';
-import { PAGES, REFERENCE_PAGE } from '../src/config/site.ts';
+import { EXTRA_PAGES, PAGES } from '../src/config/site.ts';
 import type { Block } from '../src/content/types.ts';
 
 const root = resolve(__dirname, '..');
-const result = buildContent(root, PAGES, [REFERENCE_PAGE]);
+const result = buildContent(root, PAGES, EXTRA_PAGES);
 const byId = Object.fromEntries(result.pages.map((p) => [p.file.id, p]));
 
 describe('the real content', () => {
@@ -200,7 +200,7 @@ describe('the definitions page', () => {
   const page = result.extra.find((p) => p.file.id === 'definitions')!;
 
   it('is built apart from the topics: it has no place in Home or its counts', () => {
-    expect(result.extra.map((p) => p.file.id)).toEqual(['definitions']);
+    expect(result.extra.map((p) => p.file.id)).toEqual(['definitions', 'cheatsheet']);
     expect(result.home.pages.map((p) => p.id)).toEqual([
       'regression',
       'classification',

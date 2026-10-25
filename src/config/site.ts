@@ -47,8 +47,23 @@ export const REFERENCE_PAGE = {
   source: 'content/midterm/Definitions.md',
 } as const;
 
-/** Every id the content loaders know: the topics and the reference page. */
-export type ContentPageId = PageId | typeof REFERENCE_PAGE.id;
+/**
+ * The cheat sheet: a two-sided A4 page generated from `CheatSheet.md` for the exam. Like the
+ * definitions page it is not a topic. Its Markdown holds the content of the boxes; where each box
+ * sits on the sheet is decided in `features/cheatsheet/layout.ts`.
+ */
+export const CHEATSHEET_PAGE = {
+  id: 'cheatsheet',
+  route: '/cheatsheet',
+  label: 'โพย A4',
+  source: 'content/midterm/CheatSheet.md',
+} as const;
+
+/** The pages built apart from the topics, in the order of the navbar. */
+export const EXTRA_PAGES = [REFERENCE_PAGE, CHEATSHEET_PAGE] as const;
+
+/** Every id the content loaders know: the topics and the extra pages. */
+export type ContentPageId = PageId | (typeof EXTRA_PAGES)[number]['id'];
 
 export const HOME_ROUTE = '/';
 
@@ -94,6 +109,11 @@ export const UI_TEXT = {
   solutionHide: 'ซ่อนเฉลย',
   definitionsTag: 'Definitions',
   definitionsLink: 'นิยามและการเปรียบเทียบ',
+  sheetFront: 'หน้า',
+  sheetBack: 'หลัง',
+  sheetBoth: 'ดู 2 หน้า',
+  sheetExport: 'ส่งออก PDF',
+  sheetViews: 'มุมมองโพย',
   updateReady: 'มีเวอร์ชันใหม่ พร้อมใช้งาน',
   updateAction: 'โหลดใหม่',
   offlineReady: 'ใช้งานออฟไลน์ได้แล้ว',

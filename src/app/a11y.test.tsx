@@ -73,6 +73,15 @@ describe('axe: no serious or critical violations', () => {
     40000,
   );
 
+  it('the cheat sheet page', async () => {
+    mockViewport(true);
+    renderAt('/cheatsheet');
+    await waitFor(() => expect(document.querySelectorAll('.sheet-box').length).toBe(13), {
+      timeout: 15000,
+    });
+    expect(await violations()).toEqual([]);
+  }, 40000);
+
   it('a topic page with the contents drawer open', async () => {
     renderAt('/clustering');
     fireEvent.click(

@@ -291,6 +291,15 @@ Ans strip                                            pale-green fill, 3 px deep-
 - Home: an outline button "นิยามและการเปรียบเทียบ" under the numbers. The page is not in the diagram and not in the Home counts.
 - Comparison tables are ordinary HTML tables (first column row headers); the wide one (four distances) scrolls sideways like any table.
 
+### 5.7 Cheat sheet (`#/cheatsheet`)
+
+- A finished, two-sided A4 page to copy by hand or print. No rail, no editing, no text above it (the title is for screen readers only). Toolbar: three view buttons "หน้า", "หลัง", "ดู 2 หน้า" (`aria-pressed`; the pressed one is `primary` with `on-primary` text) and the primary button "ส่งออก PDF".
+- The Markdown has the same headings as the definitions page: section 1 the definitions and formulas of every topic (1.1 to 1.7), section 2 the comparisons (2.1 to 2.6); every `###` is a box. `layout.ts` only says which side each box is on.
+- Each side is a 210 x 297 mm page (padding 5 mm) laid out at real size and shown with a CSS `scale` that fits the window (both sides sit next to each other from 900 px, stacked below). The boxes flow through two columns in the order of the Markdown, packed close together with 1.2 mm between them (a box never splits between columns). A box is a 0.3 mm `ink` rule with a 1 mm radius and an `action-blue` title with a thin blue underline.
+- The whole side is set in one font size, the largest between 2.5 and 14 px at which nothing overflows: no extra column, nothing below the page, no formula wider than its box (binary search on the real size, run again when the fonts finish loading). The page not shown stays in the document, moved out of sight, so it is measured and printed.
+- Pens: ink for the text; `**bold**` is `error` red; inline code is `action-blue`; inside a formula `\htmlClass{pen-red}`, `pen-blue` and `hl` (highlighter, `coral-soft`). Colour is never the only signal (weight and rules too), so a black-and-white print still reads.
+- Print: the navbar, toolbar, back-to-top and toasts are hidden; both sides print one per paper, scale removed (`@page` A4, margin 0, exact colours).
+
 ## 6. Contents rail (topic pages)
 
 Carried over from the NLP Notes rail, restyled.

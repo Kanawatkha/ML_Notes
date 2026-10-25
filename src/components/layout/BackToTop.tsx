@@ -33,6 +33,7 @@ export function BackToTop() {
         window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
       }
       className={cn(
+        'print:hidden',
         'fixed right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1rem,env(safe-area-inset-bottom))] z-[60] inline-flex items-center justify-center rounded-full bg-primary text-on-dark transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none',
         visible ? 'scale-100 opacity-100' : 'pointer-events-none scale-75 opacity-0',
       )}

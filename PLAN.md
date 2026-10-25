@@ -184,6 +184,13 @@ Goal: the three Markdown files to typed, tested data.
 - [x] New page **Definitions** (`#/definitions`, `content/midterm/Definitions.md`): part 1 the definitions of every topic in the lecturer's wording (overview of Supervised and Unsupervised, Regression, Classification and K-NN, Perceptron, FFBP, ID3, Clustering), part 2 six comparison tables (shorter: terse definitions without formulas, comparisons merged into tables of two to four columns). Sources: the slides and the handwritten notes in `docs/`; the text was fact-checked by an independent reader against them
 - [x] Wiring: `REFERENCE_PAGE` in `site.ts` (apart from `PAGES`, so the diagram, the Home counts and the topic colours are untouched), `buildContent(root, PAGES, [REFERENCE_PAGE])`, one shared `ContentPage` for the topic pages and the definitions page, a light `DefinitionsHero`, a fourth navbar tab and menu row, a link on Home
 
+## After launch: the cheat sheet (v1.4)
+
+- [x] New page **โพย A4** (`#/cheatsheet`, `content/midterm/CheatSheet.md`): two A4 sides of definitions and formulas with the headings of the definitions page (1.1 to 1.7 the topics, 2.1 to 2.6 the comparisons); the formulas are those of the three topic pages (no L_p, no Mahalanobis, no objective of Fuzzy C-means)
+- [x] Layout: `features/cheatsheet/layout.ts` splits the 13 boxes over the two sides; inside a side the boxes flow through two columns packed close together; one font size per side, the largest at which nothing overflows (`fit.ts`)
+- [x] Pens: `**bold**` is the red pen, inline code the blue pen, `\htmlClass{pen-red|pen-blue|hl}{...}` colours a part of a formula (the trusted classes of the KaTeX build grew from `ring` to these four)
+- [x] Views: front, back, both side by side (stacked on narrow windows), scaled to the window; export through `window.print()` with `@page` A4 margin 0 (both sides, the scale dropped), the shell is hidden in print; no explanation text on the page
+
 ## Future (not planned)
 
 - A final-exam group of pages (`content/final/`, a second diagram root).

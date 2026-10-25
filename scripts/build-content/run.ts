@@ -1,10 +1,10 @@
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
-import { PAGES, REFERENCE_PAGE } from '../../src/config/site.ts';
+import { EXTRA_PAGES, PAGES } from '../../src/config/site.ts';
 import { buildContent, writeOutput } from './index.ts';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
-const result = buildContent(root, PAGES, [REFERENCE_PAGE]);
+const result = buildContent(root, PAGES, EXTRA_PAGES);
 
 if (result.errors.length > 0) {
   console.error(`content: ${result.errors.length} error(s)`);

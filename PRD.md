@@ -41,7 +41,7 @@ The exam scope (from the lecturer's notebook) has three big topics:
 
 ## 5. Information architecture
 
-Five pages, all client-side routes (`HashRouter`):
+Six pages, all client-side routes (`HashRouter`):
 
 | Page | Route | Source content |
 |---|---|---|
@@ -50,13 +50,16 @@ Five pages, all client-side routes (`HashRouter`):
 | Classification | `#/classification` | `content/midterm/Classification.md` |
 | Clustering | `#/clustering` | `content/midterm/Clustering.md` |
 | Definitions (นิยาม) | `#/definitions` | `content/midterm/Definitions.md` |
+| Cheat sheet (โพย A4) | `#/cheatsheet` | `content/midterm/CheatSheet.md` |
 | Not found | `*` | none |
 
 A topic page can be opened at a given section with `#/classification?s=1.2` (used by the Home diagram and by shared links).
 
 The Definitions page is a reference, not a topic: definitions of every topic (part 1) and comparison tables for what students must tell apart (part 2), written for the definition questions of the exam. It has a light hero and no colour band, and it is not part of the Home diagram or the Home counts; Home links to it.
 
-Navigation: a top navbar only (logo left, four page tabs centered, share button right). No footer. Phones use a hamburger that opens a menu panel with one row per page.
+The cheat sheet is a finished two-sided A4 page (formulas and definitions, no examples) laid out like a student's sheet: ruled boxes packed close together, black ink with blue and red pens and a highlighter, set in the largest type that fits so the paper is as full as the content allows; no explanation text on the page. It shows the front, the back or both, and exports to PDF through the print dialog (A4, no margins). It is meant to be copied by hand.
+
+Navigation: a top navbar only (logo left, five page tabs centered, share button right). No footer. Phones use a hamburger that opens a menu panel with one row per page.
 
 ## 6. Features
 
@@ -110,7 +113,7 @@ Name "ML Notes". Original logo (`UI-SPEC.md` section 11): three data points on a
 5. Share opens the native sheet where supported, otherwise the QR dialog; the QR code scans to the current address; copy works.
 6. All animations in `UI-SPEC.md` section 9 work, hold 60 fps on a mid-range phone in a manual check, and are off under `prefers-reduced-motion`.
 7. Layouts verified at 360x640, 390x844, 768x1024, 1024x768, 1440x900 and phone landscape 844x390 with no horizontal page scroll except inside the diagram canvas, wide math, tables and figures.
-8. Offline test: load once, switch the network off, reload and visit all five pages.
+8. Offline test: load once, switch the network off, reload and visit all six pages.
 9. `npm run build` is green in CI and the site is reachable at the Pages URL.
 10. Lighthouse (mobile): Performance 90+, Accessibility 95+, Best Practices 95+.
 

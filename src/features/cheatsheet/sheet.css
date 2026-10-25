@@ -1,0 +1,170 @@
+/*
+ * The cheat sheet (UI-SPEC.md section 5.7): two A4 pages drawn like a student's sheet. Black ink for
+ * the text, blue and red pens for what matters, a highlighter for the rest. The pages are laid out
+ * at real size (210 x 297 mm) and shown scaled; print drops the scale.
+ */
+
+.sheet-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.sheet-stage.is-side {
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* the page that is not shown stays in the document so that it is measured and printed */
+.sheet-wrap.is-off {
+  position: absolute;
+  left: -99999px;
+  top: 0;
+}
+
+.sheet-wrap {
+  flex: none;
+  background: var(--color-canvas);
+  box-shadow: 0 0 0 1px var(--color-hairline);
+}
+
+.sheet-page {
+  display: block;
+  box-sizing: border-box;
+  width: 210mm;
+  height: 297mm;
+  padding: 5mm;
+  column-gap: 1.2mm;
+  column-fill: auto;
+  transform-origin: top left;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  overflow: hidden;
+  font-size: 8px;
+  line-height: 1.25;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* boxes are packed close together; one box never splits between two columns */
+.sheet-box {
+  box-sizing: border-box;
+  display: block;
+  margin: 0 0 1.2mm;
+  padding: 0.3em 0.45em;
+  break-inside: avoid;
+  border: 0.3mm solid var(--color-ink);
+  border-radius: 1mm;
+}
+
+.sheet-title {
+  margin: 0 0 0.2em;
+  padding-bottom: 0.05em;
+  border-bottom: 0.3mm solid var(--color-action-blue);
+  color: var(--color-action-blue);
+  font-size: 1.15em;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* the content takes the size of the box, not the reading sizes of the other pages */
+.sheet-box :where(p, li, ul, ol, td, th) {
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.28;
+}
+
+.sheet-box ul,
+.sheet-box ol {
+  gap: 0.12em !important;
+  padding-inline-start: 1.15em !important;
+}
+
+.sheet-box > div {
+  gap: 0.22em !important;
+}
+
+.sheet-box .thin-scroll {
+  overflow: visible !important;
+}
+
+.sheet-box .katex {
+  font-size: 1em;
+}
+
+.sheet-box .katex-display {
+  margin: 0.1em 0 !important;
+  text-align: left;
+}
+
+.sheet-box .katex-display > .katex {
+  text-align: left;
+}
+
+/* pens: **bold** is the red pen, `code` the blue pen, \htmlClass{...} inside a formula too */
+.sheet-box strong {
+  color: var(--color-error);
+  font-weight: 700;
+}
+
+.sheet-box code {
+  padding: 0;
+  background: none;
+  color: var(--color-action-blue);
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.sheet-box .pen-red {
+  color: var(--color-error);
+}
+
+.sheet-box .pen-blue {
+  color: var(--color-action-blue);
+}
+
+.sheet-box .hl {
+  padding: 0 0.15em;
+  background: var(--color-coral-soft);
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  body {
+    margin: 0;
+    background: var(--color-canvas);
+  }
+
+  .sheet-stage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 210mm;
+  }
+
+  .sheet-wrap,
+  .sheet-wrap.is-off {
+    position: static;
+    width: 210mm !important;
+    height: 297mm !important;
+    box-shadow: none;
+    break-after: page;
+    break-inside: avoid;
+  }
+
+  .sheet-wrap:last-child {
+    break-after: auto;
+  }
+
+  .sheet-page {
+    transform: none !important;
+  }
+}

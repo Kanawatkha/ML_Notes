@@ -7,7 +7,7 @@ import { ReadingProgress } from '@/components/layout/ReadingProgress';
 import { ShareDialog } from '@/components/layout/ShareDialog';
 import { buttonClass } from '@/components/ui/buttonClass';
 import { Icon } from '@/components/ui/Icon';
-import { HOME_ROUTE, PAGES, REFERENCE_PAGE, SITE_NAME, UI_TEXT } from '@/config/site';
+import { EXTRA_PAGES, HOME_ROUTE, PAGES, SITE_NAME, UI_TEXT } from '@/config/site';
 import { BAND_CLASS } from '@/lib/bands';
 import { cn } from '@/lib/cn';
 
@@ -28,7 +28,8 @@ export function Navbar() {
   const { pathname } = useLocation();
   const open = openAt === pathname;
   const onTopicPage =
-    PAGES.some((page) => page.route === pathname) || pathname === REFERENCE_PAGE.route;
+    PAGES.some((page) => page.route === pathname) ||
+    EXTRA_PAGES.some((page) => page.route === pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -56,7 +57,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b bg-canvas transition-colors duration-[160ms]',
+        'sticky top-0 z-50 border-b bg-canvas transition-colors duration-[160ms] print:hidden',
         scrolled ? 'border-hairline' : 'border-transparent',
       )}
     >
@@ -92,20 +93,22 @@ export function Navbar() {
               </NavLink>
             </li>
           ))}
-          <li>
-            <NavLink
-              to={REFERENCE_PAGE.route}
-              className={({ isActive }) =>
-                cn(
-                  'type-button inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 whitespace-nowrap transition-colors duration-[160ms]',
-                  isActive ? 'border-primary text-primary' : 'border-transparent text-ink',
-                )
-              }
-            >
-              <span aria-hidden="true" className="size-2 rounded-full border border-ink" />
-              {REFERENCE_PAGE.label}
-            </NavLink>
-          </li>
+          {EXTRA_PAGES.map((page) => (
+            <li key={page.id}>
+              <NavLink
+                to={page.route}
+                className={({ isActive }) =>
+                  cn(
+                    'type-button inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 whitespace-nowrap transition-colors duration-[160ms]',
+                    isActive ? 'border-primary text-primary' : 'border-transparent text-ink',
+                  )
+                }
+              >
+                <span aria-hidden="true" className="size-2 rounded-full border border-ink" />
+                {page.label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
 
         <div className="flex items-center gap-1 justify-self-end">
