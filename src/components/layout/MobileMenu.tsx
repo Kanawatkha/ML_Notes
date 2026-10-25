@@ -12,6 +12,9 @@ type MobileMenuProps = { id: string; open: boolean; onClose: () => void };
 
 const CLOSE_MS = 220;
 
+/** The place of a row in the list, so its entrance (overlay.css) starts after the rows above it. */
+const rowStyle = (i: number) => ({ '--i': i }) as React.CSSProperties;
+
 /**
  * Full-height white sheet below the navbar (UI-SPEC.md section 2): Home, then one row per topic
  * with its number, colour swatch, title and a chevron. The page below is dimmed and blurred; a press
@@ -58,7 +61,7 @@ export function MobileMenu({ id, open, onClose }: MobileMenuProps) {
         className="menu-panel max-h-full overflow-y-auto overscroll-contain border-b border-hairline bg-canvas"
       >
         <ul>
-          <li className="border-b border-hairline">
+          <li className="border-b border-hairline" style={rowStyle(0)}>
             <MenuRow to={HOME_ROUTE} end>
               <span className="w-8" aria-hidden="true" />
               <span className="size-3" aria-hidden="true" />
@@ -66,7 +69,7 @@ export function MobileMenu({ id, open, onClose }: MobileMenuProps) {
             </MenuRow>
           </li>
           {PAGES.map((page, index) => (
-            <li key={page.id} className="border-b border-hairline last:border-b-0">
+            <li key={page.id} className="border-b border-hairline" style={rowStyle(index + 1)}>
               <MenuRow to={page.route}>
                 <span className="type-mono w-8 text-body-muted" aria-hidden="true">
                   {String(index + 1).padStart(2, '0')}
@@ -79,7 +82,7 @@ export function MobileMenu({ id, open, onClose }: MobileMenuProps) {
               </MenuRow>
             </li>
           ))}
-          <li className="border-t border-hairline">
+          <li style={rowStyle(PAGES.length + 1)}>
             <MenuRow to={REFERENCE_PAGE.route}>
               <span className="type-mono w-8 text-body-muted" aria-hidden="true">
                 {String(PAGES.length + 1).padStart(2, '0')}
